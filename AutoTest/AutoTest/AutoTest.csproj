@@ -305,6 +305,7 @@
     <None Include="Resources\OFF.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Record_On.png" />
     <None Include="Resources\Surprise.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -368,8 +369,8 @@
     <None Include="Resources\Switch Off AC.png" />
     <None Include="Resources\Switch On AC.png" />
     <Content Include="AutoTestAssistant.ico" />
+    <None Include="Resources\record_off.png" />
     <Content Include="Resources\StartAutoBox.gif" />
-    <None Include="Resources\Tia.JPG" />
     <None Include="Resources\close1.png" />
     <None Include="Resources\close2.png" />
     <Content Include="Resources\mini1.png" />

@@ -3433,7 +3433,7 @@ namespace AutoTest
                                 string StreamName = DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString();
                                 string TvSystem = DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[7].Value.ToString();
                                 string Freq = DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[8].Value.ToString();
-                                string arguments = Application.StartupPath + @"\\Dektec Player\\" + StreamName + " " +
+                                string arguments = Application.StartupPath + @"\\DektecPlayer\\" + StreamName + " " +
                                                    "-mt " + TvSystem + " " +
                                                    "-mf " + Freq + " " +
                                                    "-r 0 " +
@@ -3441,7 +3441,7 @@ namespace AutoTest
 
                                 Console.WriteLine(arguments);
                                 System.Diagnostics.Process Dektec = new System.Diagnostics.Process();
-                                Dektec.StartInfo.FileName = Application.StartupPath + @"\\Dektec Player\\DtPlay.exe";
+                                Dektec.StartInfo.FileName = Application.StartupPath + @"\\DektecPlayer\\DtPlay.exe";
                                 Dektec.StartInfo.UseShellExecute = false;
                                 Dektec.StartInfo.RedirectStandardInput = true;
                                 Dektec.StartInfo.RedirectStandardOutput = true;
@@ -3950,7 +3950,7 @@ namespace AutoTest
                         
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
-
+                         
                         ini12.INIWrite(MailPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
 
                         if (Global.Break_Out_Schedule == 1)//定時器時間到跳出迴圈//
@@ -4976,78 +4976,7 @@ namespace AutoTest
         }
         #endregion
 
-        #region -- 讀取RC DB並填入Virtual RC Panel --
         Button[] Buttons;
-        private void LoadVirtualRC()
-        {
-            //根據dpi調整按鍵寬度//
-            Graphics graphics = CreateGraphics();
-            float dpiX = graphics.DpiX;
-            float dpiY = graphics.DpiY;
-            int width, height;
-            if (dpiX == 96 && dpiY == 96)
-            {
-                width = 75;
-                height = 25;
-            }
-            else
-            {
-                width = 90;
-                height = 25;
-            }
-            
-            Buttons = new Button[Global.Rc_Number];
-
-            for (int i = 0; i < Buttons.Length; i++)
-            {
-                Buttons[i] = new Button
-                {
-                    Size = new Size(width, height),
-                    Text = Global.Rc_List[i],
-                    AutoSize = false,
-                    AutoSizeMode = AutoSizeMode.GrowAndShrink
-                };
-
-                if (i <= 11)
-                {
-                    Buttons[i].Location = new Point(0 + (i * width), 5);
-                }
-                else if (i > 11 && i <= 23)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 12) * width), 45);
-                }
-                else if (i > 23 && i <= 35)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 24) * width), 85);
-                }
-                else if (i > 35 && i <= 47)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 36) * width), 125);
-                }
-                else if (i > 47 && i <= 59)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 48) * width), 165);
-                }
-                else if (i > 59 && i <= 71)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 60) * width), 205);
-                }
-                else if (i > 71 && i <= 83)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 72) * width), 245);
-                }
-                else if (i > 83 && i <= 95)
-                {
-                    Buttons[i].Location = new Point(0 + ((i - 84) * width), 285);
-                }
-
-                int index = i;
-                Buttons[i].Click += (sender1, ex) => Sand_Key(index + 1);
-                panel_VirtualRC.Controls.Add(Buttons[i]);
-            }
-        }
-        #endregion
-
         private void Sand_Key(int i)
         {
             if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
@@ -5291,9 +5220,6 @@ namespace AutoTest
                     DataGridViewComboBoxColumn RCDB = (DataGridViewComboBoxColumn)DataGridView_Schedule.Columns[0];
                     RCDB.Items.Clear();
                     LoadRCDB();
-
-                    //panel_VirtualRC.Controls.Clear();
-                    //LoadVirtualRC();
                 }
 
                 if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
@@ -5542,6 +5468,7 @@ namespace AutoTest
                 }
             }
             ReadSch();
+            button_Start.Enabled = true;
         }
         #endregion
 
@@ -6293,20 +6220,6 @@ namespace AutoTest
         
         private void button_VirtualRC_Click(object sender, EventArgs e)
         {
-            /*
-            VirtualRcPanel = !VirtualRcPanel;
-            if (VirtualRcPanel == true)
-            {
-                LoadVirtualRC();
-                panel_VirtualRC.Show();
-                panel_VirtualRC.BringToFront();
-            }
-            else
-            {
-                panel_VirtualRC.Controls.Clear();
-                panel_VirtualRC.Hide();
-            }
-            */
             FormRC formRC = new FormRC();
             formRC.Owner = this;
             if (Global.FormRC == false)
@@ -6591,7 +6504,7 @@ namespace AutoTest
             else
             {
                 Breakfunction = true;
-                Breakpoint = Nowpoint;
+				Breakpoint = Nowpoint;
                 DataGridView_Schedule.Rows[Breakpoint].DefaultCellStyle.BackColor = Color.Yellow;
                 DataGridView_Schedule.Rows[Breakpoint].DefaultCellStyle.SelectionBackColor = Color.Yellow;
                 DataGridView_Schedule.Rows[Breakpoint].DefaultCellStyle.SelectionForeColor = Color.Red;
