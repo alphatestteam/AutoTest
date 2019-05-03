@@ -6530,6 +6530,10 @@ namespace AutoTest
 
     public class Global//全域變數//
     {
+        public static string MainSettingPath = Application.StartupPath + "\\Config.ini";
+        public static string MailSettingPath = Application.StartupPath + "\\Mail.ini";
+        public static string RcSettingPath = Application.StartupPath + "\\RC.ini";
+
         public static int Scheduler_Row = 0;
         public static List<string> VID = new List<string> { };
         public static List<string> PID = new List<string> { };

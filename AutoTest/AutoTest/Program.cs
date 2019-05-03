@@ -66,6 +66,8 @@ namespace AutoTest
             
             Add_ons Add_ons = new Add_ons();
             Add_ons.CreateConfig();//如果根目錄沒有Config.ini則創建//
+            Add_ons.CreateMailConfig();//如果根目錄沒有Mail.ini則創建//
+            Add_ons.CreateRcConfig();//如果根目錄沒有Rc.ini則創建//
             Add_ons.USB_Read();//讀取USB設備的Pid, Vid//
 
             //Add_ons.CreateExcelFile();
