@@ -17,13 +17,11 @@ namespace AutoTest
             Close();
         }
 
-        string MainSettingPath = Application.StartupPath + "\\Config.ini";
-
         private void Setting_Load(object sender, EventArgs e)
         {
-            if (ini12.INIRead(MainSettingPath, "Record", "ImportDB", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "Record", "ImportDB", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "Record", "ImportDB", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "Record", "ImportDB", "")) == 1)
                 {
                     ImportDB.Checked = true;
                 }
@@ -34,7 +32,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "Record", "ImportDB", "0");
+                ini12.INIWrite(Global.MainSettingPath, "Record", "ImportDB", "0");
                 ImportDB.Checked = false;
             }
         }
@@ -44,12 +42,12 @@ namespace AutoTest
             if (ImportDB.Checked == true)
             {
                 // 寫入Import DadaBase啟動
-                ini12.INIWrite(MainSettingPath, "Record", "ImportDB", "1");
+                ini12.INIWrite(Global.MainSettingPath, "Record", "ImportDB", "1");
             }
             else
             {
                 // 寫入Import DadaBase關閉
-                ini12.INIWrite(MainSettingPath, "Record", "ImportDB", "0");
+                ini12.INIWrite(Global.MainSettingPath, "Record", "ImportDB", "0");
             }
         }
 

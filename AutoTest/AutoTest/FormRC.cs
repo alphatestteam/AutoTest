@@ -15,9 +15,7 @@ namespace AutoTest
         {
             InitializeComponent();
         }
-
-        private string MainSettingPath = Application.StartupPath + "\\Config.ini";
-        private string RcPath = Application.StartupPath + "\\RC.ini";
+        
         private string RcConfigFolder = Application.StartupPath + "\\RcConfig\\";
         private RedRatDBParser RedRatData = new RedRatDBParser();
         System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
@@ -26,18 +24,18 @@ namespace AutoTest
         {
             Form1 lForm1 = (Form1)this.Owner;
 
-            if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
             {
-                if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
                 {
                     lForm1.Autocommand_RedRat("FormRc", RcKey);
                 }
-                else if (ini12.INIRead(MainSettingPath, "Device", "AutoboxVerson", "") == "2")
+                else if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "2")
                 {
                     lForm1.Autocommand_BlueRat("FormRc", RcKey);
                 }
             }
-            else if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+            else if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
             {
                 lForm1.Autocommand_RedRat("FormRc", RcKey);
             }
@@ -291,7 +289,7 @@ namespace AutoTest
             }
 
             comboBoxRcNumber.SelectedIndex =
-                comboBoxRcNumber.Items.IndexOf(ini12.INIRead(RcPath, "Setting", "SelectRcLastTime", ""));
+                comboBoxRcNumber.Items.IndexOf(ini12.INIRead(Global.RcSettingPath, "Setting", "SelectRcLastTime", ""));
         }
 
         #region -- comboBox_SelectedIndexChanged(object sender, EventArgs e) --
@@ -557,8 +555,8 @@ namespace AutoTest
         {
             LoadRcDB();
             LoadRcKeys();
-            ini12.INIWrite(RcPath, "Setting", "SelectRcLastTime", comboBoxRcNumber.SelectedItem.ToString());
-            ini12.INIWrite(RcPath, "Setting", "SelectRcLastTimePath", RcConfigFolder + comboBoxRcNumber.SelectedItem.ToString());
+            ini12.INIWrite(Global.RcSettingPath, "Setting", "SelectRcLastTime", comboBoxRcNumber.SelectedItem.ToString());
+            ini12.INIWrite(Global.RcSettingPath, "Setting", "SelectRcLastTimePath", RcConfigFolder + comboBoxRcNumber.SelectedItem.ToString());
         }
 
         private void AddRcDb(string DBFile)
