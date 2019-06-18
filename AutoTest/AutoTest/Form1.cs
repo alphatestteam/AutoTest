@@ -143,12 +143,6 @@ namespace AutoTest
                 pictureBox_BlueRat.Image = Properties.Resources.OFF;
             }
 
-            if (ini12.INIRead(Global.MainSettingPath, "Comport", "PortName", "") == "")
-            {
-                string[] DefaultCom = System.IO.Ports.SerialPort.GetPortNames();
-                ini12.INIWrite(Global.MainSettingPath, "Comport", "PortName", DefaultCom.Last());
-            }
-
             if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1" &&
                 ini12.INIRead(Global.MainSettingPath, "RedRat", "RedRatIndex", "") != "")
             {
