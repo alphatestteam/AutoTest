@@ -671,6 +671,7 @@ namespace AutoTest
         }
         #endregion
 
+        #region -- 創建RC.ini --
         public void CreateRcConfig()
         {
             string[] Setting = { "SelectRcLastTime", "SelectRcLastTimePath" };
@@ -687,5 +688,6 @@ namespace AutoTest
                 }
             }
         }
+        #endregion
     }
 }

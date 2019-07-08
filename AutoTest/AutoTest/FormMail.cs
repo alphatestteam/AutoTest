@@ -18,12 +18,9 @@ namespace AutoTest
             InitializeComponent();
         }
 
-        string MainSettingPath = Application.StartupPath + "\\Config.ini";
-        string MailPath = Application.StartupPath + "\\Mail.ini";
-
         public void send()
         {
-            string To = ini12.INIRead(MailPath, "Mail Info", "To", "") + ",";
+            string To = ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") + ",";
             int z = 0;
             string[] to = To.Split(new char[] { ',' });
             List<string> MailList = new List<string> { };
@@ -46,22 +43,22 @@ namespace AutoTest
 
             string schedule2 = "", schedule3 = "", schedule4 = "", schedule5 = "";
             if (Global.Schedule_2_Exist == 1)
-                schedule2 = ini12.INIRead(MailPath, "Test Case", "TestCase2", "");
+                schedule2 = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase2", "");
             else if (Global.Schedule_2_Exist == 0)
                 schedule2 = "";
 
             if (Global.Schedule_3_Exist == 1)
-                schedule3 = ini12.INIRead(MailPath, "Test Case", "TestCase3", "");
+                schedule3 = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase3", "");
             else if (Global.Schedule_3_Exist == 0)
                 schedule3 = "";
 
             if (Global.Schedule_4_Exist == 1)
-                schedule4 = ini12.INIRead(MailPath, "Test Case", "TestCase4", "");
+                schedule4 = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase4", "");
             else if (Global.Schedule_4_Exist == 0)
                 schedule4 = "";
 
             if (Global.Schedule_5_Exist == 1)
-                schedule5 = ini12.INIRead(MailPath, "Test Case", "TestCase5", "");
+                schedule5 = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase5", "");
             else if (Global.Schedule_5_Exist == 0)
                 schedule5 = "";
 
@@ -72,23 +69,23 @@ namespace AutoTest
                                     PassOrFail + "<br>" + "<br>" +
 
                                     "Test Case : " + "<br>" +
-                                    "1. " + ini12.INIRead(MailPath, "Test Case", "TestCase1", "") + "<br>" +
+                                    "1. " + ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase1", "") + "<br>" +
                                     "2. " + schedule2 + "<br>" +
                                     "3. " + schedule3 + "<br>" +
                                     "4. " + schedule4 + "<br>" +
                                     "5. " + schedule5 + "<br>" + "<br>" +
 
-                                    "Urtracker Link : " + "http://fwtrack.tpvaoc.com/pts/issuelist.aspx?project=" + ini12.INIRead(MailPath, "Data Info", "ProjectNumber", "") + "<br>" +
-                                    "Project Name : " + ini12.INIRead(MailPath, "Mail Info", "ProjectName", "") + "<br>" +
-                                    "Model Name : " + ini12.INIRead(MailPath, "Mail Info", "ModelName", "") + "<br>" +
-                                    "Version : " + ini12.INIRead(MailPath, "Mail Info", "Version", "") + "<br>" + "<br>" +
+                                    "Urtracker Link : " + "http://fwtrack.tpvaoc.com/pts/issuelist.aspx?project=" + ini12.INIRead(Global.MailSettingPath, "Data Info", "ProjectNumber", "") + "<br>" +
+                                    "Project Name : " + ini12.INIRead(Global.MailSettingPath, "Mail Info", "ProjectName", "") + "<br>" +
+                                    "Model Name : " + ini12.INIRead(Global.MailSettingPath, "Mail Info", "ModelName", "") + "<br>" +
+                                    "Version : " + ini12.INIRead(Global.MailSettingPath, "Mail Info", "Version", "") + "<br>" + "<br>" +
 
-                                    "Tester : " + ini12.INIRead(MailPath, "Mail Info", "Tester", "") + "<br>" +
+                                    "Tester : " + ini12.INIRead(Global.MailSettingPath, "Mail Info", "Tester", "") + "<br>" +
                                     "Test Loop : " + Global.Loop_Number + "<br>" +
-                                    "Total Test Time : " + ini12.INIRead(MailPath, "Total Test Time", "How Long", "") + "<br>" + "<br>" +
+                                    "Total Test Time : " + ini12.INIRead(Global.MailSettingPath, "Total Test Time", "How Long", "") + "<br>" + "<br>" +
 
-                                    "Team Viewer ID : " + ini12.INIRead(MailPath, "Mail Info", "TeamViewerID", "") + "<br>" +
-                                    "Team Viewer Password : " + ini12.INIRead(MailPath, "Mail Info", "TeamViewerPassWord", "") + "<br>" + "<br>" + "<br>" + "<br>" +
+                                    "Team Viewer ID : " + ini12.INIRead(Global.MailSettingPath, "Mail Info", "TeamViewerID", "") + "<br>" +
+                                    "Team Viewer Password : " + ini12.INIRead(Global.MailSettingPath, "Mail Info", "TeamViewerPassWord", "") + "<br>" + "<br>" + "<br>" + "<br>" +
 
 
 
@@ -99,9 +96,9 @@ namespace AutoTest
 
         public void logsend()
         {
-            string To = ini12.INIRead(MailPath, "Mail Info", "To", "") + ",";
+            string To = ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") + ",";
             int z = 0;
-            string i = ini12.INIRead(MainSettingPath, "LogSearch", "Nowvalue", "");
+            string i = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Nowvalue", "");
             string[] to = To.Split(new char[] { ',' });
             List<string> MailList = new List<string> { };
 
@@ -111,12 +108,12 @@ namespace AutoTest
                 z++;
             }
 
-            string Subject = "Event Notification: " + ini12.INIRead(MainSettingPath, "LogSearch", "Text" + i, "") + " ------ " + ini12.INIRead(MainSettingPath, "LogSearch", "Times" + i, "") + " times";
+            string Subject = "Event Notification: " + ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "") + " ------ " + ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times" + i, "") + " times";
             string Body =
                                     "Event Notification" + "<br>" + "<br>" +
 
-                                    "Search Keyword: " + ini12.INIRead(MainSettingPath, "LogSearch", "Text" + i, "") + "<br>" +
-                                    "Start Test time: " + ini12.INIRead(MainSettingPath, "LogSearch", "StartTime", "") + "<br>" +
+                                    "Search Keyword: " + ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "") + "<br>" +
+                                    "Start Test time: " + ini12.INIRead(Global.MainSettingPath, "LogSearch", "StartTime", "") + "<br>" +
                                     "Search keyword time: " + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "<br>" + "<br>" +
                                     "Please note this E-mail is sent by Alpha mail system automatically, do not reply. If you have any questions please contact system administrator." + "<br>";
 
@@ -128,7 +125,7 @@ namespace AutoTest
             MailMessage msg = new MailMessage();
 
             msg.To.Add(string.Join(",", MailList.ToArray()));       //收件者，以逗號分隔不同收件者
-            msg.From = new MailAddress(ini12.INIRead(MailPath, "Mail Info", "From", ""), ini12.INIRead(MailPath, "Mail Info", "From", ""), System.Text.Encoding.UTF8);
+            msg.From = new MailAddress(ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", ""), ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", ""), System.Text.Encoding.UTF8);
             msg.Subject = Subject;      //郵件標題 
             msg.SubjectEncoding = System.Text.Encoding.UTF8;        //郵件標題編碼  
             msg.Body = Body;        //郵件內容
@@ -146,34 +143,34 @@ namespace AutoTest
                 msg.Attachments.Add(GetAttachment("NG.jpg", System.Text.Encoding.UTF8));
             }
 
-            string Schdule1Path = ini12.INIRead(MainSettingPath, "Schedule1", "Path", "");
+            string Schdule1Path = ini12.INIRead(Global.MainSettingPath, "Schedule1", "Path", "");
             msg.Attachments.Add(GetAttachmentSchdule(Path.GetFileName(Schdule1Path), System.Text.Encoding.UTF8));
 
             if (Global.Schedule_2_Exist == 1)
             {
-                string Schdule2Path = ini12.INIRead(MainSettingPath, "Schedule2", "Path", "");
+                string Schdule2Path = ini12.INIRead(Global.MainSettingPath, "Schedule2", "Path", "");
                 msg.Attachments.Add(GetAttachmentSchdule(Path.GetFileName(Schdule2Path), System.Text.Encoding.UTF8));
             }
 
             if (Global.Schedule_3_Exist == 1)
             {
-                string Schdule3Path = ini12.INIRead(MainSettingPath, "Schedule3", "Path", "");
+                string Schdule3Path = ini12.INIRead(Global.MainSettingPath, "Schedule3", "Path", "");
                 msg.Attachments.Add(GetAttachmentSchdule(Path.GetFileName(Schdule3Path), System.Text.Encoding.UTF8));
             }
 
             if (Global.Schedule_4_Exist == 1)
             {
-                string Schdule4Path = ini12.INIRead(MainSettingPath, "Schedule4", "Path", "");
+                string Schdule4Path = ini12.INIRead(Global.MainSettingPath, "Schedule4", "Path", "");
                 msg.Attachments.Add(GetAttachmentSchdule(Path.GetFileName(Schdule4Path), System.Text.Encoding.UTF8));
             }
 
             if (Global.Schedule_5_Exist == 1)
             {
-                string Schdule5Path = ini12.INIRead(MainSettingPath, "Schedule5", "Path", "");
+                string Schdule5Path = ini12.INIRead(Global.MainSettingPath, "Schedule5", "Path", "");
                 msg.Attachments.Add(GetAttachmentSchdule(Path.GetFileName(Schdule5Path), System.Text.Encoding.UTF8));
             }
 
-            string RCDBPath = ini12.INIRead(MainSettingPath, "RedRat", "DBFile", "");
+            string RCDBPath = ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", "");
             msg.Attachments.Add(GetAttachmentRCDB(Path.GetFileName(RCDBPath), System.Text.Encoding.UTF8));
 
             //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
@@ -198,7 +195,7 @@ namespace AutoTest
             catch (Exception)
             {
                 MessageBox.Show("Connect the google smtp server error and mail setting value is disabled. Please check the network connect status.", "Mail send error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ini12.INIWrite(MailPath, "Send Mail", "value", "0");
+                ini12.INIWrite(Global.MailSettingPath, "Send Mail", "value", "0");
             }
         }
 
@@ -224,7 +221,7 @@ namespace AutoTest
         private Attachment GetAttachmentSchdule(string strFileName, Encoding encode)
         {
             //設定圖片路徑
-            string SchdulePath = ini12.INIRead(MainSettingPath, "Schedule1", "Path", "");
+            string SchdulePath = ini12.INIRead(Global.MainSettingPath, "Schedule1", "Path", "");
 
             Attachment attachment = new Attachment(SchdulePath)
             {
@@ -243,7 +240,7 @@ namespace AutoTest
         private Attachment GetAttachmentRCDB(string strFileName, Encoding encode)
         {
             //設定圖片路徑
-            string RCDBPath = ini12.INIRead(MainSettingPath, "RedRat", "DBFile", "");
+            string RCDBPath = ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", "");
 
             Attachment attachment = new Attachment(RCDBPath)
             {
@@ -278,25 +275,25 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MailPath, "Mail Info", "From", textBox_From.Text.Trim());
-                    ini12.INIWrite(MailPath, "Mail Info", "To", textBox_To.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "From", textBox_From.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "To", textBox_To.Text.Trim());
 
-                    ini12.INIWrite(MailPath, "Test Case", "TestCase1", textBox_TestCase1.Text.Trim());
-                    ini12.INIWrite(MailPath, "Test Case", "TestCase2", textBox_TestCase2.Text.Trim());
-                    ini12.INIWrite(MailPath, "Test Case", "TestCase3", textBox_TestCase3.Text.Trim());
-                    ini12.INIWrite(MailPath, "Test Case", "TestCase4", textBox_TestCase4.Text.Trim());
-                    ini12.INIWrite(MailPath, "Test Case", "TestCase5", textBox_TestCase5.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase1", textBox_TestCase1.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase2", textBox_TestCase2.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase3", textBox_TestCase3.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase4", textBox_TestCase4.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase5", textBox_TestCase5.Text.Trim());
 
-                    ini12.INIWrite(MailPath, "Data Info", "ProjectNumber", textBox_ProjectNumber.Text.Trim());
-                    ini12.INIWrite(MailPath, "Mail Info", "ProjectName", textBox_ProjectName.Text.Trim());
-                    ini12.INIWrite(MailPath, "Mail Info", "ModelName", textBox_ModelName.Text.Trim());
-                    ini12.INIWrite(MailPath, "Mail Info", "Version", textBox_Version.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Data Info", "ProjectNumber", textBox_ProjectNumber.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "ProjectName", textBox_ProjectName.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "ModelName", textBox_ModelName.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "Version", textBox_Version.Text.Trim());
 
-                    ini12.INIWrite(MailPath, "Mail Info", "Tester", textBox_Tester.Text.Trim());
-                    ini12.INIWrite(MailPath, "Total Test Time", "value", textBox_TotalTestTime.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "Tester", textBox_Tester.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value", textBox_TotalTestTime.Text.Trim());
 
-                    ini12.INIWrite(MailPath, "Mail Info", "TeamViewerID", textBox_TeamViewerID.Text.Trim());
-                    ini12.INIWrite(MailPath, "Mail Info", "TeamViewerPassWord", textBox_TeamViewerPassWord.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "TeamViewerID", textBox_TeamViewerID.Text.Trim());
+                    ini12.INIWrite(Global.MailSettingPath, "Mail Info", "TeamViewerPassWord", textBox_TeamViewerPassWord.Text.Trim());
 
                     label_ErrorMessage.Text = "Save Successfully !";
                 }
@@ -306,9 +303,9 @@ namespace AutoTest
         public void FormMail_Load(object sender, EventArgs e)
         {
             label_ErrorMessage.Text = "";
-            if (ini12.INIRead(MailPath, "Send Mail", "value", "") != "")
+            if (ini12.INIRead(Global.MailSettingPath, "Send Mail", "value", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MailPath, "Send Mail", "value", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MailSettingPath, "Send Mail", "value", "")) == 1)
                 {
                     SendMailcheckBox.Checked = true;
                     textBox_From.Enabled = true;
@@ -349,7 +346,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MailPath, "Send Mail", "value", "0");
+                ini12.INIWrite(Global.MailSettingPath, "Send Mail", "value", "0");
                 SendMailcheckBox.Checked = false;
                 textBox_From.Enabled = false;
                 textBox_To.Enabled = false;
@@ -368,25 +365,25 @@ namespace AutoTest
                 textBox_TeamViewerPassWord.Enabled = false;
             }
 
-            textBox_From.Text = ini12.INIRead(MailPath, "Mail Info", "From", "");
-            textBox_To.Text = ini12.INIRead(MailPath, "Mail Info", "To", "");
+            textBox_From.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "");
+            textBox_To.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "");
 
-            textBox_TestCase1.Text = ini12.INIRead(MailPath, "Test Case", "TestCase1", "");
-            textBox_TestCase2.Text = ini12.INIRead(MailPath, "Test Case", "TestCase2", "");
-            textBox_TestCase3.Text = ini12.INIRead(MailPath, "Test Case", "TestCase3", "");
-            textBox_TestCase4.Text = ini12.INIRead(MailPath, "Test Case", "TestCase4", "");
-            textBox_TestCase5.Text = ini12.INIRead(MailPath, "Test Case", "TestCase5", "");
+            textBox_TestCase1.Text = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase1", "");
+            textBox_TestCase2.Text = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase2", "");
+            textBox_TestCase3.Text = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase3", "");
+            textBox_TestCase4.Text = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase4", "");
+            textBox_TestCase5.Text = ini12.INIRead(Global.MailSettingPath, "Test Case", "TestCase5", "");
 
-            textBox_ProjectNumber.Text = ini12.INIRead(MailPath, "Data Info", "ProjectNumber", "");
-            textBox_ProjectName.Text = ini12.INIRead(MailPath, "Mail Info", "ProjectName", "");
-            textBox_ModelName.Text = ini12.INIRead(MailPath, "Mail Info", "ModelName", "");
-            textBox_Version.Text = ini12.INIRead(MailPath, "Mail Info", "Version", "");
+            textBox_ProjectNumber.Text = ini12.INIRead(Global.MailSettingPath, "Data Info", "ProjectNumber", "");
+            textBox_ProjectName.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "ProjectName", "");
+            textBox_ModelName.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "ModelName", "");
+            textBox_Version.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "Version", "");
 
-            textBox_Tester.Text = ini12.INIRead(MailPath, "Mail Info", "Tester", "");
-            textBox_TotalTestTime.Text = ini12.INIRead(MailPath, "Mail Info", "Total Test Time", "");
+            textBox_Tester.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "Tester", "");
+            textBox_TotalTestTime.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "Total Test Time", "");
 
-            textBox_TeamViewerID.Text = ini12.INIRead(MailPath, "Mail Info", "TeamViewerID", "");
-            textBox_TeamViewerPassWord.Text = ini12.INIRead(MailPath, "Mail Info", "TeamViewerPassWord", "");
+            textBox_TeamViewerID.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "TeamViewerID", "");
+            textBox_TeamViewerPassWord.Text = ini12.INIRead(Global.MailSettingPath, "Mail Info", "TeamViewerPassWord", "");
         }
 
         bool ConnectGoogleTW()
@@ -451,7 +448,7 @@ namespace AutoTest
                 ConnectGoogleTW();
                 if (ConnectGoogleTW() == true)
                 {
-                    ini12.INIWrite(MailPath, "Send Mail", "value", "1");
+                    ini12.INIWrite(Global.MailSettingPath, "Send Mail", "value", "1");
                     textBox_From.Enabled = true;
                     textBox_From_TextChanged(new TextBox(), new EventArgs());
                     textBox_To.Enabled = true;
@@ -480,7 +477,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MailPath, "Send Mail", "value", "0");
+                ini12.INIWrite(Global.MailSettingPath, "Send Mail", "value", "0");
                 textBox_From.Enabled = false;
                 pictureBox_From.Image = null;
                 textBox_To.Enabled = false;
@@ -524,7 +521,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MailPath, "Mail Info", "From", textBox_From.Text.Trim());
+                ini12.INIWrite(Global.MailSettingPath, "Mail Info", "From", textBox_From.Text.Trim());
                 label_ErrorMessage.Text = "";
                 pictureBox_From.Image = null;
             }
@@ -539,7 +536,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MailPath, "Mail Info", "To", textBox_To.Text.Trim());
+                ini12.INIWrite(Global.MailSettingPath, "Mail Info", "To", textBox_To.Text.Trim());
                 label_ErrorMessage.Text = "";
                 pictureBox_To.Image = null;
             }
@@ -547,67 +544,67 @@ namespace AutoTest
 
         private void textBox_TestCase1_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Test Case", "TestCase1", textBox_TestCase1.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase1", textBox_TestCase1.Text.Trim());
         }
 
         private void textBox_TestCase2_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Test Case", "TestCase2", textBox_TestCase2.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase2", textBox_TestCase2.Text.Trim());
         }
 
         private void textBox_TestCase3_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Test Case", "TestCase3", textBox_TestCase3.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase3", textBox_TestCase3.Text.Trim());
         }
 
         private void textBox_TestCase4_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Test Case", "TestCase4", textBox_TestCase4.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase4", textBox_TestCase4.Text.Trim());
         }
 
         private void textBox_TestCase5_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Test Case", "TestCase5", textBox_TestCase5.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Test Case", "TestCase5", textBox_TestCase5.Text.Trim());
         }
 
         private void textBox_ProjectNumber_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Data Info", "ProjectNumber", textBox_ProjectNumber.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Data Info", "ProjectNumber", textBox_ProjectNumber.Text.Trim());
         }
 
         private void textBox_ProjectName_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Mail Info", "ProjectName", textBox_ProjectName.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Mail Info", "ProjectName", textBox_ProjectName.Text.Trim());
         }
 
         private void textBox_ModelName_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Mail Info", "ModelName", textBox_ModelName.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Mail Info", "ModelName", textBox_ModelName.Text.Trim());
         }
 
         private void textBox_Version_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Mail Info", "Version", textBox_Version.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Mail Info", "Version", textBox_Version.Text.Trim());
         }
 
         private void textBox_Tester_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Mail Info", "Tester", textBox_Tester.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Mail Info", "Tester", textBox_Tester.Text.Trim());
         }
 
         private void textBox_TotalTestTime_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Total Test Time", "value", textBox_TotalTestTime.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value", textBox_TotalTestTime.Text.Trim());
         }
 
         private void textBox_TeamViewerID_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Mail Info", "TeamViewerID", textBox_TeamViewerID.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Mail Info", "TeamViewerID", textBox_TeamViewerID.Text.Trim());
         }
 
         private void textBox_TeamViewerPassWord_TextChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MailPath, "Mail Info", "TeamViewerPassWord", textBox_TeamViewerPassWord.Text.Trim());
+            ini12.INIWrite(Global.MailSettingPath, "Mail Info", "TeamViewerPassWord", textBox_TeamViewerPassWord.Text.Trim());
         }
     }
 }

@@ -296,7 +296,7 @@ namespace AutoTest
             this.label_FwVersion.Name = "label_FwVersion";
             this.label_FwVersion.Size = new System.Drawing.Size(75, 18);
             this.label_FwVersion.TabIndex = 46;
-            this.label_FwVersion.Text = "Ver. 2.17.0";
+            this.label_FwVersion.Text = "Ver. 2.17.1";
             this.label_FwVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_FwVersion.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LabelVersion_MouseClick);
             // 

@@ -19,9 +19,6 @@ namespace AutoTest
             InitializeComponent();
         }
 
-        string MainSettingPath = Application.StartupPath + "\\Config.ini";
-        string MailPath = Application.StartupPath + "\\Mail.ini";
-
         private void loadxml()
         {
             // Redrat Database
@@ -117,56 +114,56 @@ namespace AutoTest
         public void OkBtn_Click(object sender, EventArgs e)
         {
             //Image Path//
-            ini12.INIWrite(MainSettingPath, "Record", "VideoPath", textBox_ImagePath.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "Record", "VideoPath", textBox_ImagePath.Text.Trim());
 
             //Log Path//
-            ini12.INIWrite(MainSettingPath, "Record", "LogPath", textBox_LogPath.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "Record", "LogPath", textBox_LogPath.Text.Trim());
 
             //RedRat Path//
-            ini12.INIWrite(MainSettingPath, "RedRat", "DBFile", textBox_RcDbPath.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "DBFile", textBox_RcDbPath.Text.Trim());
 
             //Generator Path//
-            ini12.INIWrite(MainSettingPath, "Record", "Generator", textBox_GeneratorPath.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "Record", "Generator", textBox_GeneratorPath.Text.Trim());
 
             //DOS Path//
-            ini12.INIWrite(MainSettingPath, "Device", "DOS", textBox_DosPath.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "Device", "DOS", textBox_DosPath.Text.Trim());
 
             //Camera Device, Audio//
-            ini12.INIWrite(MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
-            ini12.INIWrite(MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
-            ini12.INIWrite(MainSettingPath, "Camera", "AudioIndex", comboBox_CameraAudio.SelectedIndex.ToString());
-            ini12.INIWrite(MainSettingPath, "Camera", "AudioName", comboBox_CameraAudio.Text);
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioIndex", comboBox_CameraAudio.SelectedIndex.ToString());
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioName", comboBox_CameraAudio.Text);
 
             //RedRat Brands, Select RC//
-            ini12.INIWrite(MainSettingPath, "RedRat", "Brands", comboBox_TvBrands.Text.Trim());
-            ini12.INIWrite(MainSettingPath, "RedRat", "RedRatIndex", (comboBox__SelectRedrat.SelectedIndex).ToString());
-            ini12.INIWrite(MainSettingPath, "RedRat", "SerialNumber", comboBox__SelectRedrat.Text);
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "Brands", comboBox_TvBrands.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "RedRatIndex", (comboBox__SelectRedrat.SelectedIndex).ToString());
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "SerialNumber", comboBox__SelectRedrat.Text);
 
             //SerialPort1//
             if (checkBox_SerialPort1.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "Comport", "BaudRate", comboBox_SerialPort1_BaudRate_Value.Text.Trim());
-                ini12.INIWrite(MainSettingPath, "Comport", "DataBit", "8");
-                ini12.INIWrite(MainSettingPath, "Comport", "StopBits", "One");
-                ini12.INIWrite(MainSettingPath, "Comport", "PortName", comboBox_SerialPort1_PortName_Value.Text);
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "BaudRate", comboBox_SerialPort1_BaudRate_Value.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "DataBit", "8");
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "StopBits", "One");
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "PortName", comboBox_SerialPort1_PortName_Value.Text);
             }
 
             //SerialPort2//
             if (checkBox_SerialPort2.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "ExtComport", "BaudRate", comboBox_SerialPort2_BaudRate_Value.Text.Trim());
-                ini12.INIWrite(MainSettingPath, "ExtComport", "DataBit", "8");
-                ini12.INIWrite(MainSettingPath, "ExtComport", "StopBits", "One");
-                ini12.INIWrite(MainSettingPath, "ExtComport", "PortName", comboBox_SerialPort2_PortName_Value.Text);
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "BaudRate", comboBox_SerialPort2_BaudRate_Value.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "DataBit", "8");
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "StopBits", "One");
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "PortName", comboBox_SerialPort2_PortName_Value.Text);
             }
         }
 
         private void Setting_Load(object sender, EventArgs e)
         {
             //Image欄位//
-            if (Directory.Exists(ini12.INIRead(MainSettingPath, "Record", "VideoPath", "")))
+            if (Directory.Exists(ini12.INIRead(Global.MainSettingPath, "Record", "VideoPath", "")))
             {
-                textBox_ImagePath.Text = ini12.INIRead(MainSettingPath, "Record", "VideoPath", "");
+                textBox_ImagePath.Text = ini12.INIRead(Global.MainSettingPath, "Record", "VideoPath", "");
             }
             else
             {
@@ -175,9 +172,9 @@ namespace AutoTest
             }
             
             //Log欄位//
-            if (Directory.Exists(ini12.INIRead(MainSettingPath, "Record", "LogPath", "")))
+            if (Directory.Exists(ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "")))
             {
-                textBox_LogPath.Text = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                textBox_LogPath.Text = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
             }
             else
             {
@@ -186,9 +183,9 @@ namespace AutoTest
             }
 
             //RC DB欄位//
-            if (File.Exists(ini12.INIRead(MainSettingPath, "RedRat", "DBFile", "")))
+            if (File.Exists(ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", "")))
             {
-                textBox_RcDbPath.Text = ini12.INIRead(MainSettingPath, "RedRat", "DBFile", "");
+                textBox_RcDbPath.Text = ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", "");
             }
             else
             {
@@ -197,9 +194,9 @@ namespace AutoTest
             }
 
             //Generator欄位//
-            if (File.Exists(ini12.INIRead(MainSettingPath, "Record", "Generator", "")))
+            if (File.Exists(ini12.INIRead(Global.MainSettingPath, "Record", "Generator", "")))
             {
-                textBox_GeneratorPath.Text = ini12.INIRead(MainSettingPath, "Record", "Generator", "");
+                textBox_GeneratorPath.Text = ini12.INIRead(Global.MainSettingPath, "Record", "Generator", "");
             }
             else
             {
@@ -208,9 +205,9 @@ namespace AutoTest
             }
 
             //DOS欄位//
-            if (Directory.Exists(ini12.INIRead(MainSettingPath, "Device", "DOS", "")))
+            if (Directory.Exists(ini12.INIRead(Global.MainSettingPath, "Device", "DOS", "")))
             {
-                textBox_DosPath.Text = ini12.INIRead(MainSettingPath, "Device", "DOS", "");
+                textBox_DosPath.Text = ini12.INIRead(Global.MainSettingPath, "Device", "DOS", "");
             }
             else
             {
@@ -219,40 +216,40 @@ namespace AutoTest
             }
 
             #region -- SerialPort --
-            if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
             {
-                GroupBox_Rs232.Text = ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", "") + " IS USING";
+                GroupBox_Rs232.Text = ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", "") + " IS USING";
 
                 comboBox_SerialPort1_PortName_Value.DataSource = System.IO.Ports.SerialPort.GetPortNames();
                 comboBox_SerialPort2_PortName_Value.DataSource = System.IO.Ports.SerialPort.GetPortNames();
 
-                if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
                 {
                     checkBox_SerialPort1.Checked = true;
                     comboBox_SerialPort1_BaudRate_Value.Enabled = true;
                     comboBox_SerialPort1_PortName_Value.Enabled = true;
                 }
-                else if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "0")
+                else if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "0")
                 {
                     checkBox_SerialPort1.Checked = false;
                     comboBox_SerialPort1_BaudRate_Value.Enabled = false;
                     comboBox_SerialPort1_PortName_Value.Enabled = false;
                 }
 
-                if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
                 {
                     checkBox_SerialPort2.Checked = true;
                     comboBox_SerialPort2_BaudRate_Value.Enabled = true;
                     comboBox_SerialPort2_PortName_Value.Enabled = true;
                 }
-                else if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "0")
+                else if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "0")
                 {
                     checkBox_SerialPort2.Checked = false;
                     comboBox_SerialPort2_BaudRate_Value.Enabled = false;
                     comboBox_SerialPort2_PortName_Value.Enabled = false;
                 }
             }
-            else if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "0")
+            else if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "0")
             {
                 checkBox_SerialPort1.Checked = false;
                 checkBox_SerialPort1.Enabled = false;
@@ -265,15 +262,15 @@ namespace AutoTest
                 comboBox_SerialPort2_PortName_Value.Enabled = false;
             }
             
-            comboBox_SerialPort1_BaudRate_Value.Text = ini12.INIRead(MainSettingPath, "Comport", "BaudRate", "");
-            comboBox_SerialPort1_PortName_Value.Text = ini12.INIRead(MainSettingPath, "Comport", "PortName", "");
-            comboBox_SerialPort2_BaudRate_Value.Text = ini12.INIRead(MainSettingPath, "ExtComport", "BaudRate", "");
-            comboBox_SerialPort2_PortName_Value.Text = ini12.INIRead(MainSettingPath, "ExtComport", "PortName", "");
+            comboBox_SerialPort1_BaudRate_Value.Text = ini12.INIRead(Global.MainSettingPath, "Comport", "BaudRate", "");
+            comboBox_SerialPort1_PortName_Value.Text = ini12.INIRead(Global.MainSettingPath, "Comport", "PortName", "");
+            comboBox_SerialPort2_BaudRate_Value.Text = ini12.INIRead(Global.MainSettingPath, "ExtComport", "BaudRate", "");
+            comboBox_SerialPort2_PortName_Value.Text = ini12.INIRead(Global.MainSettingPath, "ExtComport", "PortName", "");
             #endregion
 
             #region -- Redrat --
             IRedRat3 redRat3;
-            if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")//Redrat存在//
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")//Redrat存在//
             {
                 for (int i = 0; i < RedRat3USBImpl.FindDevices().Count; i++)
                 {
@@ -281,14 +278,14 @@ namespace AutoTest
                     comboBox__SelectRedrat.Items.Add(redRat3.DeviceInformation.ProductName + " - " + 
                                                      redRat3.DeviceInformation.SerialNumber.ToString());
 
-                    if (ini12.INIRead(MainSettingPath, "RedRat", "SerialNumber", "") == "")
+                    if (ini12.INIRead(Global.MainSettingPath, "RedRat", "SerialNumber", "") == "")
                     {
                         comboBox__SelectRedrat.Text = comboBox__SelectRedrat.Items[0].ToString();
                     }
 
                     if (redRat3.DeviceInformation.ProductName + " - " + 
                         redRat3.DeviceInformation.SerialNumber.ToString() ==
-                        ini12.INIRead(MainSettingPath, "RedRat", "SerialNumber", ""))
+                        ini12.INIRead(Global.MainSettingPath, "RedRat", "SerialNumber", ""))
                     {
                         comboBox__SelectRedrat.Text = redRat3.DeviceInformation.ProductName + " - " + 
                                                       redRat3.DeviceInformation.SerialNumber.ToString();
@@ -302,12 +299,12 @@ namespace AutoTest
                 comboBox_TvBrands.Enabled = false;
                 comboBox__SelectRedrat.Enabled = false;
             }
-            comboBox_TvBrands.Text = ini12.INIRead(MainSettingPath, "RedRat", "Brands", "");
+            comboBox_TvBrands.Text = ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "");
             loadxml();
             #endregion
             
             #region -- Camera --
-            if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")//Camera存在//
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")//Camera存在//
             {
                 comboBox_CameraDevice.Enabled = true;
                 comboBox_CameraAudio.Enabled = true;
@@ -315,41 +312,41 @@ namespace AutoTest
                 Filters filters = new Filters();
                 Filter f;
 
-                ini12.INIWrite(MainSettingPath, "Camera", "VideoNumber", filters.VideoInputDevices.Count.ToString());
-                ini12.INIWrite(MainSettingPath, "Camera", "AudioNumber", filters.AudioInputDevices.Count.ToString());
+                ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoNumber", filters.VideoInputDevices.Count.ToString());
+                ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioNumber", filters.AudioInputDevices.Count.ToString());
                 
                 for (int c = 0; c < filters.VideoInputDevices.Count; c++)
                 {
                     f = filters.VideoInputDevices[c];
                     comboBox_CameraDevice.Items.Add(f.Name);
-                    if (f.Name == ini12.INIRead(MainSettingPath, "Camera", "VideoName", ""))
+                    if (f.Name == ini12.INIRead(Global.MainSettingPath, "Camera", "VideoName", ""))
                     {
-                        comboBox_CameraDevice.Text = ini12.INIRead(MainSettingPath, "Camera", "VideoName", "");
+                        comboBox_CameraDevice.Text = ini12.INIRead(Global.MainSettingPath, "Camera", "VideoName", "");
                     }
                 }
 
                 if (comboBox_CameraDevice.Text == "" && filters.VideoInputDevices.Count > 0)
                 {
                     comboBox_CameraDevice.SelectedIndex = filters.VideoInputDevices.Count - 1;
-                    ini12.INIWrite(MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
-                    ini12.INIWrite(MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
+                    ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
+                    ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
                 }
 
                 for (int j = 0; j < filters.AudioInputDevices.Count; j++)
                 {
                     f = filters.AudioInputDevices[j];
                     comboBox_CameraAudio.Items.Add(f.Name);
-                    if (f.Name == ini12.INIRead(MainSettingPath, "Camera", "AudioName", ""))
+                    if (f.Name == ini12.INIRead(Global.MainSettingPath, "Camera", "AudioName", ""))
                     {
-                        comboBox_CameraAudio.Text = ini12.INIRead(MainSettingPath, "Camera", "AudioName", "");
+                        comboBox_CameraAudio.Text = ini12.INIRead(Global.MainSettingPath, "Camera", "AudioName", "");
                     }
                 }
 
                 if (comboBox_CameraAudio.Text == "" && filters.AudioInputDevices.Count > 0)
                 {
                     comboBox_CameraAudio.SelectedIndex = filters.AudioInputDevices.Count - 1;
-                    ini12.INIWrite(MainSettingPath, "Camera", "AudioIndex", comboBox_CameraAudio.SelectedIndex.ToString());
-                    ini12.INIWrite(MainSettingPath, "Camera", "AudioName", comboBox_CameraAudio.Text);
+                    ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioIndex", comboBox_CameraAudio.SelectedIndex.ToString());
+                    ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioName", comboBox_CameraAudio.Text);
                 }
             }
             else
@@ -359,9 +356,9 @@ namespace AutoTest
             }
             #endregion
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "") == "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "") == "")
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "TextNum", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "TextNum", "0");
             }
         }
         
@@ -393,14 +390,14 @@ namespace AutoTest
         {
             if (checkBox_SerialPort1.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "Comport", "Checked", "1");
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "Checked", "1");
                 comboBox_SerialPort1_BaudRate_Value.Enabled = true;
                 comboBox_SerialPort1_PortName_Value.Enabled = true;
                 SerialPortCheck();
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "Comport", "Checked", "0");
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "Checked", "0");
                 comboBox_SerialPort1_BaudRate_Value.Enabled = false;
                 comboBox_SerialPort1_PortName_Value.Enabled = false;
                 SerialPortCheck();
@@ -411,14 +408,14 @@ namespace AutoTest
         {
             if (checkBox_SerialPort2.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "ExtComport", "Checked", "1");
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "Checked", "1");
                 comboBox_SerialPort2_BaudRate_Value.Enabled = true;
                 comboBox_SerialPort2_PortName_Value.Enabled = true;
                 SerialPortCheck();
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "ExtComport", "Checked", "0");
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "Checked", "0");
                 comboBox_SerialPort2_BaudRate_Value.Enabled = false;
                 comboBox_SerialPort2_PortName_Value.Enabled = false;
                 SerialPortCheck();
@@ -429,9 +426,9 @@ namespace AutoTest
         {
             if (checkBox_SerialPort1.Checked == true)
             {
-                if (comboBox_SerialPort1_PortName_Value.Text == ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", ""))
+                if (comboBox_SerialPort1_PortName_Value.Text == ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", ""))
                 {
-                    label_ErrorMessage.Text = "SerialPort don't select " + ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", "");
+                    label_ErrorMessage.Text = "SerialPort don't select " + ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", "");
                     pictureBox_SerialPort1.Image = Properties.Resources.ERROR;
                 }
                 else if (checkBox_SerialPort2.Checked == true &&
@@ -452,9 +449,9 @@ namespace AutoTest
 
             if (checkBox_SerialPort2.Checked == true)
             {
-                if (comboBox_SerialPort2_PortName_Value.Text == ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", ""))
+                if (comboBox_SerialPort2_PortName_Value.Text == ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", ""))
                 {
-                    label_ErrorMessage.Text = "SerialPort don't select " + ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", "");
+                    label_ErrorMessage.Text = "SerialPort don't select " + ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", "");
                     pictureBox_SerialPort2.Image = Properties.Resources.ERROR;
                 }
                 else if (checkBox_SerialPort1.Checked == true &&
@@ -484,7 +481,7 @@ namespace AutoTest
         {
             if (Directory.Exists(textBox_ImagePath.Text.Trim()) == true)
             {
-                ini12.INIWrite(MainSettingPath, "Record", "VideoPath", textBox_ImagePath.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "Record", "VideoPath", textBox_ImagePath.Text.Trim());
                 pictureBox_ImagePath.Image = null;
             }
             else
@@ -497,7 +494,7 @@ namespace AutoTest
         {
             if (Directory.Exists(textBox_LogPath.Text.Trim()) == true)
             {
-                ini12.INIWrite(MainSettingPath, "Record", "LogPath", textBox_LogPath.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "Record", "LogPath", textBox_LogPath.Text.Trim());
                 pictureBox_LogPath.Image = null;
             }
             else
@@ -510,7 +507,7 @@ namespace AutoTest
         {
             if (File.Exists(textBox_RcDbPath.Text.Trim()) == true)
             {
-                ini12.INIWrite(MainSettingPath, "RedRat", "DBFile", textBox_RcDbPath.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "RedRat", "DBFile", textBox_RcDbPath.Text.Trim());
                 pictureBox_RcDbPath.Image = null;
             }
             else
@@ -523,7 +520,7 @@ namespace AutoTest
         {
             if (File.Exists(textBox_GeneratorPath.Text.Trim()) == true)
             {
-                ini12.INIWrite(MainSettingPath, "Record", "Generator", textBox_GeneratorPath.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "Record", "Generator", textBox_GeneratorPath.Text.Trim());
                 pictureBox_GeneratorPath.Image = null;
             }
             else
@@ -536,7 +533,7 @@ namespace AutoTest
         {
             if (Directory.Exists(textBox_DosPath.Text.Trim()) == true)
             {
-                ini12.INIWrite(MainSettingPath, "Device", "DOS", textBox_DosPath.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "Device", "DOS", textBox_DosPath.Text.Trim());
                 pictureBox_DosPath.Image = null;
             }
             else
@@ -547,26 +544,26 @@ namespace AutoTest
 
         private void comboBox_CameraDevice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
-            ini12.INIWrite(MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
         }
 
         private void comboBox_CameraAudio_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "Camera", "AudioIndex", comboBox_CameraAudio.SelectedIndex.ToString());
-            ini12.INIWrite(MainSettingPath, "Camera", "AudioName", comboBox_CameraAudio.Text);
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioIndex", comboBox_CameraAudio.SelectedIndex.ToString());
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "AudioName", comboBox_CameraAudio.Text);
         }
 
         private void comboBox_TvBrands_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "RedRat", "Brands", comboBox_TvBrands.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "Brands", comboBox_TvBrands.Text.Trim());
             
         }
 
         private void comboBox__SelectRedrat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "RedRat", "RedRatIndex", (comboBox__SelectRedrat.SelectedIndex).ToString());
-            ini12.INIWrite(MainSettingPath, "RedRat", "SerialNumber", comboBox__SelectRedrat.Text);
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "RedRatIndex", (comboBox__SelectRedrat.SelectedIndex).ToString());
+            ini12.INIWrite(Global.MainSettingPath, "RedRat", "SerialNumber", comboBox__SelectRedrat.Text);
         }
 
         private void comboBox_SerialPort1_PortName_Value_SelectedIndexChanged(object sender, EventArgs e)
@@ -576,7 +573,7 @@ namespace AutoTest
 
         private void comboBox_SerialPort1_BaudRate_Value_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "Comport", "BaudRate", comboBox_SerialPort1_BaudRate_Value.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "Comport", "BaudRate", comboBox_SerialPort1_BaudRate_Value.Text.Trim());
         }
 
         private void comboBox_SerialPort2_PortName_Value_SelectedIndexChanged(object sender, EventArgs e)
@@ -586,7 +583,7 @@ namespace AutoTest
 
         private void comboBox_SerialPort2_BaudRate_Value_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "ExtComport", "BaudRate", comboBox_SerialPort2_BaudRate_Value.Text.Trim());
+            ini12.INIWrite(Global.MainSettingPath, "ExtComport", "BaudRate", comboBox_SerialPort2_BaudRate_Value.Text.Trim());
         }
     }
 }

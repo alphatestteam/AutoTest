@@ -21,7 +21,7 @@ namespace AutoTest
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            /*
             //Thread to show splash window
             Thread thUI = new Thread(new ThreadStart(ShowSplashWindow))
             {
@@ -30,7 +30,7 @@ namespace AutoTest
                 IsBackground = true
             };
             thUI.Start();
-
+            
             //Thread to load time-consuming resources.
             Thread th = new Thread(new ThreadStart(LoadResources))
             {
@@ -39,12 +39,13 @@ namespace AutoTest
             };
             th.Start();
             th.Join();
-            
+
             if (SplashForm != null)
             {
                 SplashForm.Invoke(new MethodInvoker(delegate { SplashForm.Close(); }));
             }
-            thUI.Join();
+            thUI.Join();*/
+            LoadResources();
             Application.Run(new Form1());
         }
 
@@ -56,6 +57,7 @@ namespace AutoTest
 
         private static void LoadResources()
         {
+            /*
             for (int i = 1; i <= 10; i++)
             {
                 if (SplashForm != null)
@@ -63,7 +65,8 @@ namespace AutoTest
                         {SplashForm.labelMark.Text = "AutoTest";}));}
                 Thread.Sleep(100);
             }
-            
+            */
+
             Add_ons Add_ons = new Add_ons();
             Add_ons.CreateConfig();//如果根目錄沒有Config.ini則創建//
             Add_ons.CreateMailConfig();//如果根目錄沒有Mail.ini則創建//

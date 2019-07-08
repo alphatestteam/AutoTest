@@ -32,12 +32,15 @@ namespace AutoTest
         //private BackgroundWorker BackgroundWorker = new BackgroundWorker();
         //private Form_DGV_Autobox Form_DGV_Autobox = new Form_DGV_Autobox();
 
+<<<<<<< HEAD
         private string MainSettingPath = Application.StartupPath + "\\Config.ini";
         private string MailPath = Application.StartupPath + "\\Mail.ini";
         private string RcPath = Application.StartupPath + "\\RC.ini";
         private string keyPath = Application.StartupPath + "\\key_cmd.ini";  //Use "Cmd" as key
 
 
+=======
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
         private IRedRat3 redRat3 = null;
         private Add_ons Add_ons = new Add_ons();
         private RedRatDBParser RedRatData = new RedRatDBParser();
@@ -135,15 +138,20 @@ namespace AutoTest
                 this.Height = 600;
                 this.Width = 1120;
             }
+<<<<<<< HEAD
 
             if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+=======
+            
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             {
-                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxVerson", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "1")
                 {
                     ConnectAutoBox1();
                 }
 
-                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxVerson", "") == "2")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "2")
                 {
                     ConnectAutoBox2();
                 }
@@ -157,13 +165,8 @@ namespace AutoTest
                 pictureBox_BlueRat.Image = Properties.Resources.OFF;
             }
 
-            if (ini12.INIRead(MainSettingPath, "Comport", "PortName", "") == "")
-            {
-                string[] DefaultCom = System.IO.Ports.SerialPort.GetPortNames();
-                ini12.INIWrite(MainSettingPath, "Comport", "PortName", DefaultCom.Last());
-            }
-
-            if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1" &&
+                ini12.INIRead(Global.MainSettingPath, "RedRat", "RedRatIndex", "") != "")
             {
                 OpenRedRat3();
             }
@@ -172,30 +175,30 @@ namespace AutoTest
                 pictureBox_RedRat.Image = Properties.Resources.OFF;
             }
 
-            if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
             {
                 pictureBox_Camera.Image = Properties.Resources.ON;
                 filters = new Filters();
                 Filter f;
 
                 comboBox_CameraDevice.Enabled = true;
-                ini12.INIWrite(MainSettingPath, "Camera", "VideoNumber", filters.VideoInputDevices.Count.ToString());
+                ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoNumber", filters.VideoInputDevices.Count.ToString());
 
                 for (int c = 0; c < filters.VideoInputDevices.Count; c++)
                 {
                     f = filters.VideoInputDevices[c];
                     comboBox_CameraDevice.Items.Add(f.Name);
-                    if (f.Name == ini12.INIRead(MainSettingPath, "Camera", "VideoName", ""))
+                    if (f.Name == ini12.INIRead(Global.MainSettingPath, "Camera", "VideoName", ""))
                     {
-                        comboBox_CameraDevice.Text = ini12.INIRead(MainSettingPath, "Camera", "VideoName", "");
+                        comboBox_CameraDevice.Text = ini12.INIRead(Global.MainSettingPath, "Camera", "VideoName", "");
                     }
                 }
 
                 if (comboBox_CameraDevice.Text == "" && filters.VideoInputDevices.Count > 0)
                 {
                     comboBox_CameraDevice.SelectedIndex = filters.VideoInputDevices.Count - 1;
-                    ini12.INIWrite(MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
-                    ini12.INIWrite(MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
+                    ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
+                    ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoName", comboBox_CameraDevice.Text);
                 }
                 comboBox_CameraDevice.Enabled = false;
             }
@@ -204,23 +207,23 @@ namespace AutoTest
                 pictureBox_Camera.Image = Properties.Resources.OFF;
             }
 
-            if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
             {
                 button_SerialPort1.Visible = true;
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "Comport", "Checked", "0");
+                ini12.INIWrite(Global.MainSettingPath, "Comport", "Checked", "0");
                 button_SerialPort1.Visible = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
             {
                 button_SerialPort2.Visible = true;
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "ExtComport", "Checked", "0");
+                ini12.INIWrite(Global.MainSettingPath, "ExtComport", "Checked", "0");
                 button_SerialPort2.Visible = false;
             }
 
@@ -229,7 +232,7 @@ namespace AutoTest
             List<string> SchExist = new List<string> { };
             for (int i = 2; i < 6; i++)
             {
-                SchExist.Add(ini12.INIRead(MainSettingPath, "Schedule" + i, "Exist", ""));
+                SchExist.Add(ini12.INIRead(Global.MainSettingPath, "Schedule" + i, "Exist", ""));
             }
 
             if (SchExist[0] != "")
@@ -665,21 +668,21 @@ namespace AutoTest
 
         private void RedratConnect()        //TO DO: Inset your connection code here
         {
-            ini12.INIWrite(MainSettingPath, "Device", "RedRatExist", "1");
+            ini12.INIWrite(Global.MainSettingPath, "Device", "RedRatExist", "1");
             pictureBox_RedRat.Image = Properties.Resources.ON;
         }
 
         private void RedratDisconnect()     //TO DO: Insert your disconnection code here
         {
-            ini12.INIWrite(MainSettingPath, "Device", "RedRatExist", "0");
+            ini12.INIWrite(Global.MainSettingPath, "Device", "RedRatExist", "0");
             pictureBox_RedRat.Image = Properties.Resources.OFF;
         }
 
         private void CameraConnect()        //TO DO: Inset your connection code here
         {
-            if (ini12.INIRead(MainSettingPath, "Device", "Name", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "Name", "") != "")
             {
-                ini12.INIWrite(MainSettingPath, "Device", "CameraExist", "1");
+                ini12.INIWrite(Global.MainSettingPath, "Device", "CameraExist", "1");
                 pictureBox_Camera.Image = Properties.Resources.ON;
                 if (StartButtonPressed == false)
                     button_Camera.Enabled = true;
@@ -688,7 +691,7 @@ namespace AutoTest
 
         private void CameraDisconnect()     //TO DO: Insert your disconnection code here
         {
-            ini12.INIWrite(MainSettingPath, "Device", "CameraExist", "0");
+            ini12.INIWrite(Global.MainSettingPath, "Device", "CameraExist", "0");
             pictureBox_Camera.Image = Properties.Resources.OFF;
             if (StartButtonPressed == false)
                 button_Camera.Enabled = false;
@@ -804,7 +807,7 @@ namespace AutoTest
         private void CaptureDone(System.Drawing.Bitmap e)
         {
             capture.FrameEvent2 -= new Capture.HeFrame(CaptureDone);
-            string fName = ini12.INIRead(MainSettingPath, "Record", "VideoPath", "");
+            string fName = ini12.INIRead(Global.MainSettingPath, "Record", "VideoPath", "");
             //string ngFolder = "Schedule" + Global.Schedule_Num + "_NG";
 
             //圖片印字>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -812,10 +815,10 @@ namespace AutoTest
             newBitmap = CloneBitmap(e);
             pictureBox4.Image = newBitmap;
 
-            if (ini12.INIRead(MainSettingPath, "Record", "CompareChoose", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Record", "CompareChoose", "") == "1")
             {
                 // Create Compare folder
-                string comparePath = ini12.INIRead(MainSettingPath, "Record", "ComparePath", "");
+                string comparePath = ini12.INIRead(Global.MainSettingPath, "Record", "ComparePath", "");
                 //string ngPath = fName + "\\" + ngFolder;
                 string compareFile = comparePath + "\\" + "cf-" + Global.Loop_Number + "_" + Global.caption_Num + ".png";
                 if (Global.caption_Num == 0)
@@ -1422,7 +1425,7 @@ namespace AutoTest
         protected void OpenRedRat3()
         {
             int dev = 0;
-            string intdev = ini12.INIRead(MainSettingPath, "RedRat", "RedRatIndex", ""); ;
+            string intdev = ini12.INIRead(Global.MainSettingPath, "RedRat", "RedRatIndex", ""); ;
 
             if (intdev != "-1")
                 dev = int.Parse(intdev);
@@ -1448,7 +1451,7 @@ namespace AutoTest
         private void ConnectAutoBox1()
         {   // RS232 Setting
             serialPort3.StopBits = System.IO.Ports.StopBits.One;
-            serialPort3.PortName = ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", "");
+            serialPort3.PortName = ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", "");
             //serialPort3.BaudRate = int.Parse(ini12.INIRead(sPath, "SerialPort", "Baudrate", ""));
             if (serialPort3.IsOpen == false)
             {
@@ -1465,7 +1468,7 @@ namespace AutoTest
         private void ConnectAutoBox2()
         {
             uint temp_version;
-            string curItem = ini12.INIRead(MainSettingPath, "Device", "AutoboxPort", "");
+            string curItem = ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxPort", "");
             if (MyBlueRat.Connect(curItem) == true)
             {
                 temp_version = MyBlueRat.FW_VER;
@@ -1489,7 +1492,7 @@ namespace AutoTest
 
         private void DisconnectAutoBox2()
         {
-            if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
             {
                 if (MyBlueRat.Disconnect() == true)
                 {
@@ -1513,12 +1516,12 @@ namespace AutoTest
             //讀取設備//
             if (Caller == "Form1")
             {
-                RedRatData.RedRatLoadSignalDB(ini12.INIRead(MainSettingPath, "RedRat", "DBFile", ""));
-                redcon = ini12.INIRead(MainSettingPath, "RedRat", "Brands", "");
+                RedRatData.RedRatLoadSignalDB(ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", ""));
+                redcon = ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "");
             }
             else if (Caller == "FormRc")
             {
-                string SelectRcLastTimePath = ini12.INIRead(RcPath, "Setting", "SelectRcLastTimePath", "");
+                string SelectRcLastTimePath = ini12.INIRead(Global.RcSettingPath, "Setting", "SelectRcLastTimePath", "");
                 RedRatData.RedRatLoadSignalDB(ini12.INIRead(SelectRcLastTimePath, "Info", "DBFile", ""));
                 redcon = ini12.INIRead(SelectRcLastTimePath, "Info", "Brands", "");
             }
@@ -1552,12 +1555,12 @@ namespace AutoTest
             {
                 if (Caller == "Form1")
                 {
-                    RedRatData.RedRatLoadSignalDB(ini12.INIRead(MainSettingPath, "RedRat", "DBFile", ""));
-                    RedRatData.RedRatSelectDevice(ini12.INIRead(MainSettingPath, "RedRat", "Brands", ""));
+                    RedRatData.RedRatLoadSignalDB(ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", ""));
+                    RedRatData.RedRatSelectDevice(ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", ""));
                 }
                 else if (Caller == "FormRc")
                 {
-                    string SelectRcLastTimePath = ini12.INIRead(RcPath, "Setting", "SelectRcLastTimePath", "");
+                    string SelectRcLastTimePath = ini12.INIRead(Global.RcSettingPath, "Setting", "SelectRcLastTimePath", "");
                     RedRatData.RedRatLoadSignalDB(ini12.INIRead(SelectRcLastTimePath, "Info", "DBFile", ""));
                     RedRatData.RedRatSelectDevice(ini12.INIRead(SelectRcLastTimePath, "Info", "Brands", ""));
                 }
@@ -1674,7 +1677,7 @@ namespace AutoTest
             {
                 if (serialPort1.IsOpen == false)
                 {
-                    string stopbit = ini12.INIRead(MainSettingPath, "Comport", "StopBits", "");
+                    string stopbit = ini12.INIRead(Global.MainSettingPath, "Comport", "StopBits", "");
                     switch (stopbit)
                     {
                         case "One":
@@ -1684,8 +1687,8 @@ namespace AutoTest
                             serialPort1.StopBits = StopBits.Two;
                             break;
                     }
-                    serialPort1.PortName = ini12.INIRead(MainSettingPath, "Comport", "PortName", "");
-                    serialPort1.BaudRate = int.Parse(ini12.INIRead(MainSettingPath, "Comport", "BaudRate", ""));
+                    serialPort1.PortName = ini12.INIRead(Global.MainSettingPath, "Comport", "PortName", "");
+                    serialPort1.BaudRate = int.Parse(ini12.INIRead(Global.MainSettingPath, "Comport", "BaudRate", ""));
                     serialPort1.DataBits = 8;
                     serialPort1.Parity = (Parity)0;
                     serialPort1.ReceivedBytesThreshold = 1;
@@ -1715,7 +1718,7 @@ namespace AutoTest
             {
                 if (serialPort2.IsOpen == false)
                 {
-                    string stopbit = ini12.INIRead(MainSettingPath, "ExtComport", "StopBits", "");
+                    string stopbit = ini12.INIRead(Global.MainSettingPath, "ExtComport", "StopBits", "");
                     switch (stopbit)
                     {
                         case "One":
@@ -1725,8 +1728,8 @@ namespace AutoTest
                             serialPort2.StopBits = System.IO.Ports.StopBits.Two;
                             break;
                     }
-                    serialPort2.PortName = ini12.INIRead(MainSettingPath, "ExtComport", "PortName", "");
-                    serialPort2.BaudRate = int.Parse(ini12.INIRead(MainSettingPath, "ExtComport", "BaudRate", ""));
+                    serialPort2.PortName = ini12.INIRead(Global.MainSettingPath, "ExtComport", "PortName", "");
+                    serialPort2.BaudRate = int.Parse(ini12.INIRead(Global.MainSettingPath, "ExtComport", "BaudRate", ""));
                     // serialPort2.Encoding = System.Text.Encoding.GetEncoding(1252);
 
                     serialPort2.DataReceived += new SerialDataReceivedEventHandler(SerialPort2_DataReceived);       // DataReceived呼叫函式
@@ -1753,12 +1756,13 @@ namespace AutoTest
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             int data_to_read = serialPort1.BytesToRead;
+
             if (data_to_read > 0)
             {
                 byte[] dataset = new byte[data_to_read];
-
                 serialPort1.Read(dataset, 0, data_to_read);
                 int index = 0;
+
                 while (data_to_read > 0)
                 {
                     LogQueue1.Enqueue(dataset[index]);
@@ -1767,8 +1771,13 @@ namespace AutoTest
                 }
 
                 string text = Encoding.ASCII.GetString(dataset);
-                //DateTime.Now.ToShortTimeString();
+                
+                DateTime.Now.ToShortTimeString();
                 DateTime dt = DateTime.Now;
+<<<<<<< HEAD
+=======
+                text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
 
 
 
@@ -1986,7 +1995,7 @@ namespace AutoTest
                 string text = Encoding.ASCII.GetString(dataset);
                 DateTime.Now.ToShortTimeString();
                 DateTime dt = DateTime.Now;
-                text = text.Replace(Environment.NewLine, "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  "); //OK
+                text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
                 textBox2.AppendText(text);
 
                 //string hex = ByteToHexStr(dataset);
@@ -2079,7 +2088,7 @@ namespace AutoTest
             string fName = "";
 
             // 讀取ini中的路徑
-            fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+            fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
             string t = fName + "\\_Log1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
             StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -2108,7 +2117,7 @@ namespace AutoTest
             string fName = "";
 
             // 讀取ini中的路徑
-            fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+            fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
             string t = fName + "\\_Log2_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
             StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -2135,10 +2144,10 @@ namespace AutoTest
         private void MyLog1Camd()
         {
             string my_string = "";
-            string csvFile = ini12.INIRead(MainSettingPath, "Record", "LogPath", "") + "\\Log1_keyword.csv";
+            string csvFile = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "") + "\\Log1_keyword.csv";
             int[] compare_number = new int[10];
             bool[] send_status = new bool[10];
-            int compare_paremeter = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", ""));
+            int compare_paremeter = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", ""));
 
             while (StartButtonPressed == true)
             {
@@ -2147,15 +2156,15 @@ namespace AutoTest
                     Keyword_SerialPort_1_temp_byte = LogQueue1.Dequeue();
                     Keyword_SerialPort_1_temp_char = (char)Keyword_SerialPort_1_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "Comport1", "")) == 1 && Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_1_temp_char == '\n'))
                         {
                             for (int i = 0; i < compare_paremeter; i++)
                             {
-                                string compare_string = ini12.INIRead(MainSettingPath, "LogSearch", "Text" + i, "");
-                                int compare_num = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "Times" + i, ""));
+                                string compare_string = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "");
+                                int compare_num = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times" + i, ""));
                                 string[] ewords = my_string.Split(new string[] { compare_string }, StringSplitOptions.None);
                                 if (Convert.ToInt32(ewords.Length - 1) >= 1)
                                 {
@@ -2177,11 +2186,19 @@ namespace AutoTest
                                     ////////////////////////////////////////////////////////////////////////////////////////////////MAIL//////////////////
                                     if (compare_number[i] > compare_num && send_status[i] == false)
                                     {
+<<<<<<< HEAD
                                         ini12.INIWrite(MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
                                         ini12.INIWrite(MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
                                         if (ini12.INIRead(MailPath, "Mail Info", "From", "") != ""
                                             && ini12.INIRead(MailPath, "Mail Info", "To", "") != ""
                                             && ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") == "1")
+=======
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
+                                        if (ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "") != "" 
+                                            && ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") != "" 
+                                            && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                         {
                                             FormMail FormMail = new FormMail();
                                             FormMail.logsend();
@@ -2189,9 +2206,15 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
+<<<<<<< HEAD
                                     if (compare_number[i] % compare_num == 0
                                         && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
                                         && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+=======
+                                    if (compare_number[i] % compare_num == 0 
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -2238,9 +2261,15 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF//////////////////
+<<<<<<< HEAD
                                     if (compare_number[i] % compare_num == 0
                                         && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
                                         && ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "") == "1")
+=======
+                                    if (compare_number[i] % compare_num == 0 
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1 = new byte[2];
                                         val1[0] = 0;
@@ -2257,12 +2286,12 @@ namespace AutoTest
                                         pictureBox_AcPower.Image = Properties.Resources.OFF;
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////SAVE LOG//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Savelog", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Savelog", "") == "1")
                                     {
                                         string fName = "";
 
                                         // 讀取ini中的路徑
-                                        fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                                        fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                                         string t = fName + "\\_SaveLog1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                                         StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -2271,7 +2300,7 @@ namespace AutoTest
                                         Txtbox1("", textBox1);
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////STOP//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Stop", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Stop", "") == "1")
                                     {
                                         button_Start.PerformClick();
                                     }
@@ -2334,8 +2363,8 @@ namespace AutoTest
                         {
                             for (int i = 0; i < compare_paremeter; i++)
                             {
-                                string compare_string = ini12.INIRead(MainSettingPath, "LogSearch", "Text" + i, "");
-                                int compare_num = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "Times" + i, ""));
+                                string compare_string = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "");
+                                int compare_num = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times" + i, ""));
                                 string[] ewords = my_string.Split(new string[] { compare_string }, StringSplitOptions.None);
 
                                 if (Convert.ToInt32(ewords.Length - 1) >= 1)
@@ -2360,11 +2389,11 @@ namespace AutoTest
                                     ////////////////////////////////////////////////////////////////////////////////////////////////MAIL//////////////////
                                     if (compare_number[i] > compare_num && send_status[i] == false)
                                     {
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
-                                        if (ini12.INIRead(MailPath, "Mail Info", "From", "") != ""
-                                            && ini12.INIRead(MailPath, "Mail Info", "To", "") != ""
-                                            && ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") == "1")
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
+                                        if (ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "") != ""
+                                            && ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") != ""
+                                            && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") == "1")
                                         {
                                             FormMail FormMail = new FormMail();
                                             FormMail.logsend();
@@ -2372,9 +2401,15 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
+<<<<<<< HEAD
                                     if (compare_number[i] % compare_num == 0
                                         && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
                                         && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+=======
+                                    if (compare_number[i] % compare_num == 0 
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -2422,8 +2457,8 @@ namespace AutoTest
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF//////////////////
                                     if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "") == "1")
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1"
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "") == "1")
                                     {
                                         byte[] val1 = new byte[2];
                                         val1[0] = 0;
@@ -2440,12 +2475,12 @@ namespace AutoTest
                                         pictureBox_AcPower.Image = Properties.Resources.OFF;
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////SAVE LOG//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Savelog", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Savelog", "") == "1")
                                     {
                                         string fName = "";
 
                                         // 讀取ini中的路徑
-                                        fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                                        fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                                         string t = fName + "\\_SaveLog1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                                         StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -2454,7 +2489,7 @@ namespace AutoTest
                                         Txtbox1("", textBox1);
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////STOP//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Stop", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Stop", "") == "1")
                                     {
                                         button_Start.PerformClick();
                                     }
@@ -2544,10 +2579,10 @@ namespace AutoTest
         private void MyLog2Camd()
         {
             string my_string = "";
-            string csvFile = ini12.INIRead(MainSettingPath, "Record", "LogPath", "") + "\\Log2_keyword.csv";
+            string csvFile = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "") + "\\Log2_keyword.csv";
             int[] compare_number = new int[10];
             bool[] send_status = new bool[10];
-            int compare_paremeter = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", ""));
+            int compare_paremeter = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", ""));
 
             while (StartButtonPressed == true)
             {
@@ -2556,15 +2591,15 @@ namespace AutoTest
                     Keyword_SerialPort_2_temp_byte = LogQueue2.Dequeue();
                     Keyword_SerialPort_2_temp_char = (char)Keyword_SerialPort_2_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "Comport2", "")) == 1 && Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_2_temp_char == '\n'))
                         {
                             for (int i = 0; i < compare_paremeter; i++)
                             {
-                                string compare_string = ini12.INIRead(MainSettingPath, "LogSearch", "Text" + i, "");
-                                int compare_num = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "Times" + i, ""));
+                                string compare_string = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "");
+                                int compare_num = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times" + i, ""));
                                 string[] ewords = my_string.Split(new string[] { compare_string }, StringSplitOptions.None);
                                 if (Convert.ToInt32(ewords.Length - 1) >= 1)
                                 {
@@ -2586,11 +2621,11 @@ namespace AutoTest
                                     ////////////////////////////////////////////////////////////////////////////////////////////////MAIL//////////////////
                                     if (compare_number[i] > compare_num && send_status[i] == false)
                                     {
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
-                                        if (ini12.INIRead(MailPath, "Mail Info", "From", "") != ""
-                                            && ini12.INIRead(MailPath, "Mail Info", "To", "") != ""
-                                            && ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") == "1")
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
+                                        if (ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "") != ""
+                                            && ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") != ""
+                                            && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") == "1")
                                         {
                                             FormMail FormMail = new FormMail();
                                             FormMail.logsend();
@@ -2599,8 +2634,8 @@ namespace AutoTest
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
                                     if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1"
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -2648,8 +2683,8 @@ namespace AutoTest
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF//////////////////
                                     if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "") == "1")
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1"
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "") == "1")
                                     {
                                         byte[] val1 = new byte[2];
                                         val1[0] = 0;
@@ -2666,12 +2701,12 @@ namespace AutoTest
                                         pictureBox_AcPower.Image = Properties.Resources.OFF;
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////SAVE LOG//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Savelog", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Savelog", "") == "1")
                                     {
                                         string fName = "";
 
                                         // 讀取ini中的路徑
-                                        fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                                        fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                                         string t = fName + "\\_SaveLog2_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                                         StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -2680,7 +2715,7 @@ namespace AutoTest
                                         Txtbox2("", textBox2);
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////SCHEDULE//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Stop", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Stop", "") == "1")
                                     {
                                         button_Start.PerformClick();
                                     }
@@ -2743,8 +2778,8 @@ namespace AutoTest
                         {
                             for (int i = 0; i < compare_paremeter; i++)
                             {
-                                string compare_string = ini12.INIRead(MainSettingPath, "LogSearch", "Text" + i, "");
-                                int compare_num = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "Times" + i, ""));
+                                string compare_string = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "");
+                                int compare_num = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times" + i, ""));
                                 string[] ewords = my_string.Split(new string[] { compare_string }, StringSplitOptions.None);
                                 if (Convert.ToInt32(ewords.Length - 1) >= 1)
                                 {
@@ -2768,11 +2803,19 @@ namespace AutoTest
                                     ////////////////////////////////////////////////////////////////////////////////////////////////MAIL//////////////////
                                     if (compare_number[i] > compare_num && send_status[i] == false)
                                     {
+<<<<<<< HEAD
                                         ini12.INIWrite(MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
                                         ini12.INIWrite(MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
                                         if (ini12.INIRead(MailPath, "Mail Info", "From", "") != ""
                                             && ini12.INIRead(MailPath, "Mail Info", "To", "") != ""
                                             && ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") == "1")
+=======
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
+                                        ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
+                                        if (ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "") != "" 
+                                            && ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") != "" 
+                                            && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                         {
                                             FormMail FormMail = new FormMail();
                                             FormMail.logsend();
@@ -2780,9 +2823,15 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
+<<<<<<< HEAD
                                     if (compare_number[i] % compare_num == 0
                                         && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
                                         && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+=======
+                                    if (compare_number[i] % compare_num == 0 
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -2830,8 +2879,8 @@ namespace AutoTest
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF//////////////////
                                     if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "") == "1")
+                                        && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1"
+                                        && ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "") == "1")
                                     {
                                         byte[] val1 = new byte[2];
                                         val1[0] = 0;
@@ -2848,12 +2897,12 @@ namespace AutoTest
                                         pictureBox_AcPower.Image = Properties.Resources.OFF;
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////SAVE LOG//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Savelog", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Savelog", "") == "1")
                                     {
                                         string fName = "";
 
                                         // 讀取ini中的路徑
-                                        fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                                        fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                                         string t = fName + "\\_SaveLog2_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                                         StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -2862,7 +2911,7 @@ namespace AutoTest
                                         Txtbox2("", textBox2);
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////STOP//////////////////
-                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(MainSettingPath, "LogSearch", "Stop", "") == "1")
+                                    if (compare_number[i] % compare_num == 0 && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Stop", "") == "1")
                                     {
                                         button_Start.PerformClick();
                                     }
@@ -2968,9 +3017,9 @@ namespace AutoTest
             }
 
             #region -- 匯出比對結果到CSV & EXCEL --
-            if (ini12.INIRead(MainSettingPath, "Record", "CompareChoose", "") == "1" && StartButtonPressed == true)
+            if (ini12.INIRead(Global.MainSettingPath, "Record", "CompareChoose", "") == "1" && StartButtonPressed == true)
             {
-                string compareFolder = ini12.INIRead(MainSettingPath, "Record", "VideoPath", "") + "\\" + "Schedule" + Global.Schedule_Number + "_Original_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                string compareFolder = ini12.INIRead(Global.MainSettingPath, "Record", "VideoPath", "") + "\\" + "Schedule" + Global.Schedule_Number + "_Original_" + DateTime.Now.ToString("yyyyMMddHHmmss");
 
                 if (Directory.Exists(compareFolder))
                 {
@@ -2979,10 +3028,10 @@ namespace AutoTest
                 else
                 {
                     Directory.CreateDirectory(compareFolder);
-                    ini12.INIWrite(MainSettingPath, "Record", "ComparePath", compareFolder);
+                    ini12.INIWrite(Global.MainSettingPath, "Record", "ComparePath", compareFolder);
                 }
                 // 匯出csv記錄檔
-                string csvFile = ini12.INIRead(MainSettingPath, "Record", "ComparePath", "") + "\\SimilarityReport_" + Global.Schedule_Number + ".csv";
+                string csvFile = ini12.INIRead(Global.MainSettingPath, "Record", "ComparePath", "") + "\\SimilarityReport_" + Global.Schedule_Number + ".csv";
                 StreamWriter sw = new StreamWriter(csvFile, false, Encoding.UTF8);
                 sw.WriteLine("Target, Source, Similarity, Sub-NG count, NGRate, Result");
 
@@ -3041,7 +3090,7 @@ namespace AutoTest
             {
                 Global.caption_Num = 0;
                 UpdateUI(j.ToString(), label_LoopNumber_Value);
-                ini12.INIWrite(MailPath, "Data Info", "CreateTime", string.Format("{0:R}", DateTime.Now));
+                ini12.INIWrite(Global.MailSettingPath, "Data Info", "CreateTime", string.Format("{0:R}", DateTime.Now));
 
                 lock (this)
                 {
@@ -3082,7 +3131,7 @@ namespace AutoTest
                             #region -- 拍照 --
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[3].Value.ToString() == "_shot")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                                 {
                                     Global.caption_Num++;
                                     if (Global.Loop_Number == 1)
@@ -3100,7 +3149,7 @@ namespace AutoTest
                             #region -- 錄影 --
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[4].Value.ToString() == "_start")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                                 {
                                     if (VideoRecording == false)
                                     {
@@ -3120,7 +3169,7 @@ namespace AutoTest
 
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[4].Value.ToString() == "_stop")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                                 {
                                     if (VideoRecording == true)       //判斷是不是正在錄影
                                     {
@@ -3140,7 +3189,7 @@ namespace AutoTest
                             #region -- AC SWITCH OLD --
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_on")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP0_Enable(hCOM, 1) == true)
                                     {
@@ -3164,7 +3213,7 @@ namespace AutoTest
 
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_off")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP0_Enable(hCOM, 1) == true)
                                     {
@@ -3190,7 +3239,7 @@ namespace AutoTest
                             #region -- AC SWITCH --
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_AC1_ON")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP0_Enable(hCOM, 1) == true)
                                     {
@@ -3213,7 +3262,7 @@ namespace AutoTest
                             }
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_AC1_OFF")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP0_Enable(hCOM, 1) == true)
                                     {
@@ -3237,7 +3286,7 @@ namespace AutoTest
 
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_AC2_ON")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP1_Enable(hCOM, 1) == true)
                                     {
@@ -3260,7 +3309,7 @@ namespace AutoTest
                             }
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_AC2_OFF")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP1_Enable(hCOM, 1) == true)
                                     {
@@ -3286,7 +3335,7 @@ namespace AutoTest
                             #region -- USB SWITCH --
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_USB1_TV")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP2_Enable(hCOM, 1) == true)
                                     {
@@ -3308,7 +3357,7 @@ namespace AutoTest
                             }
                             else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_USB1_PC")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP2_Enable(hCOM, 1) == true)
                                     {
@@ -3331,7 +3380,7 @@ namespace AutoTest
 
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_USB2_TV")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP3_Enable(hCOM, 1) == true)
                                     {
@@ -3353,7 +3402,7 @@ namespace AutoTest
                             }
                             else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[6].Value.ToString() == "_USB2_PC")
                             {
-                                if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     if (PL2303_GP3_Enable(hCOM, 1) == true)
                                     {
@@ -3380,7 +3429,7 @@ namespace AutoTest
                         #region -- COM PORT --
                         else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_log1")
                         {
-                            if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+                            if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
                             {
                                 switch (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[5].Value.ToString())
                                 {
@@ -3404,7 +3453,7 @@ namespace AutoTest
 
                         else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_log2")
                         {
-                            if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+                            if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
                             {
                                 switch (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[5].Value.ToString())
                                 {
@@ -3437,7 +3486,7 @@ namespace AutoTest
                                 serialPort1.Write(startbit, 0, 7);
 
                                 // Astro指令檔案匯入
-                                string xmlfile = ini12.INIRead(MainSettingPath, "Record", "Generator", "");
+                                string xmlfile = ini12.INIRead(Global.MainSettingPath, "Record", "Generator", "");
                                 if (System.IO.File.Exists(xmlfile) == true)
                                 {
                                     var allTiming = XDocument.Load(xmlfile).Root.Element("Generator").Elements("Device");
@@ -3484,7 +3533,7 @@ namespace AutoTest
                             try
                             {
                                 // Quantum指令檔案匯入
-                                string xmlfile = ini12.INIRead(MainSettingPath, "Record", "Generator", "");
+                                string xmlfile = ini12.INIRead(Global.MainSettingPath, "Record", "Generator", "");
                                 if (System.IO.File.Exists(xmlfile) == true)
                                 {
                                     var allTiming = XDocument.Load(xmlfile).Root.Element("Generator").Elements("Device");
@@ -3610,7 +3659,7 @@ namespace AutoTest
 
                                 System.Diagnostics.Process p = new Process();
                                 p.StartInfo.FileName = "cmd.exe";
-                                p.StartInfo.WorkingDirectory = ini12.INIRead(MainSettingPath, "Device", "DOS", "");
+                                p.StartInfo.WorkingDirectory = ini12.INIRead(Global.MainSettingPath, "Device", "DOS", "");
                                 p.StartInfo.UseShellExecute = false;
                                 p.StartInfo.RedirectStandardInput = true;
                                 p.StartInfo.RedirectStandardOutput = true;
@@ -3663,12 +3712,12 @@ namespace AutoTest
                         #region -- Factory Command 控制 --
                         else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_SXP")
                         {
-                            if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1" &&
+                            if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1" &&
                                 DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() == "_save")
                             {
                                 string fName = "";
 
-                                fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                                fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                                 string t = fName + "\\_Log2_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                                 StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -3678,7 +3727,7 @@ namespace AutoTest
                                 Txtbox2("", textBox2);
                             }
 
-                            if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1" &&
+                            if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1" &&
                                 DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() != "_save")
                             {
                                 try
@@ -4068,12 +4117,12 @@ namespace AutoTest
                             for (int k = 0; k < stime; k++)
                             {
                                 label_Command.Text = DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString();
-                                if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+                                if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
                                 {
                                     //執行小紅鼠指令
                                     Autocommand_RedRat("Form1", DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString());
                                 }
-                                else if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                                else if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                                 {
                                     //執行小藍鼠指令
                                     Autocommand_BlueRat("Form1", DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString());
@@ -4091,8 +4140,13 @@ namespace AutoTest
 
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
+<<<<<<< HEAD
 
                         ini12.INIWrite(MailPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
+=======
+                         
+                        ini12.INIWrite(Global.MailSettingPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
 
                         if (Global.Break_Out_Schedule == 1)//定時器時間到跳出迴圈//
                         {
@@ -4122,7 +4176,7 @@ namespace AutoTest
 
                         #region -- 足跡模式 --
                         //假如足跡模式打開則會append足跡上去
-                        if (ini12.INIRead(MainSettingPath, "Record", "Footprint Mode", "") == "1" && SysDelay != 0)
+                        if (ini12.INIRead(Global.MainSettingPath, "Record", "Footprint Mode", "") == "1" && SysDelay != 0)
                         {
                             //檔案不存在則加入標題
                             if (File.Exists(Application.StartupPath + @"\StepRecord.csv") == false)
@@ -4161,7 +4215,7 @@ namespace AutoTest
                     }
 
                     #region -- Import database --
-                    if (ini12.INIRead(MainSettingPath, "Record", "ImportDB", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "Record", "ImportDB", "") == "1")
                     {
                         string SQLServerURL = "server=192.168.56.2\\ATMS;database=Autobox;uid=AS;pwd=AS";
 
@@ -4200,11 +4254,11 @@ namespace AutoTest
             }
 
             #region -- Video Record --
-            if (ini12.INIRead(MainSettingPath, "Record", "EachVideo", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Record", "EachVideo", "") == "1")
             {
                 if (StartButtonPressed == true)
                 {
-                    if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                     {
                         if (VideoRecording == false)
                         {
@@ -4292,18 +4346,18 @@ namespace AutoTest
             {
                 if (Global.Schedule_2_Exist == 1 && Global.Schedule_Number == 1)
                 {
-                    if (ini12.INIRead(MainSettingPath, "Schedule2", "OnTimeStart", "") == "1" && StartButtonPressed == true)       //定時器時間未到進入等待<<<<<<<<<<<<<<
+                    if (ini12.INIRead(Global.MainSettingPath, "Schedule2", "OnTimeStart", "") == "1" && StartButtonPressed == true)       //定時器時間未到進入等待<<<<<<<<<<<<<<
                     {
                         if (Global.Break_Out_Schedule == 0)
                         {
-                            while (ini12.INIRead(MainSettingPath, "Schedule2", "Timer", "") != TimeLabel2.Text)
+                            while (ini12.INIRead(Global.MainSettingPath, "Schedule2", "Timer", "") != TimeLabel2.Text)
                             {
                                 ScheduleWait.WaitOne();
                             }
                             ScheduleWait.Set();
                         }
                     }       //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    ini12.INIWrite(MainSettingPath, "Schedule1", "OnTimeStart", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "Schedule1", "OnTimeStart", "0");
                     button_Schedule2.PerformClick();
                     MyRunCamd();
                 }
@@ -4311,18 +4365,18 @@ namespace AutoTest
                     Global.Schedule_3_Exist == 1 && Global.Schedule_Number == 1 ||
                     Global.Schedule_3_Exist == 1 && Global.Schedule_Number == 2)
                 {
-                    if (ini12.INIRead(MainSettingPath, "Schedule3", "OnTimeStart", "") == "1" && StartButtonPressed == true)
+                    if (ini12.INIRead(Global.MainSettingPath, "Schedule3", "OnTimeStart", "") == "1" && StartButtonPressed == true)
                     {
                         if (Global.Break_Out_Schedule == 0)
                         {
-                            while (ini12.INIRead(MainSettingPath, "Schedule3", "Timer", "") != TimeLabel2.Text)
+                            while (ini12.INIRead(Global.MainSettingPath, "Schedule3", "Timer", "") != TimeLabel2.Text)
                             {
                                 ScheduleWait.WaitOne();
                             }
                             ScheduleWait.Set();
                         }
                     }
-                    ini12.INIWrite(MainSettingPath, "Schedule2", "OnTimeStart", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "Schedule2", "OnTimeStart", "0");
                     button_Schedule3.PerformClick();
                     MyRunCamd();
                 }
@@ -4331,18 +4385,18 @@ namespace AutoTest
                     Global.Schedule_4_Exist == 1 && Global.Schedule_Number == 2 ||
                     Global.Schedule_4_Exist == 1 && Global.Schedule_Number == 3)
                 {
-                    if (ini12.INIRead(MainSettingPath, "Schedule4", "OnTimeStart", "") == "1" && StartButtonPressed == true)
+                    if (ini12.INIRead(Global.MainSettingPath, "Schedule4", "OnTimeStart", "") == "1" && StartButtonPressed == true)
                     {
                         if (Global.Break_Out_Schedule == 0)
                         {
-                            while (ini12.INIRead(MainSettingPath, "Schedule4", "Timer", "") != TimeLabel2.Text)
+                            while (ini12.INIRead(Global.MainSettingPath, "Schedule4", "Timer", "") != TimeLabel2.Text)
                             {
                                 ScheduleWait.WaitOne();
                             }
                             ScheduleWait.Set();
                         }
                     }
-                    ini12.INIWrite(MainSettingPath, "Schedule3", "OnTimeStart", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "Schedule3", "OnTimeStart", "0");
                     button_Schedule4.PerformClick();
                     MyRunCamd();
                 }
@@ -4352,18 +4406,18 @@ namespace AutoTest
                     Global.Schedule_5_Exist == 1 && Global.Schedule_Number == 3 ||
                     Global.Schedule_5_Exist == 1 && Global.Schedule_Number == 4)
                 {
-                    if (ini12.INIRead(MainSettingPath, "Schedule5", "OnTimeStart", "") == "1" && StartButtonPressed == true)
+                    if (ini12.INIRead(Global.MainSettingPath, "Schedule5", "OnTimeStart", "") == "1" && StartButtonPressed == true)
                     {
                         if (Global.Break_Out_Schedule == 0)
                         {
-                            while (ini12.INIRead(MainSettingPath, "Schedule5", "Timer", "") != TimeLabel2.Text)
+                            while (ini12.INIRead(Global.MainSettingPath, "Schedule5", "Timer", "") != TimeLabel2.Text)
                             {
                                 ScheduleWait.WaitOne();
                             }
                             ScheduleWait.Set();
                         }
                     }
-                    ini12.INIWrite(MainSettingPath, "Schedule4", "OnTimeStart", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "Schedule4", "OnTimeStart", "0");
                     button_Schedule5.PerformClick();
                     MyRunCamd();
                 }
@@ -4374,14 +4428,14 @@ namespace AutoTest
             if (StartButtonPressed == false)//按下STOP讓schedule結束//
             {
                 Global.Break_Out_MyRunCamd = 1;
-                ini12.INIWrite(MailPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
+                ini12.INIWrite(Global.MailSettingPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
                 UpdateUI("START", button_Start);
                 button_Start.Enabled = true;
                 button_Setting.Enabled = true;
                 button_Pause.Enabled = false;
                 button_SaveSchedule.Enabled = true;
 
-                if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                 {
                     _captureInProgress = false;
                     OnOffCamera();
@@ -4405,7 +4459,7 @@ namespace AutoTest
                 button_Pause.Enabled = false;
                 button_SaveSchedule.Enabled = true;
 
-                if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                 {
                     _captureInProgress = false;
                     OnOffCamera();
@@ -4413,7 +4467,7 @@ namespace AutoTest
 
                 Global.Total_Test_Time = Global.Schedule_1_TestTime + Global.Schedule_2_TestTime + Global.Schedule_3_TestTime + Global.Schedule_4_TestTime + Global.Schedule_5_TestTime;
                 ConvertToRealTime(Global.Total_Test_Time);
-                if (ini12.INIRead(MailPath, "Send Mail", "value", "") == "1")
+                if (ini12.INIRead(Global.MailSettingPath, "Send Mail", "value", "") == "1")
                 {
                     Global.Loop_Number = Global.Loop_Number - 1;
                     FormMail FormMail = new FormMail();
@@ -4422,7 +4476,7 @@ namespace AutoTest
             }
 
             label_Command.Text = "Completed!";
-            ini12.INIWrite(MainSettingPath, "Schedule" + Global.Schedule_Number, "OnTimeStart", "0");
+            ini12.INIWrite(Global.MainSettingPath, "Schedule" + Global.Schedule_Number, "OnTimeStart", "0");
             button_Schedule1.PerformClick();
             timer1.Stop();
             CloseDtplay();
@@ -4461,7 +4515,7 @@ namespace AutoTest
             }
             else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() == "_mail")
             {
-                if (ini12.INIRead(MailPath, "Send Mail", "value", "") == "1")
+                if (ini12.INIRead(Global.MailSettingPath, "Send Mail", "value", "") == "1")
                 {
                     Global.Pass_Or_Fail = "NG";
                     FormMail FormMail = new FormMail();
@@ -4480,12 +4534,12 @@ namespace AutoTest
                 int length = rc_key.Length - 4;
                 String rc_key_substring = rc_key.Substring(startIndex, length);
 
-                if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
                 {
                     Autocommand_RedRat("Form1", rc_key_substring);
                     label_Command.Text = rc_key_substring;
                 }
-                else if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                else if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                 {
                     Autocommand_BlueRat("Form1", rc_key_substring);
                     label_Command.Text = rc_key_substring;
@@ -4498,11 +4552,11 @@ namespace AutoTest
                 int length = log_cmd.Length - 8;
                 String log_cmd_substring = log_cmd.Substring(startIndex, length);
 
-                if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
                 {
                     serialPort1.WriteLine(log_cmd_substring);
                 }
-                else if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+                else if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
                 {
                     serialPort2.WriteLine(log_cmd_substring);
                 }
@@ -4540,7 +4594,7 @@ namespace AutoTest
             }
             else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() == "_mail")
             {
-                if (ini12.INIRead(MailPath, "Send Mail", "value", "") == "1")
+                if (ini12.INIRead(Global.MailSettingPath, "Send Mail", "value", "") == "1")
                 {
                     Global.Pass_Or_Fail = "NG";
                     FormMail FormMail = new FormMail();
@@ -4556,7 +4610,7 @@ namespace AutoTest
             {
                 string fName = "";
 
-                fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                 string t = fName + "\\_SaveLog1_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                 StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -4569,7 +4623,7 @@ namespace AutoTest
             {
                 string fName = "";
 
-                fName = ini12.INIRead(MainSettingPath, "Record", "LogPath", "");
+                fName = ini12.INIRead(Global.MainSettingPath, "Record", "LogPath", "");
                 string t = fName + "\\_SaveLog2_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + label_LoopNumber_Value.Text + ".txt";
 
                 StreamWriter MYFILE = new StreamWriter(t, false, Encoding.ASCII);
@@ -4585,12 +4639,12 @@ namespace AutoTest
                 int length = rc_key.Length - 4;
                 String rc_key_substring = rc_key.Substring(startIndex, length);
 
-                if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
                 {
                     Autocommand_RedRat("Form1", rc_key_substring);
                     label_Command.Text = rc_key_substring;
                 }
-                else if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+                else if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
                 {
                     Autocommand_BlueRat("Form1", rc_key_substring);
                     label_Command.Text = rc_key_substring;
@@ -4603,11 +4657,11 @@ namespace AutoTest
                 int length = log_cmd.Length - 8;
                 String log_cmd_substring = log_cmd.Substring(startIndex, length);
 
-                if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
                 {
                     serialPort1.WriteLine(log_cmd_substring);
                 }
-                else if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+                else if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
                 {
                     serialPort2.WriteLine(log_cmd_substring);
                 }
@@ -4649,7 +4703,7 @@ namespace AutoTest
             //int[] TotalValue = new int[Global.Schedule_Loop];
             */
             //string ngPath = ini12.INIRead(sPath, "Record", "VideoPath", "") + "\\" + "Schedule" + Global.Schedule_Num + "_NG\\";
-            string comparePath = ini12.INIRead(MainSettingPath, "Record", "ComparePath", "") + "\\";
+            string comparePath = ini12.INIRead(Global.MainSettingPath, "Record", "ComparePath", "") + "\\";
             string csvFile = comparePath + "SimilarityReport_" + Global.Schedule_Number + ".csv";
 
             //Console.WriteLine("Loop Number: " + Global.loop_Num);
@@ -4669,7 +4723,7 @@ namespace AutoTest
                 string oHashCode = ImageHelper.produceFingerPrint(pathCompare1);
                 string nHashCode = ImageHelper.produceFingerPrint(pathCompare2);
                 int difference = ImageHelper.hammingDistance(oHashCode, nHashCode);
-                int differenceNum = Convert.ToInt32(ini12.INIRead(MainSettingPath, "Record", "CompareDifferent", ""));
+                int differenceNum = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "Record", "CompareDifferent", ""));
                 string differencePercent = "";
 
                 if (difference == 0)
@@ -4974,7 +5028,7 @@ namespace AutoTest
 
         private void Savevideo()//儲存影片//
         {
-            string fName = ini12.INIRead(MainSettingPath, "Record", "VideoPath", "");
+            string fName = ini12.INIRead(Global.MainSettingPath, "Record", "VideoPath", "");
 
             string t = fName + "\\" + "_pvr" + DateTime.Now.ToString("yyyyMMddHHmmss") + "__" + label_LoopNumber_Value.Text + ".wmv";
             srtstring = fName + "\\" + "_pvr" + DateTime.Now.ToString("yyyyMMddHHmmss") + "__" + label_LoopNumber_Value.Text + ".srt";
@@ -5029,10 +5083,10 @@ namespace AutoTest
                 audio.Add(f.Name);
             }
 
-            int scam = int.Parse(ini12.INIRead(MainSettingPath, "Camera", "VideoIndex", ""));
-            int saud = int.Parse(ini12.INIRead(MainSettingPath, "Camera", "AudioIndex", ""));
-            int VideoNum = int.Parse(ini12.INIRead(MainSettingPath, "Camera", "VideoNumber", ""));
-            int AudioNum = int.Parse(ini12.INIRead(MainSettingPath, "Camera", "AudioNumber", ""));
+            int scam = int.Parse(ini12.INIRead(Global.MainSettingPath, "Camera", "VideoIndex", ""));
+            int saud = int.Parse(ini12.INIRead(Global.MainSettingPath, "Camera", "AudioIndex", ""));
+            int VideoNum = int.Parse(ini12.INIRead(Global.MainSettingPath, "Camera", "VideoNumber", ""));
+            int AudioNum = int.Parse(ini12.INIRead(Global.MainSettingPath, "Camera", "AudioNumber", ""));
 
             if (filters.VideoInputDevices.Count < VideoNum ||
                 filters.AudioInputDevices.Count < AudioNum)
@@ -5059,12 +5113,12 @@ namespace AutoTest
         #region -- 讀取RC DB並填入combobox --
         private void LoadRCDB()
         {
-            RedRatData.RedRatLoadSignalDB(ini12.INIRead(MainSettingPath, "RedRat", "DBFile", ""));
-            RedRatData.RedRatSelectDevice(ini12.INIRead(MainSettingPath, "RedRat", "Brands", ""));
+            RedRatData.RedRatLoadSignalDB(ini12.INIRead(Global.MainSettingPath, "RedRat", "DBFile", ""));
+            RedRatData.RedRatSelectDevice(ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", ""));
 
             DataGridViewComboBoxColumn RCDB = (DataGridViewComboBoxColumn)DataGridView_Schedule.Columns[0];
 
-            string devicename = ini12.INIRead(MainSettingPath, "RedRat", "Brands", "");
+            string devicename = ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "");
             if (RedRatData.RedRatSelectDevice(devicename))
             {
                 RCDB.Items.AddRange(RedRatData.RedRatGetRCNameList().ToArray());
@@ -5120,18 +5174,18 @@ namespace AutoTest
         Button[] Buttons;
         private void Sand_Key(int i)
         {
-            if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
             {
-                if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
                 {
                     Autocommand_RedRat("Form1", Buttons[i - 1].Text);
                 }
-                else if (ini12.INIRead(MainSettingPath, "Device", "AutoboxVerson", "") == "2")
+                else if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "2")
                 {
                     Autocommand_BlueRat("Form1", Buttons[i - 1].Text);
                 }
             }
-            else if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+            else if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
             {
                 Autocommand_RedRat("Form1", Buttons[i - 1].Text);
             }
@@ -5197,9 +5251,9 @@ namespace AutoTest
             Global.IO_PB7_0_COUNT = 0;
             Global.IO_PB7_1_COUNT = 0;
 
-            AutoBox_Status = ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1" ? true : false;
+            AutoBox_Status = ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" ? true : false;
 
-            if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
             {
                 if (!_captureInProgress)
                 {
@@ -5224,18 +5278,18 @@ namespace AutoTest
                     timer1.Stop();//停止倒數//
                     CloseDtplay();//關閉DtPlay//
 
-                    if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
                     {
-                        if (ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "") != "0")
+                        if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "") != "0")
                         {
                             LogThread1.Abort();
                             //Log1Data.Abort();
                         }
                     }
 
-                    if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
                     {
-                        if (ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "") != "0")
+                        if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "") != "0")
                         {
                             LogThread2.Abort();
                             //Log2Data.Abort();
@@ -5270,29 +5324,34 @@ namespace AutoTest
                     */
                     Global.Break_Out_MyRunCamd = 0;
 
-                    if (ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
                     {
                         OpenSerialPort1();
                         textBox1.Text = "";//清空serialport1//
-                        if (ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "") != "0")
+                        if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "") != "0")
                         {
                             LogThread1.IsBackground = true;
                             LogThread1.Start();
                         }
                     }
 
-                    if (ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1")
                     {
                         OpenSerialPort2();
                         textBox2.Text = "";//清空serialport2//
-                        if (ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "") != "0")
+                        if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "") != "0")
                         {
                             LogThread2.IsBackground = true;
                             LogThread2.Start();
                         }
                     }
+<<<<<<< HEAD
 
                     ini12.INIWrite(MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+=======
+                    
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                     MainThread.Start();       // 啟動執行緒
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";
@@ -5341,8 +5400,13 @@ namespace AutoTest
         private void SettingBtn_Click(object sender, EventArgs e)
         {
             FormTabControl FormTabControl = new FormTabControl();
+<<<<<<< HEAD
             Global.RCDB = ini12.INIRead(MainSettingPath, "RedRat", "Brands", "");
 
+=======
+            Global.RCDB = ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "");
+            
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             //如果serialport開著則先關閉//
             if (serialPort1.IsOpen == true)
             {
@@ -5356,14 +5420,14 @@ namespace AutoTest
             //關閉SETTING以後會讀這段>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             if (FormTabControl.ShowDialog() == DialogResult.OK)
             {
-                if (ini12.INIRead(MainSettingPath, "RedRat", "Brands", "") != Global.RCDB)
+                if (ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "") != Global.RCDB)
                 {
                     DataGridViewComboBoxColumn RCDB = (DataGridViewComboBoxColumn)DataGridView_Schedule.Columns[0];
                     RCDB.Items.Clear();
                     LoadRCDB();
                 }
 
-                if (ini12.INIRead(MainSettingPath, "Device", "RedRatExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "RedRatExist", "") == "1")
                 {
                     OpenRedRat3();
                     pictureBox_RedRat.Image = Properties.Resources.ON;
@@ -5373,7 +5437,7 @@ namespace AutoTest
                     pictureBox_RedRat.Image = Properties.Resources.OFF;
                 }
 
-                if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
+                if (ini12.INIRead(Global.MainSettingPath, "Device", "CameraExist", "") == "1")
                 {
                     pictureBox_Camera.Image = Properties.Resources.ON;
                     _captureInProgress = false;
@@ -5386,13 +5450,19 @@ namespace AutoTest
                     pictureBox_Camera.Image = Properties.Resources.OFF;
                 }
 
+<<<<<<< HEAD
                 button_SerialPort1.Visible = ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1" ? true : false;
                 button_SerialPort2.Visible = ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1" ? true : false;
 
+=======
+                button_SerialPort1.Visible = ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1" ? true : false;
+                button_SerialPort2.Visible = ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1" ? true : false;
+                
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                 List<string> SchExist = new List<string> { };
                 for (int i = 2; i < 6; i++)
                 {
-                    SchExist.Add(ini12.INIRead(MainSettingPath, "Schedule" + i, "Exist", ""));
+                    SchExist.Add(ini12.INIRead(Global.MainSettingPath, "Schedule" + i, "Exist", ""));
                 }
                 button_Schedule2.Visible = SchExist[0] == "0" ? false : true;
                 button_Schedule3.Visible = SchExist[1] == "0" ? false : true;
@@ -5414,48 +5484,48 @@ namespace AutoTest
             TimeLabel2.Text = string.Format("{0:yyyy-MM-dd  HH:mm:ss}", dt);
 
             #region -- schedule timer --
-            if (ini12.INIRead(MainSettingPath, "Schedule1", "OnTimeStart", "") == "1")
-                labelSch1Timer.Text = "Schedule 1 will start at" + "\r\n" + ini12.INIRead(MainSettingPath, "Schedule1", "Timer", "");
-            else if (ini12.INIRead(MainSettingPath, "Schedule1", "OnTimeStart", "") == "0")
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule1", "OnTimeStart", "") == "1")
+                labelSch1Timer.Text = "Schedule 1 will start at" + "\r\n" + ini12.INIRead(Global.MainSettingPath, "Schedule1", "Timer", "");
+            else if (ini12.INIRead(Global.MainSettingPath, "Schedule1", "OnTimeStart", "") == "0")
                 labelSch1Timer.Text = "";
 
-            if (ini12.INIRead(MainSettingPath, "Schedule2", "OnTimeStart", "") == "1")
-                labelSch2Timer.Text = "Schedule 2 will start at" + "\r\n" + ini12.INIRead(MainSettingPath, "Schedule2", "Timer", "");
-            else if (ini12.INIRead(MainSettingPath, "Schedule2", "OnTimeStart", "") == "0")
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule2", "OnTimeStart", "") == "1")
+                labelSch2Timer.Text = "Schedule 2 will start at" + "\r\n" + ini12.INIRead(Global.MainSettingPath, "Schedule2", "Timer", "");
+            else if (ini12.INIRead(Global.MainSettingPath, "Schedule2", "OnTimeStart", "") == "0")
                 labelSch2Timer.Text = "";
 
-            if (ini12.INIRead(MainSettingPath, "Schedule3", "OnTimeStart", "") == "1")
-                labelSch3Timer.Text = "Schedule 3 will start at" + "\r\n" + ini12.INIRead(MainSettingPath, "Schedule3", "Timer", "");
-            else if (ini12.INIRead(MainSettingPath, "Schedule3", "OnTimeStart", "") == "0")
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule3", "OnTimeStart", "") == "1")
+                labelSch3Timer.Text = "Schedule 3 will start at" + "\r\n" + ini12.INIRead(Global.MainSettingPath, "Schedule3", "Timer", "");
+            else if (ini12.INIRead(Global.MainSettingPath, "Schedule3", "OnTimeStart", "") == "0")
                 labelSch3Timer.Text = "";
 
-            if (ini12.INIRead(MainSettingPath, "Schedule4", "OnTimeStart", "") == "1")
-                labelSch4Timer.Text = "Schedule 4 will start at" + "\r\n" + ini12.INIRead(MainSettingPath, "Schedule4", "Timer", "");
-            else if (ini12.INIRead(MainSettingPath, "Schedule4", "OnTimeStart", "") == "0")
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule4", "OnTimeStart", "") == "1")
+                labelSch4Timer.Text = "Schedule 4 will start at" + "\r\n" + ini12.INIRead(Global.MainSettingPath, "Schedule4", "Timer", "");
+            else if (ini12.INIRead(Global.MainSettingPath, "Schedule4", "OnTimeStart", "") == "0")
                 labelSch4Timer.Text = "";
 
-            if (ini12.INIRead(MainSettingPath, "Schedule5", "OnTimeStart", "") == "1")
-                labelSch5Timer.Text = "Schedule 5 will start at" + "\r\n" + ini12.INIRead(MainSettingPath, "Schedule5", "Timer", "");
-            else if (ini12.INIRead(MainSettingPath, "Schedule5", "OnTimeStart", "") == "0")
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule5", "OnTimeStart", "") == "1")
+                labelSch5Timer.Text = "Schedule 5 will start at" + "\r\n" + ini12.INIRead(Global.MainSettingPath, "Schedule5", "Timer", "");
+            else if (ini12.INIRead(Global.MainSettingPath, "Schedule5", "OnTimeStart", "") == "0")
                 labelSch5Timer.Text = "";
 
-            if (ini12.INIRead(MainSettingPath, "Schedule1", "OnTimeStart", "") == "1" &&
-                ini12.INIRead(MainSettingPath, "Schedule1", "Timer", "") == TimeLabel2.Text)
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule1", "OnTimeStart", "") == "1" &&
+                ini12.INIRead(Global.MainSettingPath, "Schedule1", "Timer", "") == TimeLabel2.Text)
                 button_Start.PerformClick();
-            if (ini12.INIRead(MainSettingPath, "Schedule2", "OnTimeStart", "") == "1" &&
-                ini12.INIRead(MainSettingPath, "Schedule2", "Timer", "") == TimeLabel2.Text &&
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule2", "OnTimeStart", "") == "1" &&
+                ini12.INIRead(Global.MainSettingPath, "Schedule2", "Timer", "") == TimeLabel2.Text &&
                 timeCount != 0)
                 Global.Break_Out_Schedule = 1;
-            if (ini12.INIRead(MainSettingPath, "Schedule3", "OnTimeStart", "") == "1" &&
-                ini12.INIRead(MainSettingPath, "Schedule3", "Timer", "") == TimeLabel2.Text &&
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule3", "OnTimeStart", "") == "1" &&
+                ini12.INIRead(Global.MainSettingPath, "Schedule3", "Timer", "") == TimeLabel2.Text &&
                 timeCount != 0)
                 Global.Break_Out_Schedule = 1;
-            if (ini12.INIRead(MainSettingPath, "Schedule4", "OnTimeStart", "") == "1" &&
-                ini12.INIRead(MainSettingPath, "Schedule4", "Timer", "") == TimeLabel2.Text &&
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule4", "OnTimeStart", "") == "1" &&
+                ini12.INIRead(Global.MainSettingPath, "Schedule4", "Timer", "") == TimeLabel2.Text &&
                 timeCount != 0)
                 Global.Break_Out_Schedule = 1;
-            if (ini12.INIRead(MainSettingPath, "Schedule5", "OnTimeStart", "") == "1" &&
-                ini12.INIRead(MainSettingPath, "Schedule5", "Timer", "") == TimeLabel2.Text &&
+            if (ini12.INIRead(Global.MainSettingPath, "Schedule5", "OnTimeStart", "") == "1" &&
+                ini12.INIRead(Global.MainSettingPath, "Schedule5", "Timer", "") == TimeLabel2.Text &&
                 timeCount != 0)
                 Global.Break_Out_Schedule = 1;
             #endregion
@@ -5487,12 +5557,12 @@ namespace AutoTest
         private void CloseAutobox()
         {
             FormIsClosing = true;
-            if (ini12.INIRead(MainSettingPath, "Device", "AutoboxVerson", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "1")
             {
                 DisconnectAutoBox1();
             }
 
-            if (ini12.INIRead(MainSettingPath, "Device", "AutoboxVerson", "") == "2")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "2")
             {
                 DisconnectAutoBox2();
             }
@@ -5539,20 +5609,20 @@ namespace AutoTest
         private void MyExportCamd()
         {
             string ab_num = label_LoopNumber_Value.Text,                                                        //自動編號
-                        ab_p_id = ini12.INIRead(MailPath, "Data Info", "ProjectNumber", ""),                    //Project number
-                        ab_c_id = ini12.INIRead(MailPath, "Data Info", "TestCaseNumber", ""),                   //Test case number
-                        ab_result = ini12.INIRead(MailPath, "Data Info", "Result", ""),                         //AutoTest 測試結果
-                        ab_version = ini12.INIRead(MailPath, "Mail Info", "Version", ""),                       //軟體版號
-                        ab_ng = ini12.INIRead(MailPath, "Data Info", "NGfrequency", ""),                        //NG frequency
-                        ab_create = ini12.INIRead(MailPath, "Data Info", "CreateTime", ""),                     //測試開始時間
-                        ab_close = ini12.INIRead(MailPath, "Data Info", "CloseTime", ""),                       //測試結束時間
-                        ab_time = ini12.INIRead(MailPath, "Total Test Time", "value", ""),                      //測試執行花費時間
+                        ab_p_id = ini12.INIRead(Global.MailSettingPath, "Data Info", "ProjectNumber", ""),                    //Project number
+                        ab_c_id = ini12.INIRead(Global.MailSettingPath, "Data Info", "TestCaseNumber", ""),                   //Test case number
+                        ab_result = ini12.INIRead(Global.MailSettingPath, "Data Info", "Result", ""),                         //AutoTest 測試結果
+                        ab_version = ini12.INIRead(Global.MailSettingPath, "Mail Info", "Version", ""),                       //軟體版號
+                        ab_ng = ini12.INIRead(Global.MailSettingPath, "Data Info", "NGfrequency", ""),                        //NG frequency
+                        ab_create = ini12.INIRead(Global.MailSettingPath, "Data Info", "CreateTime", ""),                     //測試開始時間
+                        ab_close = ini12.INIRead(Global.MailSettingPath, "Data Info", "CloseTime", ""),                       //測試結束時間
+                        ab_time = ini12.INIRead(Global.MailSettingPath, "Total Test Time", "value", ""),                      //測試執行花費時間
                         ab_loop = Global.Schedule_Loop.ToString(),                                              //執行loop次數
-                        ab_loop_time = ini12.INIRead(MailPath, "Total Test Time", "value", ""),                 //1個loop需要次數
+                        ab_loop_time = ini12.INIRead(Global.MailSettingPath, "Total Test Time", "value", ""),                 //1個loop需要次數
                         ab_loop_step = (DataGridView_Schedule.Rows.Count - 1).ToString(),                       //1個loop的step數
-                        ab_root = ini12.INIRead(MailPath, "Data Info", "Reboot", ""),                           //測試重啟次數
-                        ab_user = ini12.INIRead(MailPath, "Mail Info", "Tester", ""),                           //測試人員
-                        ab_mail = ini12.INIRead(MailPath, "Mail Info", "To", "");                               //Mail address 列表
+                        ab_root = ini12.INIRead(Global.MailSettingPath, "Data Info", "Reboot", ""),                           //測試重啟次數
+                        ab_user = ini12.INIRead(Global.MailSettingPath, "Mail Info", "Tester", ""),                           //測試人員
+                        ab_mail = ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "");                               //Mail address 列表
 
             List<string> DataList = new List<string> { };
             DataList.Add(ab_num);
@@ -5582,7 +5652,7 @@ namespace AutoTest
 
             System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
             sfd.Filter = "CSV files (*.csv)|*.csv";
-            sfd.FileName = ini12.INIRead(MainSettingPath, "Schedule" + Global.Schedule_Number, "Path", "");
+            sfd.FileName = ini12.INIRead(Global.MainSettingPath, "Schedule" + Global.Schedule_Number, "Path", "");
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 using (System.IO.StreamWriter sw = new System.IO.StreamWriter(sfd.FileName, false))
@@ -5624,7 +5694,7 @@ namespace AutoTest
         {
             portos_online = new SafeDataGridView();
             Global.Schedule_Number = 1;
-            string loop = ini12.INIRead(MainSettingPath, "Schedule1", "Loop", "");
+            string loop = ini12.INIRead(Global.MainSettingPath, "Schedule1", "Loop", "");
             if (loop != "")
                 Global.Schedule_Loop = int.Parse(loop);
             labellabel_LoopTimes_Value.Text = Global.Schedule_Loop.ToString();
@@ -5634,16 +5704,16 @@ namespace AutoTest
             button_Schedule4.Enabled = true;
             button_Schedule5.Enabled = true;
             ReadSch();
-            ini12.INIWrite(MailPath, "Data Info", "TestCaseNumber", "0");
-            ini12.INIWrite(MailPath, "Data Info", "Result", "N/A");
-            ini12.INIWrite(MailPath, "Data Info", "NGfrequency", "0");
+            ini12.INIWrite(Global.MailSettingPath, "Data Info", "TestCaseNumber", "0");
+            ini12.INIWrite(Global.MailSettingPath, "Data Info", "Result", "N/A");
+            ini12.INIWrite(Global.MailSettingPath, "Data Info", "NGfrequency", "0");
         }
         private void SchBtn2_Click(object sender, EventArgs e)          ////////////Schedule2
         {
             portos_online = new SafeDataGridView();
             Global.Schedule_Number = 2;
             string loop = "";
-            loop = ini12.INIRead(MainSettingPath, "Schedule2", "Loop", "");
+            loop = ini12.INIRead(Global.MainSettingPath, "Schedule2", "Loop", "");
             if (loop != "")
                 Global.Schedule_Loop = int.Parse(loop);
             labellabel_LoopTimes_Value.Text = Global.Schedule_Loop.ToString();
@@ -5659,7 +5729,7 @@ namespace AutoTest
         {
             portos_online = new SafeDataGridView();
             Global.Schedule_Number = 3;
-            string loop = ini12.INIRead(MainSettingPath, "Schedule3", "Loop", "");
+            string loop = ini12.INIRead(Global.MainSettingPath, "Schedule3", "Loop", "");
             if (loop != "")
                 Global.Schedule_Loop = int.Parse(loop);
             labellabel_LoopTimes_Value.Text = Global.Schedule_Loop.ToString();
@@ -5674,7 +5744,7 @@ namespace AutoTest
         {
             portos_online = new SafeDataGridView();
             Global.Schedule_Number = 4;
-            string loop = ini12.INIRead(MainSettingPath, "Schedule4", "Loop", "");
+            string loop = ini12.INIRead(Global.MainSettingPath, "Schedule4", "Loop", "");
             if (loop != "")
                 Global.Schedule_Loop = int.Parse(loop);
             labellabel_LoopTimes_Value.Text = Global.Schedule_Loop.ToString();
@@ -5689,7 +5759,7 @@ namespace AutoTest
         {
             portos_online = new SafeDataGridView();
             Global.Schedule_Number = 5;
-            string loop = ini12.INIRead(MainSettingPath, "Schedule5", "Loop", "");
+            string loop = ini12.INIRead(Global.MainSettingPath, "Schedule5", "Loop", "");
             if (loop != "")
                 Global.Schedule_Loop = int.Parse(loop);
             labellabel_LoopTimes_Value.Text = Global.Schedule_Loop.ToString();
@@ -5704,8 +5774,8 @@ namespace AutoTest
         {
             // Console.WriteLine(Global.Schedule_Num);
             // 戴入Schedule CSV 檔
-            string SchedulePath = ini12.INIRead(MainSettingPath, "Schedule" + Global.Schedule_Number, "Path", "");
-            string ScheduleExist = ini12.INIRead(MainSettingPath, "Schedule" + Global.Schedule_Number, "Exist", "");
+            string SchedulePath = ini12.INIRead(Global.MainSettingPath, "Schedule" + Global.Schedule_Number, "Path", "");
+            string ScheduleExist = ini12.INIRead(Global.MainSettingPath, "Schedule" + Global.Schedule_Number, "Exist", "");
 
             string TextLine = "";
             string[] SplitLine;
@@ -5756,7 +5826,7 @@ namespace AutoTest
                         }
                     }       //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-                    if (ini12.INIRead(MainSettingPath, "Record", "EachVideo", "") == "1")
+                    if (ini12.INIRead(Global.MainSettingPath, "Record", "EachVideo", "") == "1")
                     {
                         ConvertToRealTime(((TotalDelay * Global.Schedule_Loop) + 63000) / 1000);
                     }
@@ -5842,27 +5912,27 @@ namespace AutoTest
                     }
                 }
                 label_ScheduleTime_Value.Text = d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s";
-                ini12.INIWrite(MailPath, "Total Test Time", "value", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+                ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
 
                 // 寫入每個Schedule test time
                 if (Global.Schedule_Number == 1)
-                    ini12.INIWrite(MailPath, "Total Test Time", "value1", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+                    ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value1", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
 
                 if (StartButtonPressed == true)
                 {
                     switch (Global.Schedule_Number)
                     {
                         case 2:
-                            ini12.INIWrite(MailPath, "Total Test Time", "value2", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+                            ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value2", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
                             break;
                         case 3:
-                            ini12.INIWrite(MailPath, "Total Test Time", "value3", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+                            ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value3", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
                             break;
                         case 4:
-                            ini12.INIWrite(MailPath, "Total Test Time", "value4", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+                            ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value4", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
                             break;
                         case 5:
-                            ini12.INIWrite(MailPath, "Total Test Time", "value5", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+                            ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "value5", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
                             break;
                     }
                 }
@@ -5995,7 +6065,7 @@ namespace AutoTest
             }
 
             label_TestTime_Value.Text = d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s";
-            ini12.INIWrite(MailPath, "Total Test Time", "How Long", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
+            ini12.INIWrite(Global.MailSettingPath, "Total Test Time", "How Long", d.ToString("0") + "d " + h.ToString("0") + "h " + s.ToString("0") + "m " + ms.ToString("0") + "s");
         }
 
         private void TimerPanelbutton_Click(object sender, EventArgs e)
@@ -6523,7 +6593,7 @@ namespace AutoTest
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            if (ini12.INIRead(MainSettingPath, "Device", "RunAfterStartUp", "") == "1")
+            if (ini12.INIRead(Global.MainSettingPath, "Device", "RunAfterStartUp", "") == "1")
             {
                 button_Start.PerformClick();
             }
@@ -6608,7 +6678,7 @@ namespace AutoTest
 
         private void comboBox_CameraDevice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
+            ini12.INIWrite(Global.MainSettingPath, "Camera", "VideoIndex", comboBox_CameraDevice.SelectedIndex.ToString());
             if (_captureInProgress == true)
             {
                 capture.Stop();

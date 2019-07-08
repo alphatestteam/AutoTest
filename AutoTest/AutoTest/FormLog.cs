@@ -12,15 +12,12 @@ namespace AutoTest
             InitializeComponent();
         }
 
-        string MainSettingPath = Application.StartupPath + "\\Config.ini";
-        string MailPath = Application.StartupPath + "\\Mail.ini";
-
         public void FormLog_Load(object sender, EventArgs e)
         {
             label_ErrorMessage.Text = "";
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Comport1", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Comport1", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1)
                 {
                     checkBox_SerialPort1.Checked = true;
                 }
@@ -31,14 +28,14 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Comport1", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport1", "0");
                 checkBox_SerialPort1.Checked = false;
                 comboBox_KeywordNum.Text = "0";
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Comport2", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Comport2", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1)
                 {
                     checkBox_SerialPort2.Checked = true;
                 }
@@ -49,7 +46,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Comport2", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport2", "0");
                 checkBox_SerialPort2.Checked = false;
                 comboBox_KeywordNum.Text = "0";
             }
@@ -59,10 +56,10 @@ namespace AutoTest
                 comboBox_KeywordNum.Enabled = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "") != "")
             {
-                comboBox_KeywordNum.Text = ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", "");
-                int caseSwitch = Convert.ToInt32(ini12.INIRead(MainSettingPath, "LogSearch", "TextNum", ""));
+                comboBox_KeywordNum.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "");
+                int caseSwitch = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", ""));
                 switch (caseSwitch)
                 {
                     case 0:
@@ -420,7 +417,7 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "TextNum", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "TextNum", "0");
                 label_KeywordNum.Visible = true;
                 comboBox_KeywordNum.Visible = true;
                 label_Keyword.Visible = false;
@@ -452,30 +449,30 @@ namespace AutoTest
                 checkBox_SaveLog.Visible = false;
             }
 
-            textBox_Keyword0.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text0", "");
-            textBox_Times0.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times0", "");
-            textBox_Keyword1.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text1", "");
-            textBox_Times1.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times1", "");
-            textBox_Keyword2.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text2", "");
-            textBox_Times2.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times2", "");
-            textBox_Keyword3.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text3", "");
-            textBox_Times3.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times3", "");
-            textBox_Keyword4.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text4", "");
-            textBox_Times4.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times4", "");
-            textBox_Keyword5.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text5", "");
-            textBox_Times5.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times5", "");
-            textBox_Keyword6.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text6", "");
-            textBox_Times6.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times6", "");
-            textBox_Keyword7.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text7", "");
-            textBox_Times7.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times7", "");
-            textBox_Keyword8.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text8", "");
-            textBox_Times8.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times8", "");
-            textBox_Keyword9.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Text9", "");
-            textBox_Times9.Text = ini12.INIRead(MainSettingPath, "LogSearch", "Times9", "");
+            textBox_Keyword0.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text0", "");
+            textBox_Times0.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times0", "");
+            textBox_Keyword1.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text1", "");
+            textBox_Times1.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times1", "");
+            textBox_Keyword2.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text2", "");
+            textBox_Times2.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times2", "");
+            textBox_Keyword3.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text3", "");
+            textBox_Times3.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times3", "");
+            textBox_Keyword4.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text4", "");
+            textBox_Times4.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times4", "");
+            textBox_Keyword5.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text5", "");
+            textBox_Times5.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times5", "");
+            textBox_Keyword6.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text6", "");
+            textBox_Times6.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times6", "");
+            textBox_Keyword7.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text7", "");
+            textBox_Times7.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times7", "");
+            textBox_Keyword8.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text8", "");
+            textBox_Times8.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times8", "");
+            textBox_Keyword9.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text9", "");
+            textBox_Times9.Text = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times9", "");
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Camerarecord", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Camerarecord", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Camerarecord", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Camerarecord", "")) == 1)
                 {
                     checkBox_CameraRecord.Checked = true;
                 }
@@ -486,13 +483,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Camerarecord", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Camerarecord", "0");
                 checkBox_CameraRecord.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Camerashot", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Camerashot", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Camerashot", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Camerashot", "")) == 1)
                 {
                     checkBox_CameraShot.Checked = true;
                 }
@@ -503,13 +500,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Camerashot", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Camerashot", "0");
                 checkBox_CameraShot.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "")) == 1)
                 {
                     checkBox_SendMail.Checked = true;
                 }
@@ -520,13 +517,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Sendmail", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Sendmail", "0");
                 checkBox_SendMail.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Savelog", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Savelog", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Savelog", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Savelog", "")) == 1)
                 {
                     checkBox_SaveLog.Checked = true;
                 }
@@ -537,13 +534,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Savelog", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Savelog", "0");
                 checkBox_SaveLog.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Showmessage", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Showmessage", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Showmessage", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Showmessage", "")) == 1)
                 {
                     checkBox_ShowMessage.Checked = true;
                 }
@@ -554,13 +551,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Showmessage", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Showmessage", "0");
                 checkBox_ShowMessage.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "")) == 1)
                 {
                     checkBox_AcOffOn.Checked = true;
                 }
@@ -571,13 +568,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "ACcontrol", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "ACcontrol", "0");
                 checkBox_AcOffOn.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "Stop", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "Stop", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "Stop", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Stop", "")) == 1)
                 {
                     checkBox_Stop.Checked = true;
                 }
@@ -588,13 +585,13 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Stop", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Stop", "0");
                 checkBox_Stop.Checked = false;
             }
 
-            if (ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "") != "")
+            if (ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "") != "")
             {
-                if (int.Parse(ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "")) == 1)
+                if (int.Parse(ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "")) == 1)
                 {
                     checkBox_AcOff.Checked = true;
                 }
@@ -605,14 +602,14 @@ namespace AutoTest
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "AC OFF", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "AC OFF", "0");
                 checkBox_AcOff.Checked = false;
             }
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            ini12.INIWrite(MainSettingPath, "LogSearch", "TextNum", comboBox_KeywordNum.Text);
+            ini12.INIWrite(Global.MainSettingPath, "LogSearch", "TextNum", comboBox_KeywordNum.Text);
 
             if (textBox_Keyword0.Visible == true)
             {
@@ -632,8 +629,8 @@ namespace AutoTest
                 {
                     textBox_Keyword0.BackColor = default(Color);
                     textBox_Times0.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text0", textBox_Keyword0.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times0", textBox_Times0.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text0", textBox_Keyword0.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times0", textBox_Times0.Text.Trim());
                 }
             }
             else
@@ -660,8 +657,8 @@ namespace AutoTest
                 {
                     textBox_Keyword1.BackColor = default(Color);
                     textBox_Times1.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text1", textBox_Keyword1.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times1", textBox_Times1.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text1", textBox_Keyword1.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times1", textBox_Times1.Text.Trim());
                 }
             }
             else
@@ -688,8 +685,8 @@ namespace AutoTest
                 {
                     textBox_Keyword2.BackColor = default(Color);
                     textBox_Times2.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text2", textBox_Keyword2.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times2", textBox_Times2.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text2", textBox_Keyword2.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times2", textBox_Times2.Text.Trim());
                 }
             }
             else
@@ -716,8 +713,8 @@ namespace AutoTest
                 {
                     textBox_Keyword3.BackColor = default(Color);
                     textBox_Times3.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text3", textBox_Keyword3.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times3", textBox_Times3.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text3", textBox_Keyword3.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times3", textBox_Times3.Text.Trim());
                 }
             }
             else
@@ -744,8 +741,8 @@ namespace AutoTest
                 {
                     textBox_Keyword4.BackColor = default(Color);
                     textBox_Times4.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text4", textBox_Keyword4.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times4", textBox_Times4.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text4", textBox_Keyword4.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times4", textBox_Times4.Text.Trim());
                 }
             }
             else
@@ -772,8 +769,8 @@ namespace AutoTest
                 {
                     textBox_Keyword5.BackColor = default(Color);
                     textBox_Times5.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text5", textBox_Keyword5.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times5", textBox_Times5.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text5", textBox_Keyword5.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times5", textBox_Times5.Text.Trim());
                 }
             }
             else
@@ -800,8 +797,8 @@ namespace AutoTest
                 {
                     textBox_Keyword6.BackColor = default(Color);
                     textBox_Times6.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text6", textBox_Keyword6.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times6", textBox_Times6.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text6", textBox_Keyword6.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times6", textBox_Times6.Text.Trim());
                 }
             }
             else
@@ -828,8 +825,8 @@ namespace AutoTest
                 {
                     textBox_Keyword7.BackColor = default(Color);
                     textBox_Times7.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text7", textBox_Keyword7.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times7", textBox_Times7.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text7", textBox_Keyword7.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times7", textBox_Times7.Text.Trim());
                 }
             }
             else
@@ -856,8 +853,8 @@ namespace AutoTest
                 {
                     textBox_Keyword8.BackColor = default(Color);
                     textBox_Times8.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text8", textBox_Keyword8.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times8", textBox_Times8.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text8", textBox_Keyword8.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times8", textBox_Times8.Text.Trim());
                 }
             }
             else
@@ -884,8 +881,8 @@ namespace AutoTest
                 {
                     textBox_Keyword9.BackColor = default(Color);
                     textBox_Times9.BackColor = default(Color);
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text9", textBox_Keyword9.Text.Trim());
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times9", textBox_Times9.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text9", textBox_Keyword9.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times9", textBox_Times9.Text.Trim());
                 }
             }
             else
@@ -926,11 +923,11 @@ namespace AutoTest
         {
             if (checkBox_CameraRecord.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Camerarecord", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Camerarecord", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Camerarecord", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Camerarecord", "0");
             }
         }
 
@@ -938,11 +935,11 @@ namespace AutoTest
         {
             if (checkBox_CameraShot.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Camerashot", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Camerashot", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Camerashot", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Camerashot", "0");
             }
         }
 
@@ -950,17 +947,17 @@ namespace AutoTest
         {
             if (checkBox_SendMail.Checked == true)
             {
-                if (ini12.INIRead(MailPath, "Send Mail", "value", "") == "0")
+                if (ini12.INIRead(Global.MailSettingPath, "Send Mail", "value", "") == "0")
                 {
                     MessageBox.Show("Please enable the mail function in Mail Setting");
                     checkBox_SendMail.Checked = false;
                 }
                 else
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Sendmail", "1");
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Sendmail", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Sendmail", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Sendmail", "0");
             }
         }
 
@@ -968,11 +965,11 @@ namespace AutoTest
         {
             if (checkBox_SaveLog.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Savelog", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Savelog", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Savelog", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Savelog", "0");
             }
         }
 
@@ -980,11 +977,11 @@ namespace AutoTest
         {
             if (checkBox_ShowMessage.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Showmessage", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Showmessage", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Showmessage", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Showmessage", "0");
             }
         }
 
@@ -992,11 +989,11 @@ namespace AutoTest
         {
             if (checkBox_AcOffOn.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "ACcontrol", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "ACcontrol", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "ACcontrol", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "ACcontrol", "0");
             }
         }
 
@@ -1004,11 +1001,11 @@ namespace AutoTest
         {
             if (checkBox_Stop.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Stop", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Stop", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Stop", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Stop", "0");
             }
         }
 
@@ -1016,18 +1013,18 @@ namespace AutoTest
         {
             if (checkBox_AcOff.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "AC OFF", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "AC OFF", "1");
             }
             else
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "AC OFF", "0");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "AC OFF", "0");
             }
         }
 
         private void ItemcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int caseSwitch = Convert.ToInt32(comboBox_KeywordNum.Text.Trim());
-            ini12.INIWrite(MainSettingPath, "LogSearch", "TextNum", caseSwitch.ToString());
+            ini12.INIWrite(Global.MainSettingPath, "LogSearch", "TextNum", caseSwitch.ToString());
 
             switch (caseSwitch)
             {
@@ -1400,21 +1397,21 @@ namespace AutoTest
         {
             if (checkBox_SerialPort1.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Comport1", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport1", "1");
                 comboBox_KeywordNum.Enabled = true;
             }
             else
             {
                 if (checkBox_SerialPort2.Checked == true)
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Comport1", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport1", "0");
                 }
                 else
                 {
                     comboBox_KeywordNum.Text = "0";
                     comboBox_KeywordNum.Enabled = false;
                     SetErrorPictureAsNull();
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Comport1", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport1", "0");
                 }
             }
         }
@@ -1423,21 +1420,21 @@ namespace AutoTest
         {
             if (checkBox_SerialPort2.Checked == true)
             {
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Comport2", "1");
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport2", "1");
                 comboBox_KeywordNum.Enabled = true;
             }
             else
             {
                 if (checkBox_SerialPort1.Checked == true)
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Comport2", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport2", "0");
                 }
                 else
                 {
                     comboBox_KeywordNum.Text = "0";
                     comboBox_KeywordNum.Enabled = false;
                     SetErrorPictureAsNull();
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Comport2", "0");
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Comport2", "0");
                 }
             }
         }
@@ -1460,8 +1457,8 @@ namespace AutoTest
             {
                 textBox_Keyword0.BackColor = default(Color);
                 textBox_Times0.BackColor = default(Color);
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Text0", textBox_Keyword0.Text.Trim());
-                ini12.INIWrite(MainSettingPath, "LogSearch", "Times0", textBox_Times0.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text0", textBox_Keyword0.Text.Trim());
+                ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times0", textBox_Times0.Text.Trim());
             }
         }
 
@@ -1477,7 +1474,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text0", textBox_Keyword0.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text0", textBox_Keyword0.Text.Trim());
                     pictureBox_Keyword0.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1497,7 +1494,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times0", textBox_Times0.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times0", textBox_Times0.Text.Trim());
                     pictureBox_Keyword0.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1517,7 +1514,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text1", textBox_Keyword1.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text1", textBox_Keyword1.Text.Trim());
                     pictureBox_Keyword1.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1537,7 +1534,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times1", textBox_Times1.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times1", textBox_Times1.Text.Trim());
                     pictureBox_Keyword1.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1557,7 +1554,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text2", textBox_Keyword2.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text2", textBox_Keyword2.Text.Trim());
                     pictureBox_Keyword2.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1577,7 +1574,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times2", textBox_Times2.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times2", textBox_Times2.Text.Trim());
                     pictureBox_Keyword2.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1597,7 +1594,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text3", textBox_Keyword3.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text3", textBox_Keyword3.Text.Trim());
                     pictureBox_Keyword3.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1617,7 +1614,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times3", textBox_Times3.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times3", textBox_Times3.Text.Trim());
                     pictureBox_Keyword3.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1637,7 +1634,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text4", textBox_Keyword4.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text4", textBox_Keyword4.Text.Trim());
                     pictureBox_Keyword4.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1657,7 +1654,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times4", textBox_Times4.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times4", textBox_Times4.Text.Trim());
                     pictureBox_Keyword4.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1677,7 +1674,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text5", textBox_Keyword5.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text5", textBox_Keyword5.Text.Trim());
                     pictureBox_Keyword5.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1697,7 +1694,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times5", textBox_Times5.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times5", textBox_Times5.Text.Trim());
                     pictureBox_Keyword5.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1717,7 +1714,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text6", textBox_Keyword6.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text6", textBox_Keyword6.Text.Trim());
                     pictureBox_Keyword6.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1737,7 +1734,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times6", textBox_Times6.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times6", textBox_Times6.Text.Trim());
                     pictureBox_Keyword6.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1757,7 +1754,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text7", textBox_Keyword7.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text7", textBox_Keyword7.Text.Trim());
                     pictureBox_Keyword7.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1777,7 +1774,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times7", textBox_Times7.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times7", textBox_Times7.Text.Trim());
                     pictureBox_Keyword7.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1797,7 +1794,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text8", textBox_Keyword8.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text8", textBox_Keyword8.Text.Trim());
                     pictureBox_Keyword8.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1817,7 +1814,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times8", textBox_Times8.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times8", textBox_Times8.Text.Trim());
                     pictureBox_Keyword8.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1837,7 +1834,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Text9", textBox_Keyword9.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Text9", textBox_Keyword9.Text.Trim());
                     pictureBox_Keyword9.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
@@ -1857,7 +1854,7 @@ namespace AutoTest
                 }
                 else
                 {
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "Times9", textBox_Times9.Text.Trim());
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Times9", textBox_Times9.Text.Trim());
                     pictureBox_Keyword9.Image = null;
                     label_ErrorMessage.Text = "";
                     comboBox_KeywordNum.Enabled = true;
