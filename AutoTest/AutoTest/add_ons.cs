@@ -676,18 +676,15 @@ namespace AutoTest
         {
             string[] Setting = { "SelectRcLastTime", "SelectRcLastTimePath" };
 
-            if (File.Exists(Global.RcSettingPath) == false)
+            for (int i = 0; i < Setting.Length; i++)
             {
-                for (int i = 0; i < Setting.Length; i++)
+                if (i == (Setting.Length - 1))
                 {
-                    if (i == (Setting.Length - 1))
-                    {
-                        ini12.INIWrite(Global.RcSettingPath, "Setting", Setting[i], "" + Environment.NewLine + Environment.NewLine);
-                    }
-                    else
-                    {
-                        ini12.INIWrite(Global.RcSettingPath, "Setting", Setting[i], "");
-                    }
+                    ini12.INIWrite(Global.RcSettingPath, "Setting", Setting[i], "" + Environment.NewLine + Environment.NewLine);
+                }
+                else
+                {
+                    ini12.INIWrite(Global.RcSettingPath, "Setting", Setting[i], "");
                 }
             }
         }

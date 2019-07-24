@@ -1751,7 +1751,6 @@ namespace AutoTest
                 DateTime.Now.ToShortTimeString();
                 DateTime dt = DateTime.Now;
                 text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
-                textBox1.AppendText(text);
 
                 //string hex = ByteToHexStr(dataset);
                 //File.AppendAllText(@"C:\WriteText.txt", text);
@@ -1994,13 +1993,12 @@ namespace AutoTest
 
             while (StartButtonPressed == true)
             {
-                while (LogQueue1.Count > 0)
+               while (LogQueue1.Count > 0)
                 {
                     Keyword_SerialPort_1_temp_byte = LogQueue1.Dequeue();
                     Keyword_SerialPort_1_temp_char = (char)Keyword_SerialPort_1_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && 
-                        Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_1_temp_char == '\n'))
@@ -2409,8 +2407,7 @@ namespace AutoTest
                     Keyword_SerialPort_2_temp_byte = LogQueue2.Dequeue();
                     Keyword_SerialPort_2_temp_char = (char)Keyword_SerialPort_2_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && 
-                        Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_2_temp_char == '\n'))
@@ -5073,8 +5070,6 @@ namespace AutoTest
                 
                 if (StartButtonPressed == true)//按下STOP//
                 {
-                    StartButtonPressed = false;
-                    
                     Global.Break_Out_MyRunCamd = 1;//跳出倒數迴圈//
                     MainThread.Abort();//停止執行緒//
                     timer1.Stop();//停止倒數//
@@ -5098,6 +5093,7 @@ namespace AutoTest
                         }
                     }
 
+                    StartButtonPressed = false;
                     button_Start.Enabled = false;
                     button_Setting.Enabled = false;
                     button_SaveSchedule.Enabled = false;
@@ -5107,8 +5103,6 @@ namespace AutoTest
                 }
                 else//按下START//
                 {
-                    StartButtonPressed = true;
-
                     /*
                     for (int i = 1; i < 6; i++)
                     {
@@ -5125,7 +5119,6 @@ namespace AutoTest
                         }                
                     }
                     */
-
                     Global.Break_Out_MyRunCamd = 0;
 
                     if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
@@ -5155,6 +5148,7 @@ namespace AutoTest
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";
 
+                    StartButtonPressed = true;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     button_SaveSchedule.Enabled = false;
@@ -5167,13 +5161,12 @@ namespace AutoTest
                 
                 if (StartButtonPressed == true)//按下STOP//
                 {
-                    StartButtonPressed = false;
-
                     Global.Break_Out_MyRunCamd = 1;    //跳出倒數迴圈
                     MainThread.Abort(); //停止執行緒
                     timer1.Stop();  //停止倒數
                     CloseDtplay();
 
+                    StartButtonPressed = false;
                     button_Start.Enabled = false;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
@@ -5183,12 +5176,11 @@ namespace AutoTest
                 }
                 else//按下START//
                 {
-                    StartButtonPressed = true;
-
                     Global.Break_Out_MyRunCamd = 0;
                     MainThread.Start();// 啟動執行緒
                     timer1.Start();     //開始倒數
 
+                    StartButtonPressed = true;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     pictureBox_AcPower.Image = Properties.Resources.OFF;
