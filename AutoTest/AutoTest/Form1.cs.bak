@@ -92,17 +92,9 @@ namespace AutoTest
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        //bool isFirsttime = true;
-        Dictionary<string, string> dt = new Dictionary<string, string>();
-
-
         public Form1()
         {
             InitializeComponent();
-            //initCreatesubForm();
-            initKeyCodeList();
-            st1.Start(); //第一個計時器啟動
-            //st1IsStart = true;
 
             //USB Connection//
             USBPort = new USBClass();
@@ -640,7 +632,7 @@ namespace AutoTest
             }
         }
 
-
+        
 
         private void BoxConnect()       //TO DO: Inset your connection code here
         {
@@ -689,7 +681,7 @@ namespace AutoTest
             base.WndProc(ref m);
         }
         #endregion
-
+        
         private void OnCaptureComplete(object sender, EventArgs e)
         {
             // Demonstrate the Capture.CaptureComplete event.
@@ -775,7 +767,7 @@ namespace AutoTest
         }
 
         #region -- 拍照 --
-        private void Jes() => Invoke(new EventHandler(delegate { Myshot(); }));
+        private void Jes() => Invoke(new EventHandler(delegate{Myshot();}));
 
         private void Myshot()
         {
@@ -869,11 +861,11 @@ namespace AutoTest
                                     FontColor,
                                     new PointF(5, 400));
             }
-
+            
             //照片印上現在時間//
-            bitMap_g.DrawString(TimeLabel.Text,
-                                Font,
-                                FontColor,
+            bitMap_g.DrawString(TimeLabel.Text, 
+                                Font, 
+                                FontColor, 
                                 new PointF(5, 440));
 
             Font.Dispose();
@@ -1415,7 +1407,7 @@ namespace AutoTest
 
             if (intdev != "-1")
                 dev = int.Parse(intdev);
-
+            
             var devices = RedRat3USBImpl.FindDevices();
 
             // 假若設定值大於目前device個數，直接更改為目前device個數
@@ -1495,7 +1487,7 @@ namespace AutoTest
             }
         }
 
-        public void Autocommand_RedRat(string Caller, string SigData)
+        public void Autocommand_RedRat(string Caller,string SigData)
         {
             string redcon = "";
 
@@ -1603,7 +1595,7 @@ namespace AutoTest
             RedRatDBViewer_Delay_TimeOutIndicator = true;
         }
 
-        public void RedRatDBViewer_Delay(int delay_ms)
+        private void RedRatDBViewer_Delay(int delay_ms)
         {
             if (delay_ms <= 0) return;
             System.Timers.Timer aTimer = new System.Timers.Timer(delay_ms);
@@ -1614,7 +1606,7 @@ namespace AutoTest
             {
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(1);//釋放CPU//
-
+                
                 if (Global.Break_Out_MyRunCamd == 1)//強制讓schedule直接停止//
                 {
                     Global.Break_Out_MyRunCamd = 0;
@@ -1737,7 +1729,6 @@ namespace AutoTest
         #endregion
 
         #region -- 接受SerialPort1資料 --
-        string lastKey = string.Empty;
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             int data_to_read = serialPort1.BytesToRead;
@@ -1760,118 +1751,25 @@ namespace AutoTest
                 DateTime.Now.ToShortTimeString();
                 DateTime dt = DateTime.Now;
                 text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
-                textBox1.AppendText(text);
-
-                string textReplace = text.Replace("\r\n", "$");
-                string[] textArray = textReplace.Split('$');
-                foreach (string s in textArray)
+				textBox1.AppendText(text);
+				
+				
+                //string hex = ByteToHexStr(dataset);
+                //File.AppendAllText(@"C:\WriteText.txt", text);
+                /*
+                //serialPort1.DiscardInBuffer();
+                //serialPort1.DiscardOutBuffer();
+                ///////////////////////////////////////////////先暫時拿掉此功能，因為_save可能會導致程式死當
+                string hex = ByteToHexStr(dataset);
+                if (DataGridView1.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_SXP")
                 {
-                    if (s.Length > 4 && s.Contains("Cmd:"))
+                    if (hex.Substring(0, 2) == "0E")
                     {
-                        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~");
-                        Console.WriteLine("s: " + s);
-                        string temp = s.Substring(s.IndexOf("Cmd") + 4, s.Length - (s.IndexOf("Cmd") + 4)).Trim();
-                        Console.WriteLine("temp: " + temp);
-                        //string temp = System.Text.RegularExpressions.Regex.Replace(s.Substring(s.IndexOf("Cmd") + 4, 3), "[^0-9]", "").Trim(); //Use "Cmd" as key 
-                        //string temp = s.Substring(s.IndexOf("raw") + 4, 10);  //Use raw as key
+                        textBox1.AppendText("RX: " + hex);
+                        Console.WriteLine("1---" + "RX: " + hex);
 
-                        if (Global.keyCodeDic.ContainsKey(temp) == true)
+                        if (hex.Substring(hex.Length - 2) == "A5")
                         {
-                            Console.WriteLine("Key: " + Global.keyCodeDic[temp] + "  Delay time: " + sw.ElapsedMilliseconds.ToString());
-                            DataGridView_Schedule.Rows.Add(Global.keyCodeDic[temp]);
-                            DataGridView_Schedule.FirstDisplayedScrollingRowIndex = DataGridView_Schedule.Rows.Count - 1;
-                            if (sw.IsRunning == true)
-                            {
-                                DataGridView_Schedule.Rows[DataGridView_Schedule.RowCount - 3].Cells[9].Value = sw.ElapsedMilliseconds.ToString();
-                                sw.Restart();
-                            }
-                            else
-                            {
-                                sw.Start();
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine(temp + "  key or value not found" + "  [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  ");
-                        }
-                    }
-
-                    /*if (Global.keyCodeDic.ContainsKey(temp) && clickFlag == true)
-                    {
-                        if (isFirsttime)
-                        {
-                            isFirsttime = false;
-                            lastKey = Global.keyCodeDic[temp];
-                            //Console.WriteLine(Global.keyCodeDic[temp] );
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("===Not the first time===");
-                            var delayTime = calTime();
-                            //顯示上一次的按鈕 跟經過時間
-                            //在rcdb裡找對應的值
-                            //foreach(var item rcdb)
-                            DataGridView_Schedule.Rows.Add(Global.keyCodeDic[temp]);
-                            DataGridView_Schedule.FirstDisplayedScrollingRowIndex = DataGridView_Schedule.Rows.Count - 1;
-                            //Delay time 需比keyname還要晚加上去才不會死當
-                            Console.WriteLine("Key: " + Global.keyCodeDic[temp] + "  Delay time: " + delayTime);
-                            DataGridView_Schedule.Rows[DataGridView_Schedule.RowCount - 3].Cells[9].Value = delayTime;
-                       // }
-
-                        //clickFlag = false;
-                    }
-                    //else if (Global.keyCodeDic.ContainsKey(temp) && clickFlag == false)
-                    //{
-                        //clickFlag = true;
-                    //}
-                    else
-                    {
-                        Console.WriteLine(temp + "  key or value not found" + "  [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  ");
-                    }
-                }*/
-
-                    textBox1.AppendText(text);
-
-
-
-                    //string hex = ByteToHexStr(dataset);
-                    //File.AppendAllText(@"C:\WriteText.txt", text);
-                    /*
-                    //serialPort1.DiscardInBuffer();
-                    //serialPort1.DiscardOutBuffer();
-                    ///////////////////////////////////////////////先暫時拿掉此功能，因為_save可能會導致程式死當
-                    string hex = ByteToHexStr(dataset);
-                    if (DataGridView1.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_SXP")
-                    {
-                        if (hex.Substring(0, 2) == "0E")
-                        {
-                            textBox1.AppendText("RX: " + hex);
-                            Console.WriteLine("1---" + "RX: " + hex);
-
-                            if (hex.Substring(hex.Length - 2) == "A5")
-                            {
-                                if (hex.Length >= 4 && hex.Substring(hex.Length - 4) == "A5A5")
-                                {
-                                    textBox1.AppendText("\r\n");
-                                    Console.WriteLine("\r\n");
-                                    textBox1.AppendText("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
-                                    Console.WriteLine("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
-                                    textBox1.AppendText("\r\n");
-                                    Console.WriteLine("\r\n");
-                                }
-                                else
-                                {
-                                    textBox1.AppendText(hex);
-                                    Console.WriteLine("2---" + hex);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            textBox1.AppendText(hex);
-                            Console.WriteLine("3---" + hex);
-                            if(hex.Substring(hex.Length - 2) == "A5")
                             if (hex.Length >= 4 && hex.Substring(hex.Length - 4) == "A5A5")
                             {
                                 textBox1.AppendText("\r\n");
@@ -1881,76 +1779,45 @@ namespace AutoTest
                                 textBox1.AppendText("\r\n");
                                 Console.WriteLine("\r\n");
                             }
-
-                            if (hex == "A5")
+                            else
                             {
-                                textBox1.AppendText("\r\n");
-                                Console.WriteLine("\r\n");
-                                textBox1.AppendText("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
-                                Console.WriteLine("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
-                                textBox1.AppendText("\r\n");
-                                Console.WriteLine("\r\n");
+                                textBox1.AppendText(hex);
+                                Console.WriteLine("2---" + hex);
                             }
                         }
                     }
                     else
-                        textBox1.AppendText(text);
-                    */
+                    {
+                        textBox1.AppendText(hex);
+                        Console.WriteLine("3---" + hex);
+                        if(hex.Substring(hex.Length - 2) == "A5")
+                        if (hex.Length >= 4 && hex.Substring(hex.Length - 4) == "A5A5")
+                        {
+                            textBox1.AppendText("\r\n");
+                            Console.WriteLine("\r\n");
+                            textBox1.AppendText("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
+                            Console.WriteLine("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
+                            textBox1.AppendText("\r\n");
+                            Console.WriteLine("\r\n");
+                        }
+
+                        if (hex == "A5")
+                        {
+                            textBox1.AppendText("\r\n");
+                            Console.WriteLine("\r\n");
+                            textBox1.AppendText("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
+                            Console.WriteLine("TX: " + DataGridView1.Rows[Global.Scheduler_Row].Cells[5].Value.ToString() + "\r\n");
+                            textBox1.AppendText("\r\n");
+                            Console.WriteLine("\r\n");
+                        }
+                    }
                 }
+                else
+                    textBox1.AppendText(text);
+                */
             }
         }
         #endregion
-
-        Stopwatch st1 = new Stopwatch();
-        Stopwatch st2 = new Stopwatch();
-
-        /*public long calTime()
-        {
-            if (st1IsStart)
-            {
-                st1.Stop();//停止st1
-                costTime = st1.ElapsedMilliseconds; //回傳st1的時間
-                st1.Reset();
-                st1IsStart = false;
-                st2.Start();//啟動st2
-                st2IsStart = true;
-                return costTime;
-            }
-            if (st2IsStart)
-            {
-                st2.Stop();
-                costTime = st2.ElapsedMilliseconds;
-                st2.Reset();
-                st2IsStart = false;
-                st1.Start();
-                st1IsStart = true;
-                return costTime;
-            }
-            return 0;
-        }*/
-
-
-        /// <summary>
-        /// 初始化key code參考清單
-        /// </summary>
-        private void initKeyCodeList()
-        {
-            StreamReader str = new StreamReader(Global.keyPath);
-            string item = string.Empty;
-            
-            while ((item = str.ReadLine()) != null)
-            {
-                if (item.IndexOf("Cmd") != -1)
-                {
-                    //Global.keyCodeDic.Add(item.Substring(item.IndexOf("raw") + 4, item.IndexOf("=") - (item.IndexOf("raw") + 4)).Trim(),
-                    // item.Substring(item.IndexOf("=") + 1, item.Length - (item.IndexOf("=") + 1)).Trim());  //Use raw as key
-                    Global.keyCodeDic.Add(item.Substring(item.IndexOf("Cmd") + 4, item.IndexOf("=") - (item.IndexOf("Cmd") + 4)).Trim(),
-                         item.Substring(item.IndexOf("=") + 1, item.Length - (item.IndexOf("=") + 1)).Trim());
-                }
-            }
-            str.Close();
-
-        }
 
         #region -- 接受SerialPort2資料 --
         private void SerialPort2_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -2128,13 +1995,12 @@ namespace AutoTest
 
             while (StartButtonPressed == true)
             {
-                while (LogQueue1.Count > 0)
+               while (LogQueue1.Count > 0)
                 {
                     Keyword_SerialPort_1_temp_byte = LogQueue1.Dequeue();
                     Keyword_SerialPort_1_temp_char = (char)Keyword_SerialPort_1_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && 
-                        Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_1_temp_char == '\n'))
@@ -2324,7 +2190,7 @@ namespace AutoTest
                                 string compare_string = ini12.INIRead(Global.MainSettingPath, "LogSearch", "Text" + i, "");
                                 int compare_num = Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Times" + i, ""));
                                 string[] ewords = my_string.Split(new string[] { compare_string }, StringSplitOptions.None);
-
+                                
                                 if (Convert.ToInt32(ewords.Length - 1) >= 1)
                                 {
                                     compare_number[i] = compare_number[i] + (ewords.Length - 1);
@@ -2543,8 +2409,7 @@ namespace AutoTest
                     Keyword_SerialPort_2_temp_byte = LogQueue2.Dequeue();
                     Keyword_SerialPort_2_temp_char = (char)Keyword_SerialPort_2_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && 
-                        Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_2_temp_char == '\n'))
@@ -2938,9 +2803,9 @@ namespace AutoTest
         #endregion
 
         #region -- 跑Schedule的指令集 --
-         public int sRepeat = 0, stime = 0, SysDelay = 0;
         private void MyRunCamd()
         {
+            int sRepeat = 0, stime = 0, SysDelay = 0;
 
             Global.Loop_Number = 1;
             Global.Break_Out_Schedule = 0;
@@ -3709,7 +3574,7 @@ namespace AutoTest
                                             else
                                             {
                                                 IO_CMD();
-                                            }
+                                            }     
                                         }
                                         else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString().Substring(6, 1) == "1" &&
                                             Global.IO_INPUT.Substring(10, 1) == "1")
@@ -3823,7 +3688,7 @@ namespace AutoTest
                                         }
                                         break;
                                     #endregion
-
+                                        
                                     #region -- PB01 --
                                     case "01":
                                         if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString().Substring(6, 1) == "0" &&
@@ -3895,13 +3760,13 @@ namespace AutoTest
                         else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_audio_debounce")
                         {
                             bool Debounce_Time_PB1, Debounce_Time_PB7;
-                            if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[2].Value.ToString() != "")
+                            if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[2].Value.ToString() != "" )
                             {
                                 MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB1(Convert.ToUInt16(DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[2].Value.ToString()));
                                 MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB7(Convert.ToUInt16(DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[2].Value.ToString()));
                                 Debounce_Time_PB1 = MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB1(Convert.ToUInt16(DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[2].Value.ToString()));
                                 Debounce_Time_PB7 = MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB7(Convert.ToUInt16(DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[2].Value.ToString()));
-
+                                
                             }
                             else
                             {
@@ -3909,13 +3774,13 @@ namespace AutoTest
                                 MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB7();
                                 Debounce_Time_PB1 = MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB1();
                                 Debounce_Time_PB7 = MyBlueRat.Set_Input_GPIO_Low_Debounce_Time_PB7();
-
+                                
                             }
                         }
                         #endregion
 
                         #region -- Keyword Search --
-                        else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString().Length >= 9 &&
+                        else if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString().Length >= 9 && 
                                  DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString().Substring(0, 9) == "_keyword_")
                         {
                             if (DataGridView_Schedule.Rows[Global.Scheduler_Row].Cells[0].Value.ToString().Length == 11)
@@ -4076,7 +3941,7 @@ namespace AutoTest
                             }
                         }
                         #endregion
-
+                        
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
                          
@@ -4121,7 +3986,7 @@ namespace AutoTest
                                     "PA14_0,PA14_1," +
                                     "PA15_0,PA15_1," +
                                     "PB1_0,PB1_1," +
-                                    "PB7_0,PB7_1" +
+                                    "PB7_0,PB7_1" + 
                                     Environment.NewLine);
 
                                 File.AppendAllText(Application.StartupPath + @"\StepRecord.csv",
@@ -4136,7 +4001,7 @@ namespace AutoTest
                             else
                             {
                                 File.AppendAllText(Application.StartupPath + @"\StepRecord.csv",
-                                Global.Loop_Number + "," + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "," + label_Command.Text + "," + Global.IO_INPUT +
+                                Global.Loop_Number + "," + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "," + label_Command.Text + "," + Global.IO_INPUT + 
                                 "," + Global.IO_PA10_0_COUNT + "," + Global.IO_PA10_1_COUNT +
                                 "," + Global.IO_PA11_0_COUNT + "," + Global.IO_PA11_1_COUNT +
                                 "," + Global.IO_PA14_0_COUNT + "," + Global.IO_PA14_1_COUNT +
@@ -4218,7 +4083,7 @@ namespace AutoTest
                 }
             }
             #endregion
-
+            
             /*
             #region Excel function
             if (ini12.INIRead(sPath, "Record", "CompareChoose", "") == "1" && excelstat == true)
@@ -4386,7 +4251,7 @@ namespace AutoTest
             }
             else//schedule自動跑完//
             {
-                StartButtonPressed = false;
+                StartButtonPressed = false;       
 
                 UpdateUI("START", button_Start);
                 button_Setting.Enabled = true;
@@ -4952,7 +4817,7 @@ namespace AutoTest
         #endregion
 
         private void Mysvideo() => Invoke(new EventHandler(delegate { Savevideo(); }));//開始錄影//
-
+        
         private void Mysstop() => Invoke(new EventHandler(delegate//停止錄影//
         {
             capture.Stop();
@@ -5002,7 +4867,7 @@ namespace AutoTest
         {
             Filters filters = new Filters();
             Filter f;
-
+            
             List<string> video = new List<string> { };
             for (int c = 0; c < filters.VideoInputDevices.Count; c++)
             {
@@ -5022,7 +4887,7 @@ namespace AutoTest
             int VideoNum = int.Parse(ini12.INIRead(Global.MainSettingPath, "Camera", "VideoNumber", ""));
             int AudioNum = int.Parse(ini12.INIRead(Global.MainSettingPath, "Camera", "AudioNumber", ""));
 
-            if (filters.VideoInputDevices.Count < VideoNum ||
+            if (filters.VideoInputDevices.Count < VideoNum || 
                 filters.AudioInputDevices.Count < AudioNum)
             {
                 MessageBox.Show("Please reset video and/or audio device and select continue.", "Camera Status Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -5165,7 +5030,7 @@ namespace AutoTest
                 c.DropDownWidth = width;
             }
         }
-
+        
         private void StartBtn_Click(object sender, EventArgs e)
         {
             byte[] val = new byte[2];
@@ -5204,11 +5069,9 @@ namespace AutoTest
                 Thread LogThread2 = new Thread(new ThreadStart(MyLog2Camd));
                 //Thread Log1Data = new Thread(new ThreadStart(Log1_Receiving_Task));
                 //Thread Log2Data = new Thread(new ThreadStart(Log2_Receiving_Task));
-
+                
                 if (StartButtonPressed == true)//按下STOP//
                 {
-                    StartButtonPressed = false;
-                    
                     Global.Break_Out_MyRunCamd = 1;//跳出倒數迴圈//
                     MainThread.Abort();//停止執行緒//
                     timer1.Stop();//停止倒數//
@@ -5232,6 +5095,7 @@ namespace AutoTest
                         }
                     }
 
+                    StartButtonPressed = false;
                     button_Start.Enabled = false;
                     button_Setting.Enabled = false;
                     button_SaveSchedule.Enabled = false;
@@ -5241,8 +5105,6 @@ namespace AutoTest
                 }
                 else//按下START//
                 {
-                    StartButtonPressed = true;
-
                     /*
                     for (int i = 1; i < 6; i++)
                     {
@@ -5259,7 +5121,6 @@ namespace AutoTest
                         }                
                     }
                     */
-
                     Global.Break_Out_MyRunCamd = 0;
 
                     if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
@@ -5285,11 +5146,11 @@ namespace AutoTest
                     }
                     
                     ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-
                     MainThread.Start();       // 啟動執行緒
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";
 
+                    StartButtonPressed = true;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     button_SaveSchedule.Enabled = false;
@@ -5299,31 +5160,29 @@ namespace AutoTest
             if (AutoBox_Status == false)//如果沒接AutoBox//
             {
                 Thread MainThread = new Thread(new ThreadStart(MyRunCamd));
-
+                
                 if (StartButtonPressed == true)//按下STOP//
                 {
-                    StartButtonPressed = false;
-
                     Global.Break_Out_MyRunCamd = 1;    //跳出倒數迴圈
                     MainThread.Abort(); //停止執行緒
                     timer1.Stop();  //停止倒數
                     CloseDtplay();
 
+                    StartButtonPressed = false;
                     button_Start.Enabled = false;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     button_SaveSchedule.Enabled = false;
-
+                    
                     label_Command.Text = "Please wait...";
                 }
                 else//按下START//
                 {
-                    StartButtonPressed = true;
-
                     Global.Break_Out_MyRunCamd = 0;
                     MainThread.Start();// 啟動執行緒
                     timer1.Start();     //開始倒數
 
+                    StartButtonPressed = true;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     pictureBox_AcPower.Image = Properties.Resources.OFF;
@@ -5507,7 +5366,6 @@ namespace AutoTest
             OpenSerialPort1();
             Controls.Add(textBox1);
             textBox1.BringToFront();
-            button_SelectAll.BringToFront();
         }
 
         private void Com2Btn_Click(object sender, EventArgs e)
@@ -5610,7 +5468,7 @@ namespace AutoTest
 
         private void button_insert_a_row_Click(object sender, EventArgs e)
         {
-            DataGridView_Schedule.Rows.Insert(DataGridView_Schedule.CurrentCell.RowIndex + 1, new DataGridViewRow());
+            DataGridView_Schedule.Rows.Insert(DataGridView_Schedule.CurrentCell.RowIndex +1, new DataGridViewRow());
         }
 
         #region -- Form1的Schedule 1~5按鈕功能 --
@@ -5694,7 +5552,7 @@ namespace AutoTest
             button_Schedule5.Enabled = false;
             ReadSch();
         }
-        public void ReadSch()
+        private void ReadSch()
         {
             // Console.WriteLine(Global.Schedule_Num);
             // 戴入Schedule CSV 檔
@@ -5957,7 +5815,7 @@ namespace AutoTest
                 timer1.Start();
             }
         }
-
+        
         private void Timer1_Tick_1(object sender, EventArgs e)
         {
             timer1.Interval = 1000;
@@ -5967,7 +5825,7 @@ namespace AutoTest
                 label_ScheduleTime_Value.Text = (--timeCount).ToString();
                 ConvertToRealTime(timeCount);
             }
-
+            
             TestTime++;
             long ms, s, h, d = new int();
             ms = 0; s = 0; h = 0; d = 0;
@@ -6353,7 +6211,7 @@ namespace AutoTest
             }
         }
         #endregion
-
+        
         private void button_VirtualRC_Click(object sender, EventArgs e)
         {
             FormRC formRC = new FormRC();
@@ -6588,7 +6446,7 @@ namespace AutoTest
                 Console.WriteLine(error);
                 MessageBox.Show("RC Key is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
-
+            
         }
 
         private string strValue;
@@ -6640,99 +6498,14 @@ namespace AutoTest
             else
             {
                 Breakfunction = true;
-                Breakpoint = Nowpoint;
+				Breakpoint = Nowpoint;
                 DataGridView_Schedule.Rows[Breakpoint].DefaultCellStyle.BackColor = Color.Yellow;
                 DataGridView_Schedule.Rows[Breakpoint].DefaultCellStyle.SelectionBackColor = Color.Yellow;
                 DataGridView_Schedule.Rows[Breakpoint].DefaultCellStyle.SelectionForeColor = Color.Red;
                 Console.WriteLine("Enable the Breakfunction");
             }
         }
-
-        //Record schedule with RC 
-        
-        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-        bool isAction = false;
-        private void button_keyRec_Click(object sender, EventArgs e)
-        {
-            isAction = !isAction;
-            if (isAction)
-            {
-                sw.Stop();
-                if (serialPort1.IsOpen == false)
-                {
-                    OpenSerialPort1();
-                }
-
-                button_keyRec.Text = "STOP REC";
-
-            }
-            else
-            {
-                if (serialPort1.IsOpen == true)
-                {
-                    CloseSerialPort1();
-                }
-                if (serialPort2.IsOpen == true)
-                {
-                    CloseSerialPort2();
-                }
-                button_keyRec.Text = "KEY REC";
-            }
-        }
-
-        //Select and copy log from textBox1
-        private void button_selectAll_Click(object sender, EventArgs e)
-        {
-            // Determine if any text is selected in the TextBox control.
-            if (textBox1.SelectionLength == 0)
-            {
-                // Select all text in the text box.
-                textBox1.Focus();
-                textBox1.SelectAll();
-                // Copy the contents of the control to the Clipboard.
-                textBox1.Copy();
-            }
-        }
-
-
-        FormReleaseTest FormReleaseTest;
-
-        private void button_ReleaseTest_Click(object sender, EventArgs e)
-        {
-            FormReleaseTest = new FormReleaseTest();
-            FormReleaseTest.comboBox_TestItem.SelectedValueChanged += ComboBox_TestItem_SelectedValueChanged;
-            FormReleaseTest.Owner = this;
-            if (Global.FormReleaseTest == false)
-            {
-                FormReleaseTest.Show();
-            }
-
-
-        }
-        private void ComboBox_TestItem_SelectedValueChanged(object sender, EventArgs e)
-        {
-            FormReleaseTest.test();
-            ReadSch();
-        }
-
-        private void DataGridView_Schedule_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void Cb_SelectedValueChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void FormReleaseTest_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
-
-
-
 
     public class SafeDataGridView : DataGridView
     {
@@ -6754,7 +6527,6 @@ namespace AutoTest
         public static string MainSettingPath = Application.StartupPath + "\\Config.ini";
         public static string MailSettingPath = Application.StartupPath + "\\Mail.ini";
         public static string RcSettingPath = Application.StartupPath + "\\RC.ini";
-        public static string keyPath = Application.StartupPath + "\\key_cmd.ini";
 
         public static int Scheduler_Row = 0;
         public static List<string> VID = new List<string> { };
@@ -6819,8 +6591,7 @@ namespace AutoTest
         public static int Break_Out_Schedule = 0;//定時器中斷變數//
         public static int Break_Out_MyRunCamd;//是否跳出倒數迴圈，1為跳出//
         public static bool FormRC = false;
-        public static bool FormReleaseTest = false;
-        public static Dictionary<string, string> keyCodeDic = new Dictionary<string, string>();
+
         //MessageBox.Show("RC Key is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Question);//MessageBox範例
     }
 }
