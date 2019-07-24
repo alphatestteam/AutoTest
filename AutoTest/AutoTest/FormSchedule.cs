@@ -8,9 +8,19 @@ namespace AutoTest
 {
     public partial class FormSchedule : Form
     {
+<<<<<<< HEAD
+        string MainSettingPath = Application.StartupPath + "\\Config.ini";
+        string MailPath = Application.StartupPath + "\\Mail.ini";
+
+        public FormReleaseTest frt = new FormReleaseTest();
+
+=======
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
         public FormSchedule()
         {
             InitializeComponent();
+            //textBox_Schedule1.Text = frt.getCombox;
+   
         }
 
         private void FormSchedule_Load(object sender, EventArgs e)
@@ -292,15 +302,37 @@ namespace AutoTest
             #endregion
         }
 
+        public string setTextBox_Schedule1
+        {
+            set
+            {
+                textBox_Schedule1.Text = value;
+            }
+        }
+
+
         #region LoadSchBtn
         private void LoadSchBtn1_Click(object sender, EventArgs e)      // Load Schedule1 Path
         {
             SchOpen1.Filter = "CSV files (*.csv)|*.CSV";
             SchOpen1.ShowDialog();
-            if (SchOpen1.FileName == "SchOpen1")
-                textBox_Schedule1.Text = textBox_Schedule1.Text;
-            else
-                textBox_Schedule1.Text = SchOpen1.FileName;
+            
+        
+
+                if (SchOpen1.FileName == "SchOpen1")
+                {
+                    textBox_Schedule1.Text = textBox_Schedule1.Text;
+                }
+                else
+                {
+                    textBox_Schedule1.Text = SchOpen1.FileName;
+                }
+
+
+
+
+
+
         }
         private void LoadSchBtn2_Click(object sender, EventArgs e)      // Load Schedule2 Path
         {
@@ -339,7 +371,7 @@ namespace AutoTest
                 textBox_Schedule5.Text = SchOpen5.FileName;
         }
         #endregion
-        
+
         public void SaveSchBtn_Click(object sender, EventArgs e)
         {
             if (checkBox_Schedule3.Checked == true)
@@ -500,7 +532,7 @@ namespace AutoTest
             #endregion
         }
 
-        
+
 
         #region checkBoxTimer
         private void checkBoxTimer1_CheckedChanged(object sender, EventArgs e)
@@ -570,12 +602,13 @@ namespace AutoTest
         }
         #endregion
 
-        
 
-        
+
+
 
         private void textBox_Schedule1_TextChanged(object sender, EventArgs e)
         {
+     
             if (File.Exists(textBox_Schedule1.Text.Trim()) == true)
             {
                 ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Path", textBox_Schedule1.Text.Trim());
@@ -894,8 +927,13 @@ namespace AutoTest
             //足跡模式//
             if (checkBox_FootprintMode.Checked == true)
             {
+<<<<<<< HEAD
+
+                ini12.INIWrite(MainSettingPath, "Record", "Footprint Mode", "1");
+=======
                 
                 ini12.INIWrite(Global.MainSettingPath, "Record", "Footprint Mode", "1");
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             }
             else
             {
@@ -908,8 +946,13 @@ namespace AutoTest
             //測試完成開始錄影//
             if (checkBox_VideoRecord.Checked == true)
             {
+<<<<<<< HEAD
+
+                ini12.INIWrite(MainSettingPath, "Record", "EachVideo", "1");
+=======
                 
                 ini12.INIWrite(Global.MainSettingPath, "Record", "EachVideo", "1");
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             }
             else
             {
@@ -922,13 +965,24 @@ namespace AutoTest
             //程式啟動自動跑shchedule//
             if (checkBox_ScheduleAutoStart.Checked == true)
             {
+<<<<<<< HEAD
+
+                ini12.INIWrite(MainSettingPath, "Device", "RunAfterStartUp", "1");
+=======
                 
                 ini12.INIWrite(Global.MainSettingPath, "Device", "RunAfterStartUp", "1");
+>>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             }
             else
             {
                 ini12.INIWrite(Global.MainSettingPath, "Device", "RunAfterStartUp", "0");
             }
+        }
+
+        private void textBox_Schedule1_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("textBox_Schedule1.Text: " + textBox_Schedule1.Text);
+            
         }
     }
 }

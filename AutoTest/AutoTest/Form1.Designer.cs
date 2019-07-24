@@ -105,6 +105,7 @@ namespace AutoTest
             this.label_Ac1 = new System.Windows.Forms.Label();
             this.pictureBox_Ac2 = new System.Windows.Forms.PictureBox();
             this.pictureBox_Ac1 = new System.Windows.Forms.PictureBox();
+            this.button_SelectAll = new System.Windows.Forms.Button();
             this.button_AcUsb = new System.Windows.Forms.Button();
             this.pictureBox_BlueRat = new System.Windows.Forms.PictureBox();
             this.MiniPicBox = new System.Windows.Forms.PictureBox();
@@ -116,6 +117,8 @@ namespace AutoTest
             this.panelVideo = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.comboBox_CameraDevice = new System.Windows.Forms.ComboBox();
+            this.button_keyRec = new System.Windows.Forms.Button();
+            this.button_ReleaseTest = new System.Windows.Forms.Button();
             this.DataGridView_Schedule = new AutoTest.SafeDataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -265,7 +268,7 @@ namespace AutoTest
             // 
             this.TimeLabel.AutoSize = true;
             this.TimeLabel.BackColor = System.Drawing.Color.DarkOrange;
-            this.TimeLabel.Font = new System.Drawing.Font("微軟正黑體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.TimeLabel.Font = new System.Drawing.Font("Microsoft JhengHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.TimeLabel.ForeColor = System.Drawing.Color.White;
             this.TimeLabel.Location = new System.Drawing.Point(318, 703);
             this.TimeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -649,7 +652,7 @@ namespace AutoTest
             this.button_TimeLine.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_TimeLine.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button_TimeLine.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button_TimeLine.Location = new System.Drawing.Point(771, 444);
+            this.button_TimeLine.Location = new System.Drawing.Point(580, 444);
             this.button_TimeLine.Margin = new System.Windows.Forms.Padding(2);
             this.button_TimeLine.Name = "button_TimeLine";
             this.button_TimeLine.Size = new System.Drawing.Size(81, 25);
@@ -812,7 +815,7 @@ namespace AutoTest
             this.labelGPIO_Input.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.labelGPIO_Input.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.labelGPIO_Input.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.labelGPIO_Input.Location = new System.Drawing.Point(590, 444);
+            this.labelGPIO_Input.Location = new System.Drawing.Point(399, 444);
             this.labelGPIO_Input.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGPIO_Input.Name = "labelGPIO_Input";
             this.labelGPIO_Input.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1024,6 +1027,20 @@ namespace AutoTest
             this.pictureBox_Ac1.TabStop = false;
             this.pictureBox_Ac1.Click += new System.EventHandler(this.pictureBox_Ac1_Click);
             // 
+            // button_SelectAll
+            // 
+            this.button_SelectAll.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.button_SelectAll.BackColor = System.Drawing.Color.Transparent;
+            this.button_SelectAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_SelectAll.Font = new System.Drawing.Font("Microsoft JhengHei UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button_SelectAll.Location = new System.Drawing.Point(975, 40);
+            this.button_SelectAll.Name = "button_SelectAll";
+            this.button_SelectAll.Size = new System.Drawing.Size(101, 24);
+            this.button_SelectAll.TabIndex = 98;
+            this.button_SelectAll.Text = "Select All+Cpoy";
+            this.button_SelectAll.UseVisualStyleBackColor = false;
+            this.button_SelectAll.Click += new System.EventHandler(this.button_selectAll_Click);
+            // 
             // button_AcUsb
             // 
             this.button_AcUsb.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -1037,7 +1054,7 @@ namespace AutoTest
             this.button_AcUsb.Size = new System.Drawing.Size(130, 25);
             this.button_AcUsb.TabIndex = 94;
             this.button_AcUsb.Text = "AC / USB SWITCH";
-            this.button_AcUsb.UseVisualStyleBackColor = false;
+            this.button_AcUsb.UseVisualStyleBackColor = true;
             this.button_AcUsb.Click += new System.EventHandler(this.button_AcUsb_Click);
             // 
             // pictureBox_BlueRat
@@ -1158,6 +1175,34 @@ namespace AutoTest
             this.comboBox_CameraDevice.TabIndex = 95;
             this.comboBox_CameraDevice.SelectedIndexChanged += new System.EventHandler(this.comboBox_CameraDevice_SelectedIndexChanged);
             // 
+            // button_keyRec
+            // 
+            this.button_keyRec.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F);
+            this.button_keyRec.Location = new System.Drawing.Point(480, 10);
+            this.button_keyRec.Margin = new System.Windows.Forms.Padding(2);
+            this.button_keyRec.Name = "button_keyRec";
+            this.button_keyRec.Size = new System.Drawing.Size(75, 25);
+            this.button_keyRec.TabIndex = 97;
+            this.button_keyRec.Text = "KEY REC";
+            this.button_keyRec.UseVisualStyleBackColor = true;
+            this.button_keyRec.Visible = false;
+            this.button_keyRec.Click += new System.EventHandler(this.button_keyRec_Click);
+            // 
+            // button_ReleaseTest
+            // 
+            this.button_ReleaseTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button_ReleaseTest.BackColor = System.Drawing.Color.Transparent;
+            this.button_ReleaseTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button_ReleaseTest.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button_ReleaseTest.Location = new System.Drawing.Point(749, 444);
+            this.button_ReleaseTest.Margin = new System.Windows.Forms.Padding(2);
+            this.button_ReleaseTest.Name = "button_ReleaseTest";
+            this.button_ReleaseTest.Size = new System.Drawing.Size(103, 25);
+            this.button_ReleaseTest.TabIndex = 99;
+            this.button_ReleaseTest.Text = "RELEASE TEST";
+            this.button_ReleaseTest.UseVisualStyleBackColor = false;
+            this.button_ReleaseTest.Click += new System.EventHandler(this.button_ReleaseTest_Click);
+            // 
             // DataGridView_Schedule
             // 
             this.DataGridView_Schedule.AllowUserToResizeColumns = false;
@@ -1203,6 +1248,7 @@ namespace AutoTest
             this.DataGridView_Schedule.RowTemplate.Height = 24;
             this.DataGridView_Schedule.Size = new System.Drawing.Size(950, 400);
             this.DataGridView_Schedule.TabIndex = 23;
+            this.DataGridView_Schedule.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_Schedule_CellContentClick);
             this.DataGridView_Schedule.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_Schedule_CellMouseDoubleClick);
             this.DataGridView_Schedule.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridView1_DataError);
             this.DataGridView_Schedule.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGridView1_EditingControlShowing);
@@ -1308,6 +1354,9 @@ namespace AutoTest
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1106, 554);
+            this.Controls.Add(this.button_ReleaseTest);
+            this.Controls.Add(this.button_SelectAll);
+            this.Controls.Add(this.button_keyRec);
             this.Controls.Add(this.button_AcUsb);
             this.Controls.Add(this.panel_AcUsb);
             this.Controls.Add(this.button_InsertRow);
@@ -1498,6 +1547,9 @@ namespace AutoTest
         private System.Windows.Forms.ComboBox comboBox_CameraDevice;
         public SafeDataGridView DataGridView_Schedule;
         public System.Windows.Forms.Button button_Start;
+        private System.Windows.Forms.Button button_keyRec;
+        private System.Windows.Forms.Button button_SelectAll;
+        private System.Windows.Forms.Button button_ReleaseTest;
     }
 }
 
