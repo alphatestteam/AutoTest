@@ -1737,11 +1737,7 @@ namespace AutoTest
         #endregion
 
         #region -- 接受SerialPort1資料 --
-<<<<<<< HEAD
-
-=======
         //bool clickFlag = true;
->>>>>>> 4be2311c4027369b453e3f6d07a5417a378cae85
         string lastKey = string.Empty;
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -4131,12 +4127,6 @@ namespace AutoTest
 
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
-
-<<<<<<< HEAD
-                        ini12.INIWrite(MailPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
-                         
-=======
->>>>>>> 4be2311c4027369b453e3f6d07a5417a378cae85
                         ini12.INIWrite(Global.MailSettingPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
 
                         if (Global.Break_Out_Schedule == 1)//定時器時間到跳出迴圈//
@@ -5341,14 +5331,8 @@ namespace AutoTest
                         }
                     }
 
-<<<<<<< HEAD
-                    ini12.INIWrite(MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                     
-                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-=======
-                    ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-
->>>>>>> 4be2311c4027369b453e3f6d07a5417a378cae85
                     MainThread.Start();       // 啟動執行緒
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";

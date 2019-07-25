@@ -86,12 +86,7 @@ namespace AutoTest
                 {
 
                 Console.WriteLine("comboBox_TestItem: " + comboBox_TestItem.SelectedItem.ToString());
-<<<<<<< HEAD
                 ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Path", testCaseDic[(string)comboBox_TestItem.SelectedItem].ToString());
-=======
-                //Item itm = (Item)comboBox_TestItem.SelectedItem;
-                ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Path", TestCaseDic[(string)comboBox_TestItem.SelectedItem].ToString());
->>>>>>> 4be2311c4027369b453e3f6d07a5417a378cae85
                 ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Exist", "1");
                 return true;
                 }
