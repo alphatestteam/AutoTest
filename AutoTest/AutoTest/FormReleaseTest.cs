@@ -66,12 +66,14 @@ namespace AutoTest
         {
             InitializeComponent();
             this.FormClosed += FormReleaseTest_FormClosed;
-            if (System.IO.File.Exists(testCaseDicPath)) {
+            if (System.IO.File.Exists(testCaseDicPath))
+            {
                 CreateDictionary();
             }
             else
             {
                 CreateTestCaseIni();
+                CreateDictionary();
             }
             foreach (string key in testCaseDic.Keys)
             {
@@ -86,12 +88,8 @@ namespace AutoTest
                 {
 
                 Console.WriteLine("comboBox_TestItem: " + comboBox_TestItem.SelectedItem.ToString());
-<<<<<<< HEAD
                 ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Path", testCaseDic[(string)comboBox_TestItem.SelectedItem].ToString());
-=======
                 //Item itm = (Item)comboBox_TestItem.SelectedItem;
-                ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Path", TestCaseDic[(string)comboBox_TestItem.SelectedItem].ToString());
->>>>>>> 4be2311c4027369b453e3f6d07a5417a378cae85
                 ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Exist", "1");
                 return true;
                 }
@@ -188,11 +186,13 @@ namespace AutoTest
         private void button_Pass_Click(object sender, EventArgs e)
         {
             dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Value = "PASS";
+            dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Style.BackColor = Color.LightGreen;
         }
 
         private void button_Fail_Click(object sender, EventArgs e)
         {
             dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Value = "FAIL";
+            dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Style.BackColor = Color.Red;
         }
 
         private void button_None_Click(object sender, EventArgs e)
@@ -200,6 +200,7 @@ namespace AutoTest
             dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Value = "NONE";
             dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Style.BackColor = Color.LightGray;
         }
+
         private void FormReleaseTest_Load(object sender, EventArgs e)
         {
             button_Last.Enabled = false;
