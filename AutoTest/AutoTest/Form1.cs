@@ -129,7 +129,7 @@ namespace AutoTest
                 this.Height = 600;
                 this.Width = 1120;
             }
-            
+
             if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
             {
                 if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "1")
@@ -1737,6 +1737,7 @@ namespace AutoTest
         #endregion
 
         #region -- 接受SerialPort1資料 --
+        bool clickFlag = true;
         string lastKey = string.Empty;
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -1759,9 +1760,8 @@ namespace AutoTest
                 
                 DateTime.Now.ToShortTimeString();
                 DateTime dt = DateTime.Now;
-                text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
-                textBox1.AppendText(text);
 
+                text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
                 string textReplace = text.Replace("\r\n", "$");
                 string[] textArray = textReplace.Split('$');
                 foreach (string s in textArray)
@@ -1806,6 +1806,7 @@ namespace AutoTest
 
                         }
                         else
+<<<<<<< HEAD
                         {
                             Console.WriteLine("===Not the first time===");
                             var delayTime = calTime();
@@ -1846,6 +1847,48 @@ namespace AutoTest
                     {
                         if (hex.Substring(0, 2) == "0E")
                         {
+=======
+                        {
+                            Console.WriteLine("===Not the first time===");
+                            var delayTime = calTime();
+                            //顯示上一次的按鈕 跟經過時間
+                            //在rcdb裡找對應的值
+                            //foreach(var item rcdb)
+                            DataGridView_Schedule.Rows.Add(Global.keyCodeDic[temp]);
+                            DataGridView_Schedule.FirstDisplayedScrollingRowIndex = DataGridView_Schedule.Rows.Count - 1;
+                            //Delay time 需比keyname還要晚加上去才不會死當
+                            Console.WriteLine("Key: " + Global.keyCodeDic[temp] + "  Delay time: " + delayTime);
+                            DataGridView_Schedule.Rows[DataGridView_Schedule.RowCount - 3].Cells[9].Value = delayTime;
+                       // }
+
+                        //clickFlag = false;
+                    }
+                    //else if (Global.keyCodeDic.ContainsKey(temp) && clickFlag == false)
+                    //{
+                        //clickFlag = true;
+                    //}
+                    else
+                    {
+                        Console.WriteLine(temp + "  key or value not found" + "  [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  ");
+                    }
+                }*/
+
+                    textBox1.AppendText(text);
+
+
+
+                    //string hex = ByteToHexStr(dataset);
+                    //File.AppendAllText(@"C:\WriteText.txt", text);
+                    /*
+                    //serialPort1.DiscardInBuffer();
+                    //serialPort1.DiscardOutBuffer();
+                    ///////////////////////////////////////////////先暫時拿掉此功能，因為_save可能會導致程式死當
+                    string hex = ByteToHexStr(dataset);
+                    if (DataGridView1.Rows[Global.Scheduler_Row].Cells[0].Value.ToString() == "_SXP")
+                    {
+                        if (hex.Substring(0, 2) == "0E")
+                        {
+>>>>>>> d308a570de5c4f0e44a609dc813dda8c09b55e4c
                             textBox1.AppendText("RX: " + hex);
                             Console.WriteLine("1---" + "RX: " + hex);
 
@@ -1904,6 +1947,10 @@ namespace AutoTest
         Stopwatch st1 = new Stopwatch();
         Stopwatch st2 = new Stopwatch();
 
+        bool st1IsStart = false;
+        bool st2IsStart = false;
+        long costTime = 0;
+
         /*public long calTime()
         {
             if (st1IsStart)
@@ -1937,7 +1984,7 @@ namespace AutoTest
         {
             StreamReader str = new StreamReader(Global.keyPath);
             string item = string.Empty;
-            
+
             while ((item = str.ReadLine()) != null)
             {
                 if (item.IndexOf("Cmd") != -1)
@@ -1949,7 +1996,6 @@ namespace AutoTest
                 }
             }
             str.Close();
-
         }
 
         #region -- 接受SerialPort2資料 --
@@ -2133,8 +2179,7 @@ namespace AutoTest
                     Keyword_SerialPort_1_temp_byte = LogQueue1.Dequeue();
                     Keyword_SerialPort_1_temp_char = (char)Keyword_SerialPort_1_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && 
-                        Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport1", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_1_temp_char == '\n'))
@@ -2543,8 +2588,7 @@ namespace AutoTest
                     Keyword_SerialPort_2_temp_byte = LogQueue2.Dequeue();
                     Keyword_SerialPort_2_temp_char = (char)Keyword_SerialPort_2_temp_byte;
 
-                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && 
-                        Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
+                    if (Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "Comport2", "")) == 1 && Convert.ToInt32(ini12.INIRead(Global.MainSettingPath, "LogSearch", "TextNum", "")) > 0)
                     {
                         #region \n
                         if ((Keyword_SerialPort_2_temp_char == '\n'))
@@ -4079,7 +4123,7 @@ namespace AutoTest
 
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
-                         
+
                         ini12.INIWrite(Global.MailSettingPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
 
                         if (Global.Break_Out_Schedule == 1)//定時器時間到跳出迴圈//
@@ -5207,8 +5251,6 @@ namespace AutoTest
 
                 if (StartButtonPressed == true)//按下STOP//
                 {
-                    StartButtonPressed = false;
-                    
                     Global.Break_Out_MyRunCamd = 1;//跳出倒數迴圈//
                     MainThread.Abort();//停止執行緒//
                     timer1.Stop();//停止倒數//
@@ -5232,6 +5274,7 @@ namespace AutoTest
                         }
                     }
 
+                    StartButtonPressed = false;
                     button_Start.Enabled = false;
                     button_Setting.Enabled = false;
                     button_SaveSchedule.Enabled = false;
@@ -5241,8 +5284,6 @@ namespace AutoTest
                 }
                 else//按下START//
                 {
-                    StartButtonPressed = true;
-
                     /*
                     for (int i = 1; i < 6; i++)
                     {
@@ -5259,7 +5300,6 @@ namespace AutoTest
                         }                
                     }
                     */
-
                     Global.Break_Out_MyRunCamd = 0;
 
                     if (ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1")
@@ -5283,13 +5323,14 @@ namespace AutoTest
                             LogThread2.Start();
                         }
                     }
-                    
+
                     ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
 
                     MainThread.Start();       // 啟動執行緒
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";
 
+                    StartButtonPressed = true;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     button_SaveSchedule.Enabled = false;
@@ -5302,13 +5343,12 @@ namespace AutoTest
 
                 if (StartButtonPressed == true)//按下STOP//
                 {
-                    StartButtonPressed = false;
-
                     Global.Break_Out_MyRunCamd = 1;    //跳出倒數迴圈
                     MainThread.Abort(); //停止執行緒
                     timer1.Stop();  //停止倒數
                     CloseDtplay();
 
+                    StartButtonPressed = false;
                     button_Start.Enabled = false;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
@@ -5318,12 +5358,11 @@ namespace AutoTest
                 }
                 else//按下START//
                 {
-                    StartButtonPressed = true;
-
                     Global.Break_Out_MyRunCamd = 0;
                     MainThread.Start();// 啟動執行緒
                     timer1.Start();     //開始倒數
 
+                    StartButtonPressed = true;
                     button_Setting.Enabled = false;
                     button_Pause.Enabled = true;
                     pictureBox_AcPower.Image = Properties.Resources.OFF;
@@ -5336,7 +5375,7 @@ namespace AutoTest
         {
             FormTabControl FormTabControl = new FormTabControl();
             Global.RCDB = ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "");
-            
+
             //如果serialport開著則先關閉//
             if (serialPort1.IsOpen == true)
             {
@@ -5382,7 +5421,7 @@ namespace AutoTest
 
                 button_SerialPort1.Visible = ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1" ? true : false;
                 button_SerialPort2.Visible = ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1" ? true : false;
-                
+
                 List<string> SchExist = new List<string> { };
                 for (int i = 2; i < 6; i++)
                 {
