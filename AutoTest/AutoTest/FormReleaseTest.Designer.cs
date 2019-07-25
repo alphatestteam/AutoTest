@@ -63,7 +63,7 @@
             // 
             // button_Pass
             // 
-            this.button_Pass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.button_Pass.BackColor = System.Drawing.SystemColors.Control;
             this.button_Pass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Pass.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button_Pass.Location = new System.Drawing.Point(311, 299);
@@ -76,7 +76,7 @@
             // 
             // button_Fail
             // 
-            this.button_Fail.BackColor = System.Drawing.Color.Red;
+            this.button_Fail.BackColor = System.Drawing.SystemColors.Control;
             this.button_Fail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Fail.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button_Fail.Location = new System.Drawing.Point(409, 299);

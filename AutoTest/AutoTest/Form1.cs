@@ -5332,7 +5332,6 @@ namespace AutoTest
                     }
 
                     ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                    
                     MainThread.Start();       // 啟動執行緒
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";
