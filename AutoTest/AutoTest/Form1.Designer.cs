@@ -1248,7 +1248,6 @@ namespace AutoTest
             this.DataGridView_Schedule.RowTemplate.Height = 24;
             this.DataGridView_Schedule.Size = new System.Drawing.Size(950, 400);
             this.DataGridView_Schedule.TabIndex = 23;
-            this.DataGridView_Schedule.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_Schedule_CellContentClick);
             this.DataGridView_Schedule.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_Schedule_CellMouseDoubleClick);
             this.DataGridView_Schedule.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGridView1_DataError);
             this.DataGridView_Schedule.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGridView1_EditingControlShowing);
@@ -1496,7 +1495,7 @@ namespace AutoTest
         private System.Windows.Forms.Label labelSch5Timer;
         private System.Windows.Forms.Label labelSch4Timer;
         private System.Windows.Forms.Label labelSch3Timer;
-        private System.Windows.Forms.Button button_Pause;
+        public System.Windows.Forms.Button button_Pause;
         private System.Windows.Forms.Label label_ScheduleTime_Value;
         public System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panel1;

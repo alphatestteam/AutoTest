@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReleaseTest));
             this.comboBox_TestItem = new System.Windows.Forms.ComboBox();
             this.button_Pass = new System.Windows.Forms.Button();
             this.button_Fail = new System.Windows.Forms.Button();
@@ -62,6 +63,7 @@
             // 
             // button_Pass
             // 
+            this.button_Pass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.button_Pass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Pass.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button_Pass.Location = new System.Drawing.Point(311, 299);
@@ -69,11 +71,12 @@
             this.button_Pass.Size = new System.Drawing.Size(75, 23);
             this.button_Pass.TabIndex = 1;
             this.button_Pass.Text = "PASS";
-            this.button_Pass.UseVisualStyleBackColor = true;
+            this.button_Pass.UseVisualStyleBackColor = false;
             this.button_Pass.Click += new System.EventHandler(this.button_Pass_Click);
             // 
             // button_Fail
             // 
+            this.button_Fail.BackColor = System.Drawing.Color.Red;
             this.button_Fail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Fail.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button_Fail.Location = new System.Drawing.Point(409, 299);
@@ -81,7 +84,7 @@
             this.button_Fail.Size = new System.Drawing.Size(75, 23);
             this.button_Fail.TabIndex = 2;
             this.button_Fail.Text = "FAIL";
-            this.button_Fail.UseVisualStyleBackColor = true;
+            this.button_Fail.UseVisualStyleBackColor = false;
             this.button_Fail.Click += new System.EventHandler(this.button_Fail_Click);
             // 
             // button_Run
@@ -98,6 +101,7 @@
             // 
             // button_None
             // 
+            this.button_None.BackColor = System.Drawing.Color.Silver;
             this.button_None.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_None.Font = new System.Drawing.Font("Microsoft JhengHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button_None.Location = new System.Drawing.Point(503, 299);
@@ -105,7 +109,7 @@
             this.button_None.Size = new System.Drawing.Size(75, 23);
             this.button_None.TabIndex = 5;
             this.button_None.Text = "NONE";
-            this.button_None.UseVisualStyleBackColor = true;
+            this.button_None.UseVisualStyleBackColor = false;
             this.button_None.Click += new System.EventHandler(this.button_None_Click);
             // 
             // textBox_Comment
@@ -121,6 +125,7 @@
             // dataGridView_Report
             // 
             this.dataGridView_Report.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView_Report.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView_Report.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Report.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -209,8 +214,9 @@
             this.Controls.Add(this.button_Pass);
             this.Controls.Add(this.comboBox_TestItem);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormReleaseTest";
-            this.Text = "FormReleaseTest";
+            this.Text = "Release Test";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReleaseTest_FormClosed);
             this.Load += new System.EventHandler(this.FormReleaseTest_Load);
             this.Shown += new System.EventHandler(this.FormReleaseTest_Shown);

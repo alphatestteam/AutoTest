@@ -8,14 +8,12 @@ namespace AutoTest
 {
     public partial class FormSchedule : Form
     {
-<<<<<<< HEAD
+
         string MainSettingPath = Application.StartupPath + "\\Config.ini";
         string MailPath = Application.StartupPath + "\\Mail.ini";
 
         public FormReleaseTest frt = new FormReleaseTest();
 
-=======
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
         public FormSchedule()
         {
             InitializeComponent();
@@ -927,13 +925,10 @@ namespace AutoTest
             //足跡模式//
             if (checkBox_FootprintMode.Checked == true)
             {
-<<<<<<< HEAD
 
                 ini12.INIWrite(MainSettingPath, "Record", "Footprint Mode", "1");
-=======
                 
                 ini12.INIWrite(Global.MainSettingPath, "Record", "Footprint Mode", "1");
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             }
             else
             {
@@ -946,13 +941,10 @@ namespace AutoTest
             //測試完成開始錄影//
             if (checkBox_VideoRecord.Checked == true)
             {
-<<<<<<< HEAD
 
                 ini12.INIWrite(MainSettingPath, "Record", "EachVideo", "1");
-=======
                 
                 ini12.INIWrite(Global.MainSettingPath, "Record", "EachVideo", "1");
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             }
             else
             {
@@ -965,13 +957,10 @@ namespace AutoTest
             //程式啟動自動跑shchedule//
             if (checkBox_ScheduleAutoStart.Checked == true)
             {
-<<<<<<< HEAD
 
                 ini12.INIWrite(MainSettingPath, "Device", "RunAfterStartUp", "1");
-=======
                 
                 ini12.INIWrite(Global.MainSettingPath, "Device", "RunAfterStartUp", "1");
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             }
             else
             {

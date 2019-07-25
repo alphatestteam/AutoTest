@@ -32,15 +32,12 @@ namespace AutoTest
         //private BackgroundWorker BackgroundWorker = new BackgroundWorker();
         //private Form_DGV_Autobox Form_DGV_Autobox = new Form_DGV_Autobox();
 
-<<<<<<< HEAD
         private string MainSettingPath = Application.StartupPath + "\\Config.ini";
         private string MailPath = Application.StartupPath + "\\Mail.ini";
         private string RcPath = Application.StartupPath + "\\RC.ini";
         private string keyPath = Application.StartupPath + "\\key_cmd.ini";  //Use "Cmd" as key
 
 
-=======
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
         private IRedRat3 redRat3 = null;
         private Add_ons Add_ons = new Add_ons();
         private RedRatDBParser RedRatData = new RedRatDBParser();
@@ -56,7 +53,7 @@ namespace AutoTest
         private Capture capture = null;
         private Filters filters = null;
         private bool _captureInProgress;
-        private bool StartButtonPressed = false;//true = 按下START//false = 按下STOP//
+        public bool StartButtonPressed = false;//true = 按下START//false = 按下STOP//
         //private bool excelstat = false;
         private bool VideoRecording = false;//是否正在錄影//
         private bool TimerPanel = false;
@@ -138,13 +135,11 @@ namespace AutoTest
                 this.Height = 600;
                 this.Width = 1120;
             }
-<<<<<<< HEAD
 
             if (ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
-=======
+
             
             if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             {
                 if (ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxVerson", "") == "1")
                 {
@@ -1751,7 +1746,7 @@ namespace AutoTest
         #endregion
 
         #region -- 接受SerialPort1資料 --
-        bool clickFlag = true;
+
         string lastKey = string.Empty;
         private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -1774,46 +1769,43 @@ namespace AutoTest
                 
                 DateTime.Now.ToShortTimeString();
                 DateTime dt = DateTime.Now;
-<<<<<<< HEAD
-=======
-                text = text.Replace("\r\n", "\r").Replace("\n\r", "\r").Replace("\n", "\r").Replace("\r", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "]  ");
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
-
-
 
                 text = text.Replace("\r", "").Replace("\n", "\r\n" + "[" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  ");
+
+                if (clickFlag == true) { 
                 string textReplace = text.Replace("\r\n", "$");
                 string[] textArray = textReplace.Split('$');
-                foreach (string s in textArray)
-                {
-                    if (s.Length > 4 && s.Contains("Cmd:"))
+                    foreach (string s in textArray)
                     {
-                        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~");
-                        Console.WriteLine("s: " + s);
-                        string temp = s.Substring(s.IndexOf("Cmd") + 4, s.Length - (s.IndexOf("Cmd") + 4)).Trim();
-                        Console.WriteLine("temp: " + temp);
-                        //string temp = System.Text.RegularExpressions.Regex.Replace(s.Substring(s.IndexOf("Cmd") + 4, 3), "[^0-9]", "").Trim(); //Use "Cmd" as key 
-                        //string temp = s.Substring(s.IndexOf("raw") + 4, 10);  //Use raw as key
-
-                        if (Global.keyCodeDic.ContainsKey(temp) == true)
+                        if (s.Length > 4 && s.Contains("Cmd:"))
                         {
-                            Console.WriteLine("Key: " + Global.keyCodeDic[temp] + "  Delay time: " + sw.ElapsedMilliseconds.ToString());
-                            DataGridView_Schedule.Rows.Add(Global.keyCodeDic[temp]);
-                            DataGridView_Schedule.FirstDisplayedScrollingRowIndex = DataGridView_Schedule.Rows.Count - 1;
-                            if (sw.IsRunning == true)
+                            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~");
+                            Console.WriteLine("s: " + s);
+                            string temp = s.Substring(s.IndexOf("Cmd") + 4, s.Length - (s.IndexOf("Cmd") + 4)).Trim();
+                            Console.WriteLine("temp: " + temp);
+                            //string temp = System.Text.RegularExpressions.Regex.Replace(s.Substring(s.IndexOf("Cmd") + 4, 3), "[^0-9]", "").Trim(); //Use "Cmd" as key 
+                            //string temp = s.Substring(s.IndexOf("raw") + 4, 10);  //Use raw as key
+
+                            if (Global.keyCodeDic.ContainsKey(temp) == true)
                             {
-                                DataGridView_Schedule.Rows[DataGridView_Schedule.RowCount - 3].Cells[9].Value = sw.ElapsedMilliseconds.ToString();
-                                sw.Restart();
+                                Console.WriteLine("Key: " + Global.keyCodeDic[temp] + "  Delay time: " + sw.ElapsedMilliseconds.ToString());
+                                DataGridView_Schedule.Rows.Add(Global.keyCodeDic[temp]);
+                                DataGridView_Schedule.FirstDisplayedScrollingRowIndex = DataGridView_Schedule.Rows.Count - 1;
+                                if (sw.IsRunning == true)
+                                {
+                                    DataGridView_Schedule.Rows[DataGridView_Schedule.RowCount - 3].Cells[9].Value = sw.ElapsedMilliseconds.ToString();
+                                    sw.Restart();
+                                }
+                                else
+                                {
+                                    sw.Start();
+                                }
+
                             }
                             else
                             {
-                                sw.Start();
+                                Console.WriteLine(temp + "  key or value not found" + "  [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  ");
                             }
-
-                        }
-                        else
-                        {
-                            Console.WriteLine(temp + "  key or value not found" + "  [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  ");
                         }
                     }
 
@@ -2186,19 +2178,11 @@ namespace AutoTest
                                     ////////////////////////////////////////////////////////////////////////////////////////////////MAIL//////////////////
                                     if (compare_number[i] > compare_num && send_status[i] == false)
                                     {
-<<<<<<< HEAD
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
-                                        if (ini12.INIRead(MailPath, "Mail Info", "From", "") != ""
-                                            && ini12.INIRead(MailPath, "Mail Info", "To", "") != ""
-                                            && ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") == "1")
-=======
                                         ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
                                         ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
                                         if (ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "") != "" 
                                             && ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") != "" 
                                             && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                         {
                                             FormMail FormMail = new FormMail();
                                             FormMail.logsend();
@@ -2206,15 +2190,9 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
-<<<<<<< HEAD
-                                    if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
-=======
                                     if (compare_number[i] % compare_num == 0 
                                         && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
                                         && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -2261,15 +2239,9 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF//////////////////
-<<<<<<< HEAD
-                                    if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "AC OFF", "") == "1")
-=======
                                     if (compare_number[i] % compare_num == 0 
                                         && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
                                         && ini12.INIRead(Global.MainSettingPath, "LogSearch", "AC OFF", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1 = new byte[2];
                                         val1[0] = 0;
@@ -2401,15 +2373,9 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
-<<<<<<< HEAD
-                                    if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
-=======
                                     if (compare_number[i] % compare_num == 0 
                                         && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
                                         && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -2803,19 +2769,11 @@ namespace AutoTest
                                     ////////////////////////////////////////////////////////////////////////////////////////////////MAIL//////////////////
                                     if (compare_number[i] > compare_num && send_status[i] == false)
                                     {
-<<<<<<< HEAD
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
-                                        ini12.INIWrite(MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
-                                        if (ini12.INIRead(MailPath, "Mail Info", "From", "") != ""
-                                            && ini12.INIRead(MailPath, "Mail Info", "To", "") != ""
-                                            && ini12.INIRead(MainSettingPath, "LogSearch", "Sendmail", "") == "1")
-=======
                                         ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Nowvalue", i.ToString());
                                         ini12.INIWrite(Global.MainSettingPath, "LogSearch", "Display" + i, compare_number[i].ToString());
                                         if (ini12.INIRead(Global.MailSettingPath, "Mail Info", "From", "") != "" 
                                             && ini12.INIRead(Global.MailSettingPath, "Mail Info", "To", "") != "" 
                                             && ini12.INIRead(Global.MainSettingPath, "LogSearch", "Sendmail", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                         {
                                             FormMail FormMail = new FormMail();
                                             FormMail.logsend();
@@ -2823,15 +2781,9 @@ namespace AutoTest
                                         }
                                     }
                                     ////////////////////////////////////////////////////////////////////////////////////////////////AC OFF ON//////////////////
-<<<<<<< HEAD
-                                    if (compare_number[i] % compare_num == 0
-                                        && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1"
-                                        && ini12.INIRead(MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
-=======
                                     if (compare_number[i] % compare_num == 0 
                                         && ini12.INIRead(Global.MainSettingPath, "Device", "AutoboxExist", "") == "1" 
                                         && ini12.INIRead(Global.MainSettingPath, "LogSearch", "ACcontrol", "") == "1")
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                                     {
                                         byte[] val1;
                                         val1 = new byte[2];
@@ -4140,13 +4092,10 @@ namespace AutoTest
 
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
-<<<<<<< HEAD
 
                         ini12.INIWrite(MailPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
-=======
                          
                         ini12.INIWrite(Global.MailSettingPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
 
                         if (Global.Break_Out_Schedule == 1)//定時器時間到跳出迴圈//
                         {
@@ -5345,13 +5294,10 @@ namespace AutoTest
                             LogThread2.Start();
                         }
                     }
-<<<<<<< HEAD
 
                     ini12.INIWrite(MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-=======
                     
                     ini12.INIWrite(Global.MainSettingPath, "LogSearch", "StartTime", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                     MainThread.Start();       // 啟動執行緒
                     timer1.Start();     //開始倒數
                     button_Start.Text = "STOP";
@@ -5400,13 +5346,10 @@ namespace AutoTest
         private void SettingBtn_Click(object sender, EventArgs e)
         {
             FormTabControl FormTabControl = new FormTabControl();
-<<<<<<< HEAD
             Global.RCDB = ini12.INIRead(MainSettingPath, "RedRat", "Brands", "");
 
-=======
             Global.RCDB = ini12.INIRead(Global.MainSettingPath, "RedRat", "Brands", "");
             
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
             //如果serialport開著則先關閉//
             if (serialPort1.IsOpen == true)
             {
@@ -5450,15 +5393,12 @@ namespace AutoTest
                     pictureBox_Camera.Image = Properties.Resources.OFF;
                 }
 
-<<<<<<< HEAD
                 button_SerialPort1.Visible = ini12.INIRead(MainSettingPath, "Comport", "Checked", "") == "1" ? true : false;
                 button_SerialPort2.Visible = ini12.INIRead(MainSettingPath, "ExtComport", "Checked", "") == "1" ? true : false;
 
-=======
                 button_SerialPort1.Visible = ini12.INIRead(Global.MainSettingPath, "Comport", "Checked", "") == "1" ? true : false;
                 button_SerialPort2.Visible = ini12.INIRead(Global.MainSettingPath, "ExtComport", "Checked", "") == "1" ? true : false;
                 
->>>>>>> f10633d2ac294895321450150a4a70d76e906b11
                 List<string> SchExist = new List<string> { };
                 for (int i = 2; i < 6; i++)
                 {
@@ -6725,11 +6665,12 @@ namespace AutoTest
         }
 
         //Record schedule with RC 
-        
         System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
         bool isAction = false;
+        bool clickFlag = false;
         private void button_keyRec_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("===KEY REC is pressed.===");
             isAction = !isAction;
             if (isAction)
             {
@@ -6740,6 +6681,7 @@ namespace AutoTest
                 }
 
                 button_keyRec.Text = "STOP REC";
+                clickFlag = true;
 
             }
             else
@@ -6753,6 +6695,7 @@ namespace AutoTest
                     CloseSerialPort2();
                 }
                 button_keyRec.Text = "KEY REC";
+                clickFlag = false;
             }
         }
 
@@ -6787,14 +6730,10 @@ namespace AutoTest
         }
         private void ComboBox_TestItem_SelectedValueChanged(object sender, EventArgs e)
         {
-            FormReleaseTest.test();
+            FormReleaseTest.ReleaseTestSchChange();
             ReadSch();
         }
 
-        private void DataGridView_Schedule_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void Cb_SelectedValueChanged(object sender, EventArgs e)
         {

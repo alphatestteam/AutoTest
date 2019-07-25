@@ -16,9 +16,8 @@ namespace AutoTest
 {
     public partial class FormReleaseTest : Form
     {
-
-        Dictionary<string, string> TestCaseDic = new Dictionary<string, string>();
-        private string testCaseDicPath = Application.StartupPath + "\\TestCase.ini";
+        static string testCaseDicPath = Application.StartupPath + "\\TestCase.ini";
+        Dictionary<string, string> testCaseDic = new Dictionary<string, string>();
         List<string> dataGridViewList = new List<string>();
 
         private void CreateDictionary()
@@ -27,49 +26,81 @@ namespace AutoTest
             string item = string.Empty;
             while ((item = str.ReadLine()) != null)
             {
-                if (item.Length > 0)
+                if (item.Length > 0 && item.Contains("=") == true)
                 {
-                    TestCaseDic.Add(item.Substring(0, item.IndexOf("=")).Trim(), Application.StartupPath + "\\TestCase\\" + item.Substring(item.IndexOf("=") + 1, item.Length - (item.IndexOf("=") + 1)).Trim());
-
+                    testCaseDic.Add(item.Substring(0, item.IndexOf("=")).Trim(), Application.StartupPath + "\\TestCase\\" + item.Substring(item.IndexOf("=") + 1, item.Length - (item.IndexOf("=") + 1)).Trim());
                 }
             }
             str.Close();
         }
 
 
+        private void CreateTestCaseIni()
+        {
+            INIFile inif = new INIFile(testCaseDicPath);
+            inif.Write("Release Test", "eUM", "eUM.csv");
+            inif.Write("Release Test", "Power_ON", "Power_ON.csv");
+            inif.Write("Release Test", "Power_OFF", "Power_OFF.csv");
+            inif.Write("Release Test", "Reinstall_EU(skip satellite)", "Reinstall_EU(skip satellite).csv");
+            inif.Write("Release Test", "RC", "RC.csv");
+            inif.Write("Release Test", "Volume", "Volume.csv");
+            inif.Write("Release Test", "DVB-T_Installation", "DVB-T_Installation.csv");
+            inif.Write("Release Test", "DVB-C_Installation", "DVB-C_Installation.csv");
+            inif.Write("Release Test", "HDD_Format", "HDD_Format.csv");
+            inif.Write("Release Test", "Time_Shift", "Time_Shift.csv");
+            inif.Write("Release Test", "Recording", "Recording.csv");
+            inif.Write("Release Test", "EPG", "EPG.csv");
+            inif.Write("Release Test", "USB", "USB.csv");
+            inif.Write("Release Test", "HDMI1", "HDMI1.csv");
+            inif.Write("Release Test", "HDMI2", "HDMI2.csv");
+            inif.Write("Release Test", "HDMI3", "HDMI3.csv");
+            inif.Write("Release Test", "YPbPr", "YPbPr.csv");
+            inif.Write("Release Test", "CVBS", "CVBS.csv");
+            inif.Write("Release Test", "Wireless", "Wireless.csv");
+            inif.Write("Release Test", "SMTV", "SMTV.csv");
+            inif.Write("Release Test", "Netflix", "Netflix.csv");
+            inif.Write("Release Test", "YouTube", "YouTube.csv");
+        }
+
         public FormReleaseTest()
         {
             InitializeComponent();
             this.FormClosed += FormReleaseTest_FormClosed;
-            CreateDictionary();
-            foreach (string key in TestCaseDic.Keys)
+            if (System.IO.File.Exists(testCaseDicPath)) {
+                CreateDictionary();
+            }
+            else
+            {
+                CreateTestCaseIni();
+            }
+            foreach (string key in testCaseDic.Keys)
             {
                 comboBox_TestItem.Items.Add(key);
             }
-            //comboBox_TestItem.SelectedIndex = 0;
         }
 
 
-        public bool test()
+        public bool ReleaseTestSchChange()
         {
-            try
-            {
-                Console.WriteLine("comboBox_TestItem: " + comboBox_TestItem.SelectedItem.ToString());
-                //Item itm = (Item)comboBox_TestItem.SelectedItem;
-                string MainSettingPath = Application.StartupPath + "\\Config.ini";
-                ini12.INIWrite(MainSettingPath, "Schedule1", "Path", TestCaseDic[(string)comboBox_TestItem.SelectedItem].ToString());
-                ini12.INIWrite(MainSettingPath, "Schedule1", "Exist", "1");
-                return true;
-            }
-            catch (Exception ie)
-            {
-                return false;
-            }
+                if (File.Exists(testCaseDic[(string)comboBox_TestItem.SelectedItem].ToString()) == true)
+                {
 
+                Console.WriteLine("comboBox_TestItem: " + comboBox_TestItem.SelectedItem.ToString());
+                ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Path", testCaseDic[(string)comboBox_TestItem.SelectedItem].ToString());
+                ini12.INIWrite(Global.MainSettingPath, "Schedule1", "Exist", "1");
+                return true;
+                }
+                else
+                {
+                    MessageBox.Show("CSV file not found or CSV file name does not match with TestCase.ini.", "Error");
+                    return false;
+                }
         }
+
+
         public void comboBox_TestItem_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("value: " + TestCaseDic[(string)comboBox_TestItem.SelectedItem]);
+            Console.WriteLine("value: " + testCaseDic[(string)comboBox_TestItem.SelectedItem]);
             if (dataGridView_Report.Rows.Count > 1)
             {
                 bool isSame = false;
@@ -104,24 +135,37 @@ namespace AutoTest
                 dataGridView_Report.Rows.Add(comboBox_TestItem.SelectedItem.ToString());
             }
 
-            GridUI(comboBox_TestItem.SelectedIndex.ToString(), dataGridView_Report);
+            GridUI(comboBox_TestItem.SelectedIndex.ToString(), dataGridView_Report); //Datagridview highlight
+            Gridscroll(comboBox_TestItem.SelectedIndex.ToString(), dataGridView_Report);//Datagridview scollbar move when highlight change
 
         }
 
+
         public void button_Run_Click(object sender, EventArgs e)
         {
-
             Global.Schedule_Loop = 1;
             Form1 lForm1 = (Form1)this.Owner;
-            if (comboBox_TestItem.SelectedItem.ToString() != null)
+            if (comboBox_TestItem.SelectedIndex != -1)
             {
-                lForm1.Autocommand_BlueRat("Form1", "TV");
-                lForm1.RedRatDBViewer_Delay(3000);
-                lForm1.button_Start.PerformClick();
+                if (lForm1.StartButtonPressed == true) //STOP key is pressed
+                {
+                    button_Run.Text = "RUN";
+                    lForm1.button_Start.PerformClick();
+                    button_Next.Enabled = true;
+                }
+                else //START key is pressed
+                {
+                    button_Run.Text = "STOP";
+                    lForm1.Autocommand_BlueRat("Form1", "TV");
+                    lForm1.RedRatDBViewer_Delay(2000);
+                    lForm1.button_Start.PerformClick();
+                    button_Last.Enabled = false;
+                    button_Next.Enabled = false;
+                }
             }
             else
             {
-                MessageBox.Show("Please press button NEXT to start the test.");
+                MessageBox.Show("Please press button NEXT to start the test.", "Error");
             }
         }
 
@@ -149,12 +193,14 @@ namespace AutoTest
         private void button_None_Click(object sender, EventArgs e)
         {
             dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Value = "NONE";
+            dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[1].Style.BackColor = Color.LightGray;
         }
         private void FormReleaseTest_Load(object sender, EventArgs e)
         {
             button_Last.Enabled = false;
         }
 
+        //Generate report
         private void button_Generate_Click(object sender, EventArgs e)
         {
             ExcelWorksheet workSheet;
@@ -173,7 +219,7 @@ namespace AutoTest
                 workSheet.Cells[rangeAll].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 workSheet.Cells.Style.Font.Size = 12;
 
-                //Header format
+                //Format for headers
                 workSheet.Row(2).Height = 31;
                 workSheet.Row(2).Style.Font.Bold = true;
                 workSheet.Row(2).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -202,28 +248,38 @@ namespace AutoTest
                     workSheet.Cells[i + 3, 2].Style.Fill.BackgroundColor.SetColor(Color.AliceBlue);
 
                     //Result column
-                    if (dataGridView_Report.Rows[i].Cells[1].Value != null && dataGridView_Report.Rows[i].Cells[2].Value !=null)
+                    if (dataGridView_Report.Rows[i].Cells[1].Value == null)
+                    {
+                        workSheet.Cells[i + 3, 3].Value = " ";
+                    }
+                    else
                     {
                         workSheet.Cells[i + 3, 3].Value = dataGridView_Report.Rows[i].Cells[1].Value;
                         if (workSheet.Cells[i + 3, 3].Value.ToString() == "PASS")
                         {
                             workSheet.Cells[i + 3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            workSheet.Cells[i + 3, 3].Style.Fill.BackgroundColor.SetColor(Color.LawnGreen);
+                            workSheet.Cells[i + 3, 3].Style.Fill.BackgroundColor.SetColor(Color.Green);
                         }
-
-                    else if (workSheet.Cells[i + 3, 3].Value.ToString() == "FAIL")
-                    {
-                        workSheet.Cells[i + 3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        workSheet.Cells[i + 3, 3].Style.Fill.BackgroundColor.SetColor(Color.Red);
-                    }
-                    else if (workSheet.Cells[i + 3, 3].Value.ToString() == "NONE")
-                    {
-                        workSheet.Cells[i + 3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        workSheet.Cells[i + 3, 3].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        else if (workSheet.Cells[i + 3, 3].Value.ToString() == "FAIL")
+                        {
+                            workSheet.Cells[i + 3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            workSheet.Cells[i + 3, 3].Style.Fill.BackgroundColor.SetColor(Color.Red);
+                        }
+                        else if (workSheet.Cells[i + 3, 3].Value.ToString() == "NONE")
+                        {
+                            workSheet.Cells[i + 3, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            workSheet.Cells[i + 3, 3].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        }
                     }
 
                     //Comment column
-                    workSheet.Cells[i + 3, 4].Value = dataGridView_Report.Rows[i].Cells[2].Value;
+                    if (dataGridView_Report.Rows[i].Cells[2].Value == null)
+                    {
+                        workSheet.Cells[i + 3, 4].Value = " ";
+                    }
+                    else
+                    {
+                        workSheet.Cells[i + 3, 4].Value = dataGridView_Report.Rows[i].Cells[2].Value;
                     }
                 }
 
@@ -236,7 +292,7 @@ namespace AutoTest
                 p.Dispose();
                 workSheet = null;
 
-                MessageBox.Show("Report is generated on Desktop.");
+                MessageBox.Show("Report is generated on Desktop.", "Message");
             }
         }
 
@@ -259,6 +315,21 @@ namespace AutoTest
             }
         }
 
+        //Scrolling when Datagridview highlight change
+        private delegate void UpdateUICallBack3(string value, DataGridView ctl);
+        private void Gridscroll(string i, DataGridView gv)
+        {
+            if (InvokeRequired)
+            {
+                UpdateUICallBack3 uu = new UpdateUICallBack3(Gridscroll);
+                Invoke(uu, i, gv);
+            }
+            else
+            {
+                gv.FirstDisplayedScrollingRowIndex = int.Parse(i);
+            }
+        }
+
         private void textBox_Comment_TextChanged(object sender, EventArgs e)
         {
             dataGridView_Report.Rows[comboBox_TestItem.SelectedIndex].Cells[2].Value = textBox_Comment.Text;
@@ -271,10 +342,10 @@ namespace AutoTest
                 button_Next.Enabled = true;
                 button_Last.Enabled = true;
                 comboBox_TestItem.SelectedIndex = comboBox_TestItem.SelectedIndex + 1;
+                button_Run.Enabled = true;
             }
             else
             {
-                button_Next.Enabled = false;
                 MessageBox.Show("This is the last test case.");
             }
         }
