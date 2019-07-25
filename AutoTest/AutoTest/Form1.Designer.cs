@@ -268,7 +268,7 @@ namespace AutoTest
             // 
             this.TimeLabel.AutoSize = true;
             this.TimeLabel.BackColor = System.Drawing.Color.DarkOrange;
-            this.TimeLabel.Font = new System.Drawing.Font("Microsoft JhengHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.TimeLabel.Font = new System.Drawing.Font("微軟正黑體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.TimeLabel.ForeColor = System.Drawing.Color.White;
             this.TimeLabel.Location = new System.Drawing.Point(318, 703);
             this.TimeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -296,7 +296,7 @@ namespace AutoTest
             this.label_FwVersion.Name = "label_FwVersion";
             this.label_FwVersion.Size = new System.Drawing.Size(75, 18);
             this.label_FwVersion.TabIndex = 46;
-            this.label_FwVersion.Text = "Ver. 2.17.1";
+            this.label_FwVersion.Text = "Ver. 2.17.2";
             this.label_FwVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label_FwVersion.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LabelVersion_MouseClick);
             // 
